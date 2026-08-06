@@ -1093,3 +1093,126 @@ so the minimal correct cadence is **event/session-triggered**:
 Build the periodic level-triggered timer (with tiered requeue — hot objects sooner,
 brain/02) **only at unattended cutover**, alongside L2's caps. Don't build the timer
 now; build the session-start sweep now.
+
+---
+
+# Follow-up rulings (round 6)
+
+From batch 3 (20 companies, 45/45 converged, 150 tests green). One anomaly that is a
+**real correctness bug** (M6, the Camp Network re-ask) plus five hurdles. Two of the
+five (M3 entity-leak, M4 US-wide postings) are not parsing fixes — they touch
+*evidence attribution* and the *demotion* logic, and both resolve to principles the
+brain already holds (identity-before-write; J1 absent-never-demotes). M1/M2/M6 feed
+directly into the **v2 cleanup prompt** as fixes-with-tests.
+
+## M1 — Velocity merge: don't widen the flat window, make the wide window *evidence-gated*
+
+**Ruling: two windows, not one bigger one.** Fig Security's 21-day seed→A with the
+*same lead investors* is clearly one raise in two announcements — but the fix is not
+"cap the window at 30 days flat," because a flat 30-day window would wrongly collapse
+two *genuinely distinct* rounds that happen 25 days apart (a fast-but-real seed→A,
+which is real signal you must not erase). The signal that two rounds are *one event*
+is not the gap alone — it's **corroborating same-raise evidence.** So:
+- **Short flat window (≤ ~14d): collapse on time alone** — handles the out-of-stealth
+  same-week disclosure (G3's original case).
+- **Wide window (≤ ~45d): collapse ONLY when corroborated** by a same-raise signal —
+  canonically **shared lead investor(s)**, also explicit tranche labels or a
+  seed/seed-extension pairing. Fig (21d + same leads) → collapses. A hypothetical 21d
+  gap with *different* leads and a valuation step-up → stays two rounds.
+Both windows are tunable config, boot-validated (J6). Tag the collapsed event
+`announced-in-tranches (same lead)` — per G3 the pattern is itself evidence, not
+nothing. **Dependency:** this needs clean, comparable lead-investor data (ties to M3);
+if lead investors can't be parsed reliably, fall back to the short flat window and
+flag rather than guess.
+
+## M2 — Funding totals: trust the headline aggregate; dedupe rows for *structure*; cross-check the two
+
+**Ruling: yes, "trust the headline total, dedupe the rows" is the standing rule — with
+a mandatory cross-check.** The headline **Total Funding is Crunchbase's own reconciled
+aggregate and is the authoritative total** — *never reconstruct the total by summing
+rows*, because rows are duplicate- and tranche-prone (Daytona's pre-seed and seed each
+appearing twice). Separately, **dedupe rows to distinct `(round_type, announced_on)`
+tuples** for round-structure and velocity purposes — and note the store's
+`UNIQUE (entity_id, round_type, announced_on)` constraint already enforces the exact
+case at the DB layer. The non-negotiable addition (Unknown≠0 / verified discipline):
+**cross-check the deduped-row sum against the headline; if they materially diverge,
+drift-flag to review** rather than silently trusting either. A discrepancy is a known
+data-quality signal to surface, not a number to smooth over.
+
+## M3 — Financial-row attribution: the discriminator is DIRECTION (recipient vs investor), not a name-substring
+
+**Ruling: right instinct, wrong handle — fix the phrasing before it creates false
+negatives.** "Only rows whose name contains the company's own name" would exclude the
+*leaks* (correct) but also exclude most *legitimate* raises, which are named by round
+type ("Series A", "Seed") and do **not** contain the company name. The real
+distinction is **direction: is the company the *recipient* of the round, or the
+*investor/grantor*?** Etherealize's "Ethereum Institutional" seed and Daytona's
+"BeatAI" grant are rows where the company is the *funder* and a **different named
+entity** is the recipient. So:
+- **Count** rows that are the company's own funding rounds (round-type-named, capital
+  flowing *in*).
+- **Exclude** rows attributed to a *different named entity* (grants/investments the
+  company *made*) — prefer Crunchbase's structural signal (the Investments section /
+  investor role) over string matching where available.
+- **Ambiguous row → exclude from the total AND flag** (Unknown≠0: an unclassifiable
+  row is not silently counted).
+This is **identity-before-write applied to funding evidence** (brain/04; brain/10 D2):
+evidence must be attributed to the *correct entity* before it counts. JD's name-match
+catches the cases he saw because the leaks carry another entity's name — but encode it
+as "exclude rows about a *different* entity," never "require the company's *own* name."
+
+## M4 — A verified NYC office turns a "US-wide/remote, no explicit NYC" reading from a measured-0 into an *ambiguous* signal — which may not drive the Low-NYC exit
+
+**Ruling: yes, soften it — because this isn't softening, it's correctly classifying
+the evidence.** This is J1's absent-vs-contradicting distinction, and the standing
+"NYC must be listed" rule was too blunt: it's correct for *counting explicit NYC
+roles* but wrong to let that count *drive a demotion* when the 0 is an artifact of how
+the company posts, not confirmed absence. The discriminator is the **shape of the
+non-NYC roles**:
+- **NYC-excluding** (roles explicitly in *other* cities — Echo's Tel Aviv/SF — and no
+  NYC office): a real **measured-low**. The Low-NYC exit **stands**.
+- **NYC-ambiguous** (roles posted "United States" / "Remote, U.S." *with a verified
+  NYC office* — Fig's 488 Madison): the NYC-eligible count is **not 0, it's Unknown** —
+  we cannot measure how many of those remote roles are NYC. Per J1, **absent/ambiguous
+  evidence may never demote**, so this **does not trigger the hard Low-NYC exit.**
+Mechanism, precise so it doesn't over-correct: a verified-NYC-office + US-wide/remote
+reading sets `nyc_jobs = Unknown` (evidence note: "roles posted US-wide/remote; NYC
+office verified at [address]; NYC-eligibility unmeasurable"), **not** `0` and **not** a
+fabricated positive. That Unknown holds the company in review/watch (and, with the
+office as a weak-positive presence signal, off the Low-NYC shelf) while the data-blind
+cap keeps it from claiming a Prospect seat it hasn't earned. **The office blocks the
+demotion without manufacturing a promotion.** Gate strictly on a *verified* office
+(stale/unverified address doesn't count). Fig holds instead of shelving — correct.
+
+## M5 — Embedded ATS boards are now the majority path: elevate G2+K1 from "protocol" to "the standard careers lane"
+
+**Ruling: confirmed — 5 of 12 Ashby boards being embed-only makes the two-phase lane
+the DEFAULT, not a fallback.** The discovery/bind phase must **always** parse embed
+scripts / the rendered DOM for ATS handles; "static scan found nothing" is **never**
+"no board" (that's the K1 false-zero trap that produced Brandlight). Standard careers
+path, restated as the norm: **browser + embed-parse to BIND (extract the Ashby board
+token), then the Ashby API to COUNT** on cadence (G2 — cheap, no re-discovery). One
+addition for the observe layer: **track the static-discovery hit-rate as a metric** —
+it's now ~50% embed-only, and if it drops further the browser-bind becomes even more
+load-bearing, which is a cost/account-surface signal worth watching (more binds = more
+browser sessions on the risky source).
+
+## M6 — The Camp Network re-ask is a real bug: the negative-finding intake must persist a *durable suppressing state*, not just fire an event
+
+**Ruling: this is a correctness bug and a trust bug, and it goes in the v2 cleanup
+prompt with a locking test.** "Joe says: no careers page" is defined (round-5 Part 5)
+to be *recorded with jd-manual provenance + date, stop re-asking, and switch the
+company to the LinkedIn-jobs fallback with monthly re-discovery.* It came back after
+JD acked it because the intake is being **adopted as an event but the resulting
+durable state isn't persisted** — so the next projection re-derives "Joe: paste
+careers link" and re-sets the ask. The fix:
+- Acking "no careers page" transitions the company to a **durable state**
+  (`careers_status = no-page-per-jd`, jd-manual provenance + date) that **suppresses
+  the board ask** and **switches enrichment to the LinkedIn-jobs fallback.**
+- The careers **re-discovery is scheduled to +1 month, not immediate** — the intake's
+  forced recheck must not re-run discovery seconds after JD acked and re-emit the ask.
+- **Locking test (for the v2 prompt):** ack "no careers page" → run a reconcile sweep
+  → assert the "paste careers link" ask does **not** return and `careers_status`
+  persists. A batch-3 miss that isn't turned into a test recurs in batch 4 (the K1
+  "same reader, same bug" lesson). Note: DataLane's "Joe: paste careers link" rides
+  the *same* mechanism — fixing M6 makes that intake trustworthy too.

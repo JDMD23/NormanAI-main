@@ -1,15 +1,15 @@
 <!--
 HOW TO USE THIS FILE (this note is for JD, not the agent):
-This is the post-batch-3 cleanup / pre-batch-4 hardening prompt. Paste the whole
-thing into the Fable build chat (the one building JDMD23/NormanAI-CRMx). It is
-grounded in a real read of the phase-0 branch as it stood after batch 3, not in
-generic advice. Section 5 is deliberately left as a slot: after you paste your
-specific batch-3 issues into this chat, I'll fold them into a v2 of this prompt
-and resend. Nothing here invents work — it hardens what exists and builds the one
-floor that's missing before the automation goes live.
+This is the post-batch-3 cleanup / pre-batch-4 hardening prompt — v2, with JD's six
+batch-3 issues folded into Section 5, each with its ruling and a locking test. Paste
+the whole thing into the Fable build chat (the one building JDMD23/NormanAI-CRMx). It
+is grounded in a real read of the phase-0 branch after batch 3 plus the round-6
+rulings (M1–M6). Nothing here invents work — it hardens what exists, fixes the six
+batch-3 findings, and builds the one floor (observability) that's missing before the
+automation goes live.
 -->
 
-# Norman — Post-Batch-3 Cleanup & Pre-Batch-4 Hardening
+# Norman — Post-Batch-3 Cleanup & Pre-Batch-4 Hardening (v2)
 
 You are the world-class principal engineer continuing the Norman build
 (**JDMD23/NormanAI-CRMx**), with **NormansBrain** as your knowledge base. Batch 3
@@ -191,16 +191,62 @@ Then **stop and wait for JD.** Do not begin batch 4.
 
 ---
 
-## 5. JD's specific batch-3 issues  ← (to be filled in)
-JD will paste concrete issues he caught while running batch 3 (individual companies,
-mis-reads, surface annoyances, wrong routings). When he does:
-- Treat each as a **top-priority cleanup item**, triaged into the ranked list above
-  (most will land in Priorities 2–4).
-- For each: state the root cause, the fix, **and the test that locks it so it can't
-  regress** — a batch-3 miss that isn't turned into a test will happen again in
-  batch 4 (the "same reader, same bug" lesson, K1).
-- If an issue reveals a *design* question the brain hasn't ruled on, flag it for JD
-  rather than guessing — a new ruling belongs in NormansBrain first.
+## 5. JD's batch-3 issues (v2 — folded in, each with the ruling and the locking test)
+All six were ruled in NormansBrain round 6 (`reviews/phase1-lane-design-decisions.md`,
+M1–M6). Every one becomes a **fix + a test that locks it** — a batch-3 miss not turned
+into a test recurs in batch 4 (K1, "same reader, same bug"). Triage into the priority
+list is noted per item.
 
-*(This section is intentionally empty in v1. After JD supplies his batch-3 feedback,
-this prompt is reissued as v2 with these items folded in and sequenced.)*
+**5.1 — Camp Network re-ask bug (M6) — HIGHEST PRIORITY, it's a trust bug.**
+"Joe says: no careers page" returned after JD acked it, because the intake fires as an
+event but never persists the durable state that suppresses the ask. Fix: acking
+transitions the company to a durable `careers_status = no-page-per-jd` (jd-manual
+provenance + date) that **suppresses the board ask, switches enrichment to the
+LinkedIn-jobs fallback, and schedules careers re-discovery to +1 month (not
+immediate).** **Locking test:** ack "no careers page" → run a reconcile sweep → assert
+the "paste careers link" ask does not return and the state persists. *DataLane's "Joe:
+paste careers link" rides the same mechanism — this fix makes that intake trustworthy
+too.* → Fits **Priority 3** (reconcile correctness).
+
+**5.2 — Velocity merge window (M1).** Fig Security's 21-day seed→A (same lead
+investors) computed a noise "Fast." Fix: **two windows** — a short flat window (≤~14d,
+collapse on time alone) and a wide window (≤~45d) that collapses **only when
+corroborated** by a same-raise signal (shared lead investors / tranche labels). Both
+tunable config, boot-validated; tag the collapsed event `announced-in-tranches`.
+**Test:** Fig collapses (21d + same leads); a 21d gap with different leads stays two
+rounds. → **Priority 1** (config) + a velocity test.
+
+**5.3 — Funding total from duplicate/tranche rows (M2).** Daytona's rows doubled;
+$38M headline kept. Standing rule: **the headline Total is authoritative — never sum
+rows to get the total**; dedupe rows to `(round_type, announced_on)` for structure;
+**cross-check the deduped-row sum vs the headline and drift-flag a material
+divergence.** **Test:** duplicated tranche rows yield one structural round each, the
+headline total is preserved, and an injected divergence raises a review flag.
+
+**5.4 — Other-entity rows leaking into financials (M3).** Etherealize's "Ethereum
+Institutional" seed and Daytona's "BeatAI" grant are the company acting as *investor*,
+not raiser. Fix: **discriminate on DIRECTION (recipient vs investor), not a name
+substring** — count the company's own inbound funding rounds; exclude rows attributed
+to a *different named entity*; flag the ambiguous. (JD's name-match was reaching for
+"is this row about a different entity" — encode it that way, or "require the company's
+own name" will drop legitimate round-type-named raises.) **Test:** a raise row named
+"Series A" counts; an outbound row named after another entity is excluded.
+
+**5.5 — US-wide postings + verified NYC office (M4).** Fig shelved at Low NYC despite a
+real 488 Madison office, because roles post "United States"/"Remote, U.S." Fix: a
+**verified NYC office** turns "US-wide/remote, no explicit NYC" from a measured-0 into
+**`nyc_jobs = Unknown`** (not 0, not a fabricated positive) — which, per J1, **may not
+drive the Low-NYC exit.** The office blocks the demotion; the data-blind cap prevents
+an unearned Prospect seat. NYC-*excluding* roles (explicit other cities, no office)
+still exit. **Test:** Fig (US-wide + verified office) holds off the Low-NYC shelf; Echo
+(Tel Aviv/SF, no office) still exits. *This one re-routes a live company — surface it
+to JD explicitly when it lands.*
+
+**5.6 — Embedded ATS boards are the majority (M5).** 5/12 Ashby boards were embed-only.
+Confirm the two-phase lane (browser+embed-parse to bind → API to count) is the
+**default**, and add a **static-discovery-hit-rate metric to `core/observe`** (now
+~50% embed-only; a further drop means more browser binds = more account surface). No
+behavior change — a validation and an observe metric. → **Priority 2** (observe).
+
+*(v2 issued after batch 3. If a later batch surfaces a design question the brain
+hasn't ruled on, flag it for JD — a new ruling belongs in NormansBrain first.)*
