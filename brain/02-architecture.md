@@ -52,6 +52,21 @@ artifacts in any system — application code churns around them. Consequences:
 - Migrations must be forward-only, reversible in effect (expand → migrate → contract),
   and deployable independently of the code that needs them.
 
+## Adopt formal models; inherit their theorems
+
+When the domain has a mature formal model — BSP/Pregel for stepwise parallel
+workflows, actors for isolated concurrency, event sourcing for auditable state,
+state machines for lifecycle logic — adopting it wholesale buys properties you'd
+otherwise engineer feature by feature. LangGraph is the clean demonstration
+(studies/langgraph.md): because execution advances in supersteps with writes
+invisible until the step boundary, durable checkpointing, safe human-in-the-loop
+interruption, replay/forking, and race-free parallelism all *fall out* of the
+model rather than being bolted on. Ad-hoc control flow gives each of those
+features a hand-built, bug-prone implementation — if it gets them at all. The
+price is the model's constraints (BSP's lockstep latency, actors' no-shared-state);
+take the deal when the guarantees matter more than the constraints, and design the
+unit of atomicity before the features that will need it.
+
 ## State is the hard part; minimize what owns it
 
 Every stateful component (DB, cache, queue, in-memory session, singleton) is a source

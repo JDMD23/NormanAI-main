@@ -46,7 +46,11 @@ Elite teams treat SQL and the database as a first-class part of the system:
 - Default to immutability; create new values instead of mutating shared ones. Most
   "spooky action at a distance" bugs are shared mutable state with unclear ownership.
 - Every piece of mutable state gets exactly one owner. Two writers to one value is
-  a design bug even when a lock makes it "safe."
+  a design bug even when a lock makes it "safe." Where multiple writers are the
+  design (fan-in, parallel workers), attach a *declared merge policy* to the state
+  cell itself — overwrite-last / accumulate / reduce-with-operator / barrier —
+  rather than scattering conflict resolution across call sites (LangGraph's typed
+  channels are the reference implementation; see studies/langgraph.md).
 - Derived state (caches, denormalized counts, materialized aggregates) must be
   *recomputable from source*. If the derived copy can drift and nothing can rebuild
   it, data corruption is a matter of time.
