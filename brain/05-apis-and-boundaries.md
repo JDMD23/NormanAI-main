@@ -74,6 +74,28 @@ removing later is a breaking change. Private-by-default everything.
   beta marker for the opposite lifecycle end, and suppression for *internal*
   callers so only users see warnings — warning noise is interface cost too.
 
+## Provider adapters: the N-integration pattern
+
+When you integrate N interchangeable providers (payment gateways, storage
+backends, LLM vendors, job-board APIs), the durable shape (ats-scrapers is the
+reference — studies/ats-scrapers.md):
+- **ABC interface + decorator registry as the *only* lookup.** Each adapter is
+  one self-registering file implementing one method; callers resolve by registry
+  key, never by importing adapter classes by path. A new provider adds a file
+  and touches nothing else.
+- **Declare per-provider capability as class-attribute data**, consumed by a
+  shared client — HTTP engine, auth mode, escalation policy, headers. Default to
+  the cheap path; make the expensive one (browser engine, impersonation, extra
+  auth) an opt-in declaration on the adapters that provably need it. Behavior
+  lives in the shared client; only the *declaration* varies per provider.
+- **Capture the provider's quirks in a docstring beside the adapter** — the
+  exact endpoint, what the API does and doesn't return, the costly flags, the
+  rate-limit reality. This is the knowledge-delta principle (brain/09) aimed at
+  external APIs: the next maintainer inherits the hard-won knowledge or relearns
+  it by outage.
+- **Pair a contract test with each adapter** so upstream drift fails your CI,
+  not production (brain/05 consumer-side contract tests).
+
 ## Events and messages as APIs
 
 Event schemas are the hardest contracts to evolve because consumers are invisible.
