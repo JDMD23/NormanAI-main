@@ -99,7 +99,15 @@ without evidence, the same way you don't reformat a regex you don't understand.
   *load-bearing*: no evidence, no claim. It's the cheapest, most robust defense
   against hallucinated facts entering a system of record (the trust boundary,
   brain/10 #4), and it needs no second model — just a rule that reads the evidence
-  the first one produced.
+  the first one produced. The framework generalization (guardrails): wrap LLM calls
+  in **guards at both boundaries** — an *input* guard sanitizes untrusted content
+  (scraped pages) before it reaches the prompt (prompt-injection defense), an
+  *output* guard validates claims before they become facts. Each validator carries
+  a declared **on_fail action** — `reask` / `fix` / `filter` / `refrain` /
+  `exception` / `noop` — the same nonconformance-policy vocabulary as data
+  validation (brain/04): evidence-clamping is a `fix`/`filter`, Review-Required
+  routing is a `refrain`/`reask`. And constrain the model to emit schema-conforming
+  structured output (repair/reask on miss) rather than free text you must re-parse.
 - **Don't ask one prompt to serve two opposing objectives.** A single call cannot
   be both high-recall ("catch everything") and high-precision ("only the certain
   stuff") — it splits the difference and does neither (Research's stated reason for

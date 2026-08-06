@@ -52,6 +52,18 @@ Pipeline standards:
 - The debugging question to design for: "a user says X failed at 3pm — can I find
   exactly what happened in under five minutes?" If not, observability has failed,
   regardless of how many dashboards exist.
+- **For data/ML/LLM systems, add drift and quality monitoring — the silent-failure
+  signal metrics miss** (evidently). A pipeline can be green on every golden signal
+  while its *output distribution* rots: scores drift, an input feature trends
+  wrong because a source quietly broke, an LLM's answers degrade. Run statistical
+  drift tests (KS/PSI/Wasserstein) on key scores and inputs, and LLM-as-judge evals
+  on generative output. The powerful move is the **offline-eval → live-monitor
+  continuum**: the *same* checks you run as a one-off during development get
+  promoted to a scheduled production monitor, so "the model still ranks the labeled
+  cases correctly / the score distribution hasn't shifted" is watched continuously,
+  not just at build time. This is the runtime complement to the eval harness
+  (brain/03): eval gates catch regressions you ship; drift monitors catch
+  degradations the *world* ships.
 
 ## Operational maturity
 

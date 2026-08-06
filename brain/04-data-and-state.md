@@ -17,6 +17,17 @@ Key modeling calls that pay compound interest:
 - **IDs are opaque and stable.** Natural keys (email, username, SKU) leak into URLs
   and foreign keys, then someone needs to change one. Surrogate keys + unique
   constraints on natural keys.
+- **When there's no shared unique ID, identity is probabilistic evidence-weighing,
+  not string equality** (splink / Fellegi-Sunter). The pipeline: **block**
+  (generate candidate pairs by a cheap key so you never compare all N², e.g. same
+  domain / name-prefix) → **compare each field at graded levels** (exact / fuzzy /
+  different, not a boolean) → **weight the evidence** (each level carries a learned
+  match weight; rare-value matches count more than common ones — term-frequency
+  adjustment) → **threshold and cluster** links into one canonical entity. Weigh
+  *multiple non-correlated* fields (name + domain + handle + location), and make the
+  match *explainable* so a human can adjudicate the uncertain ones. This is the
+  engine behind "resolve identity before the first write" (brain/10 #6) and the
+  identity-conflict decision.
 - **Nullability is a modeling statement.** A nullable column means "this fact may
   legitimately not exist" — not "I didn't want to write a migration." Every nullable
   field forces a branch in every consumer forever.
@@ -70,6 +81,24 @@ Elite teams treat SQL and the database as a first-class part of the system:
 - Validate at the boundary, then trust internally. Parse, don't validate: convert
   raw input into a rich internal type *once*, at the edge, so interior code never
   re-checks (`parse_order(json) -> Order`, not `is_valid(dict)` sprinkled everywhere).
+- **Validation is a declared nonconformance policy, not a boolean.** Three mature,
+  independent frameworks converged on this — a data loader (dlt), an LLM guard
+  (guardrails), a dataframe validator (pandera): when data doesn't conform, you
+  don't just "reject" — you apply a *declared policy per rule* drawn from a small
+  universal vocabulary:
+  - **accept & evolve** (dlt `evolve`) — widen the schema to fit the new shape;
+  - **coerce/fix** (pandera `coerce`, guardrails `fix`) — repair to a conforming value;
+  - **discard the value** (dlt `discard_value`, guardrails `filter`) — drop the field, keep the record;
+  - **discard the record** (dlt `discard_row`) — drop the whole row;
+  - **reject loudly** (dlt `freeze`, guardrails `exception`, pandera eager raise);
+  - **ask again** (guardrails `reask`) — send it back to the producer/model;
+  - **pass but record** (guardrails `noop`) — let it through, log the deviation.
+  Declare the policy *per field family*, at the boundary. For batches, prefer
+  **lazy validation** (pandera): collect *all* failures into a structured table in
+  one pass, not fail-fast on the first. This single concept unifies schema
+  evolution, LLM-output guarding (brain/09), Unknown≠0 (= discard-value, never
+  zero-fill), and reason-coded human routing (brain/10 #10: Review-Required reasons
+  are `reask`/`refrain` policies).
 - Serialization formats are contracts: additive changes only (new optional fields);
   renames and type changes are breaking and need versioning or expand/contract.
 - Timestamps in UTC, ISO-8601 at boundaries, timezone math only at display.
