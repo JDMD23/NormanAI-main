@@ -894,3 +894,202 @@ with provenance and to trigger the instrument audit. Loading 20 more companies b
 that path exists widens the board JD is hand-correcting **faster than the machine can
 systematically absorb the corrections** — the exact opposite of what you want while
 the operator is the most reliable sensor on the board. Reconcile first.
+
+---
+
+# Follow-up rulings (round 5)
+
+Same-day implementation of the J and K rulings, a live validation event, and **two
+JD directives that revise prior rulings**. Two things to affirm first, because
+they're the whole mechanized-invariant loop closing end to end within hours:
+**J7 predicted all five partial-evidence flippers and four flipped on measurement**
+— Astelia's Prospect seat "at exactly 60 riding the unknown" collapsing to Low NYC
+on 2 heads is the textbook case J1 was written for; the evidence-hysteresis rule and
+the replay audit *together* caught and corrected a real mis-route the same day. And
+**JD's standing autonomy order** ("LinkedIn identity-verified + NYC headcount blank →
+go measure it, no queuing, no asking") is JD encoding the operator-respect principle
+himself: the machine's work queue must never leak onto the human's.
+
+## Directive effects on prior rulings (record before the new questions)
+
+- **Directive #1 (Sales Nav is the ruler) confirms K3 — no revision.** The
+  discovered people-page geo param (`?facetGeoRegion=90000070`, exact metro count in
+  one load) is precisely the *tagged interim fallback* K3 named; Sales Nav proper
+  stays the pinned instrument. Migration debt now includes re-measuring tonight's
+  geo-param values **and** the two earlier JD-manual values onto Sales Nav so every
+  count and delta shares one ruler (K3 consequence #3).
+- **Directive #2 (budgets waived during build) is a *scoped suspension*, not a
+  deletion, of the cap rulings.** The F2 tiered-budget ramp, G7's deferred-checks,
+  and any daily-cap language are **suspended for attended build-phase**, replaced by
+  pace-only rules. They are **scheduled for reinstatement at unattended cutover**
+  (L2). The *pacing* non-negotiables are untouched: human pace + jitter, working
+  hours, strict LinkedIn serialization, breaker halts instantly on any challenge.
+  Note the harmony, not tension: waiving the daily *quota* actually **strengthens the
+  all-or-nothing-per-company invariant** (G7 atomicity) — "work moves through
+  COMPLETELY, not piecemeal" is the same instinct as "no partial evidence, no
+  stranded half-enrichment waiting for tomorrow's budget." The quota was in mild
+  tension with atomicity; removing it (while attended) resolves that.
+- **The standing autonomy grant has design weight and is affirmed:** "Action Needed
+  must never show machine work as pending when the machine could just do it" is the
+  detect-then-**do** line (vs detect-then-ask), the operator-respect principle at its
+  conclusion. One guard: "could just do it" acts **within** the pacing envelope —
+  autonomy to *act* is never autonomy to act *fast* or *into a challenge*. The grant
+  operates inside the non-negotiables, not around them.
+
+## L1 — The budget waiver, eyes open: the danger isn't daily volume, it's inhuman *regularity* — and the waiver only holds if monitoring replaces the quota
+
+**Ruling: defensible while attended and at human pace — because 30–60 touches/day at
+human pace is inside a legitimate heavy Sales-Nav-user envelope (a busy recruiter's
+day), and the directive preserves exactly the signatures that *do* trigger detection
+(superhuman speed, inhuman regularity) as non-negotiable.** The volume itself isn't
+the threat. Three real residual risks the pace-only model doesn't fully cover:
+1. **Sustained regularity is itself a signature.** A human has *day-level* variance —
+   heavy days, light days, weekends, gaps. A machine doing 30–60 *every* working day
+   on a fixed cadence, indefinitely, creates a longitudinal pattern even if each day
+   is individually human-plausible. **Add day-level variance** (occasional light/
+   skipped days, respect weekends), not just intra-day jitter.
+2. **Sales Nav's commercial-use limit (CUL)** throttles heavy searchers monthly —
+   *throttle, not ban*, but at 300 companies × cadence you'll approach it, and a CUL
+   cap can *masquerade as an F3 soft-block (category d)*. The breaker taxonomy must
+   grow a case: "monthly search limit reached" ≠ soft-block ≠ selector break.
+3. **The waiver removes the blast-radius limiter quotas provided.** A cap also bounds
+   how much a bug/runaway can burn before a human notices. Without it, the **breaker
+   is the only volume ceiling left** — fine while attended (JD notices in minutes),
+   which is exactly why L2's attended/unattended split is the crux.
+
+**The line where I'd insist on coming back to JD with data is signal-triggered, not a
+magic company count.** Don't pick "300." Come back on the *first sign the envelope is
+tightening*: (a) **challenge frequency > a one-off** — the breaker halts on the first
+challenge, but the observe layer must *count challenges over a rolling window*,
+because a *second* challenge is the trend that matters; (b) **soft-block rate** (F3
+category d) rising above a low baseline; (c) **CUL-throttle detection** on Sales Nav.
+Any one → stop and bring data, don't push through. **These three are the tripwires
+the observe layer must watch, and they must be live *before* scaling** — because the
+waiver converts a *static* safety (quota) into a *dynamic* one (monitoring), and a
+dynamic safety only protects you if it's actually watched. **The condition on the
+waiver: no live tripwires = the safety was removed, not replaced.**
+
+## L2 — Unattended cutover flips the safety model: mechanize the caps back, and make "unattended without caps" an impossible state
+
+**Ruling: confirmed and sharpened — the waiver is *mode-scoped*.** Attended/build =
+JD's judgment + the breaker are sufficient, quotas are just friction. Unattended =
+the human sensor of last resort is *gone*, so the only protection is what's
+mechanized. In unattended mode:
+- **Reinstate a volume cap as a blast-radius limiter** (not as anti-detection —
+  pacing handles that). Its unattended job is to bound what a bug, a runaway retry,
+  or a slow drift into a challenge-storm can burn before the next human check-in. Set
+  it to *the volume JD would be comfortable discovering the machine did while he
+  wasn't looking* — smaller than the attended max.
+- **Conservative-on-uncertainty becomes mandatory.** Attended, a soft-block can be a
+  judgment call; unattended, the only safe default is halt-don't-write-alert-wait,
+  because no judgment is available.
+- **Make it an invariant, not a to-do.** `attended_mode` is a config flag the
+  scheduler sets; the system **refuses to run unattended without its caps** the same
+  way it refuses a malformed config (config-validated at boot). Don't leave
+  "reinstate quotas when we go unattended" as something a human remembers — mechanize
+  it so the unsafe state can't exist. That's the elite move: the safety model
+  *inverts automatically* at cutover.
+
+## L3 — Review auto-resolution: the machine may finish an *evidence* question under JD's own rule; it may never close a decision JD *reserved*
+
+**Ruling: default is your lean — an opened review waits for the human (a review is a
+promise) — with one typed exception, and Bolto is NOT in it.** The discriminator is
+*what the review was waiting on*:
+- **Evidence-gated review** (opened only because a measurement was missing/ambiguous):
+  once new evidence resolves it **under a rule JD already approved**, the machine is
+  not making a new judgment — it's applying JD's own rule to now-complete evidence.
+  This subclass **may auto-close**, with the resolution change-logged and surfaced
+  ("review auto-resolved: evidence now decisive, routed per [rule]").
+- **Judgment-gated review** (opened because the *decision* is JD's by ownership — a
+  relationship call, a protected status, a reserved "should we pursue despite X"):
+  **never auto-closes**, no matter how decisive the evidence.
+This reuses J5's structured `review_reason` for free — the enum already carries
+whether a review is evidence-gated or judgment-gated, so the machine knows which it
+may close. **Bolto stays open:** by your own description "JD's open decision outranks
+the router" — that's a *judgment gate*, not an evidence gate. So even though 0 heads
+/ 0 jobs / Chicago hubs is now unambiguous, the *decision* is one JD reserved.
+Surface "evidence now decisive → recommend Do Not Pursue" on the board so he closes
+it in one glance; the machine does not close it. (If JD prefers maximum conservatism
+— *all* reviews wait, even evidence-gated — that's a defensible simpler setting and
+it's his queue to set; the typed exception is an offer, not a mandate.)
+
+## L4 — J7 graduates from bug-hunt to standing regression harness — confirmed, plus a fourth job
+
+**Ruling: confirmed — and add post-config-change regression as a fourth standing
+use.** J1 now *prevents* partial-evidence *entry* structurally, so J7's role shifts
+from catching that bug to four guardrails: (1) **held-position sensor** — J1 lets a
+company hold on one absent component, so replay periodically re-checks "would this
+held company survive a worst/best forcing of the missing value?"; (2) **pre-batch
+sanity gate**; (3) **post-instrument-migration check** (after the Sales Nav
+re-measure, confirm the new ruler doesn't silently flip anyone); and (4) **new:
+post-config-change regression** — any edit to the scoring config or a router
+threshold (J6 taxonomy order, hysteresis bounds, band cutoffs) gets a replay against
+live data to see *what would move* before it ships. J7 is now the cheap "what does
+this change do to the live board?" harness for the whole routing layer.
+
+## L5 — Reconcile scope: the happy-path list is right; the edge/safety pieces are what make it safe against live JD edits
+
+**Ruling: the ten-item list is complete on the happy path. Add seven edge/safety
+items, fix one scoping error, pin one ordering rule, and scope cadence to mode.**
+
+**One scoping fix — separate sweep-triggered from event/one-shot work.** The list
+mixes three trigger types; build them together but don't run them on the same clock:
+- *Sweep-triggered* (every sweep): board diff, JD-edit adoption, drift-heal, the
+  non-Verified⇒Action assertion.
+- *Event-triggered*: resolve-then-echo (fires on manual entry, often interactive),
+  dispute-as-drift logging, the select-migration playbook (fires on **schema
+  change**, not every tick).
+- *One-shot*: **the Sales Nav re-measure migration is a one-time job, not a recurring
+  reconcile duty** — gated by the L4 replay audit. Baking "re-measure every headcount"
+  into each sweep would re-measure the whole board every cycle. Run it once, verify,
+  retire it.
+
+**One ordering rule that prevents re-introducing the clobber:** within a sweep,
+**adopt JD edits BEFORE healing drift.** Sequence: (1) read board → (2) adopt JD
+edits with provenance (their fields are now truth) → (3) heal drift on the *remaining
+machine-owned* columns against the datastore → (4) assert invariants → (5) write
+back. Heal-before-adopt would overwrite a JD edit before it was adopted — the exact
+failure J2/J4/K4 guard against.
+
+**Seven missing edge/safety pieces:**
+1. **Heal scope = machine-owned fields ONLY, stated as an invariant.** Reconcile
+   *reads* human-owned fields (to adopt) but **never writes** them (relationship
+   notes, protected statuses, jd-manual values). This is *the* reconcile invariant;
+   without it a drift-heal can clobber a JD edit.
+2. **Idempotency (the controller-runtime property).** Every reconcile action must be
+   idempotent and correct from any starting point, so a sweep run twice — or run
+   mid-enrichment — can't double-apply. This is what makes level-triggered safe.
+3. **Per-company failure isolation (bulkhead, G7).** A breaker halt on one company's
+   triggered recheck records the halt and **moves on** — one company's challenge
+   never stops the whole sweep. A half-finished sweep is safe because the next sweep
+   re-converges.
+4. **Reconcile writes its own actions to the change-log.** A drift-heal or an
+   adoption is itself an append-only entry ("reconcile healed X to datastore truth"),
+   so "why did this change?" is always answerable — reconcile never acts invisibly.
+5. **Stale-jd-manual surfacing.** jd-manual outranks machine and is never silently
+   overwritten — but a *materially newer* machine measurement (JD's heads=4 from a
+   month ago vs Sales Nav's 6 today) **surfaces as a Changes delta for JD to
+   accept/refresh**, so a stale manual value can't ossify forever. Never-overwrite
+   holds; add never-let-it-silently-rot.
+6. **Cross-field invariant re-assertion, not just the Action one.** While sweeping,
+   re-assert the whole invariant set on each row (Unknown≠0, band-entry evidence
+   completeness, single-write-path) — the sweep is the natural place to catch any row
+   that drifted out of spec, not only the non-Verified⇒Action rule.
+7. **A dry-run/diff mode for the sweep.** Before the first live reconcile against
+   JD's real edits, run it in report-only mode (show what it *would* adopt/heal/flag)
+   so you validate the adopt-before-heal ordering on real data before it writes. Cheap
+   insurance for the highest-clobber-risk slice.
+
+**Minimal correct sweep cadence while attended-only: cadence follows mode.** You do
+**not** need a background timer while the system runs only in working sessions — a
+timer is unattended-mode machinery. Level-triggered means "converge when it matters,"
+so the minimal correct cadence is **event/session-triggered**:
+- **Mandatory: a full sweep at the *start* of every working session, before the
+  machine does anything else** — this is what adopts whatever JD edited while the
+  machine was off (the H6 scenario: "I pasted a careers link, how does it know?").
+  That single rule closes the H6 gap.
+- **On-demand after a burst of board edits** within a session.
+- **At session end**, to flush/verify.
+Build the periodic level-triggered timer (with tiered requeue — hot objects sooner,
+brain/02) **only at unattended cutover**, alongside L2's caps. Don't build the timer
+now; build the session-start sweep now.
