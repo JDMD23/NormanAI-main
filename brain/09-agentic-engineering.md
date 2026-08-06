@@ -151,6 +151,9 @@ process. Rules that follow:
   The description is a *routing surface*: put all when-to-use information there —
   deliberately generous with trigger phrases, since under-triggering is the
   observed failure mode (Anthropic's own guidance) — and zero workflow summary.
+  The highest-value trigger for a vendor skill is the *failure of the platform's
+  native tool* ("use when web_fetch fails" — Scrapling): the fallback slot is
+  where the agent is actively looking for an alternative.
 - Anything you don't want executed as instructions shouldn't look like instructions.
 - The doc the agent actually loads is the API; everything else is dead weight —
   token cost is interface cost, so compress what loads every session.

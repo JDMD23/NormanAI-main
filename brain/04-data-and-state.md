@@ -54,6 +54,13 @@ Elite teams treat SQL and the database as a first-class part of the system:
 - Derived state (caches, denormalized counts, materialized aggregates) must be
   *recomputable from source*. If the derived copy can drift and nothing can rebuild
   it, data corruption is a matter of time.
+- References into structure you don't control (CSS selectors, API response paths,
+  UI-test locators) are derived data that *will* break: store a fingerprint of
+  the target at bind time and re-derive by similarity when the structure shifts —
+  deterministic matching beats "ask an LLM to find it again" (offline, cheap,
+  explainable). Surface confidence when re-binding; a silent partial match is a
+  new bug wearing the old name. (Reference implementation: Scrapling's adaptive
+  selectors — studies/scrapling.md.)
 - Global state (singletons, module-level mutables, thread-locals) couples everything
   it touches and makes tests order-dependent. Thread state explicitly, or scope it
   to a request/job context object.
