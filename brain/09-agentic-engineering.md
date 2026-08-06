@@ -275,6 +275,36 @@ an agent's unrequested improvements inflate the diff a human must review and spe
 trust the task didn't earn. An agent granted standing maintenance duties by its
 human is an owner for that scope; otherwise, guest rules apply.
 
+## Autonomous experiment loops
+
+The design for agent-driven hill climbing (karpathy/autoresearch is the
+reference; studies/autoresearch.md):
+- **Freeze the judge.** The evaluation code, metric, and dependencies live
+  outside the agent's editable surface, by hard rule. Without this boundary any
+  self-improving loop eventually optimizes the metric's implementation instead
+  of the target — reward hacking excluded by construction, not by trust.
+- **Normalize by budget, not configuration.** A fixed wall-clock/cost budget per
+  experiment makes every attempt comparable regardless of what changed, prices
+  the loop predictably, and supplies the kill criterion (over budget → discard).
+- **Choose an invariant metric** — one that stays meaningful under every move
+  the agent is allowed to make. And remember the frozen judge is still a chosen
+  judge: Goodhart applies to what the scalar can't see.
+- **Price complexity into the accept rule.** Keep-if-better loops accrete cruft
+  monotonically unless the acceptance test charges for it: tiny win + hacky code
+  → discard; equal result + simpler code → keep.
+- **Git is the ledger; negatives are the record.** Branch per run, commit per
+  attempt, advance on improvement, reset on regression — and log every attempt
+  (kept, discarded, crashed, with descriptions), because the discards are the
+  research record.
+- **Bounded crash policy + boredom protocol.** Trivial failure → fix and rerun;
+  broken idea → log and move on; a few failed fixes → give up. And specify what
+  to do when out of ideas (re-read sources, combine near-misses, escalate
+  radicalism) — autonomous loops fail on stopping and on idea exhaustion, so
+  script both.
+- **Two-level programming.** The human's surface is the org code — the loop
+  instructions, roster, and accept rules — one level above the work. Iterating
+  there is the actual meta-game.
+
 ## Calibrate autonomy by reversibility
 
 There is also a *system-level* autonomy choice, prior to any single gate: who owns
