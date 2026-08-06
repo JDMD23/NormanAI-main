@@ -1216,3 +1216,91 @@ careers link" and re-sets the ask. The fix:
   persists. A batch-3 miss that isn't turned into a test recurs in batch 4 (the K1
   "same reader, same bug" lesson). Note: DataLane's "Joe: paste careers link" rides
   the *same* mechanism — fixing M6 makes that intake trustworthy too.
+
+---
+
+# Follow-up rulings (round 7)
+
+Two open decisions from JD's desk after a strong post-round-6 cleanup (main==phase-0,
+189 tests green, `core/observe` live and run as a ritual, all six M-rulings landed
+with locking tests, M4 correctly re-routing Fig **and** Astelia off the Low-NYC
+shelf). One is a sequencing call (N1); one is a genuinely new, load-bearing data
+decision that needs a build-repo ADR (N2). N3 is a fidelity item the watcher flagged.
+
+## N1 — Re-measure before batch 4 — and treat the re-measure as the Sales Nav lane's calibrated first flight
+
+**Ruling: re-measure first. The agent's instinct is right, and the reason is deeper
+than "less to migrate."** Three compounding arguments:
+1. **Debt is smallest now.** Every batch loaded on the interim instrument adds to the
+   pile that must be re-measured onto Sales Nav (K3). Batch 4 would take it from ~44
+   to ~64. Pay it down at its minimum.
+2. **You're otherwise scoring on a mixed ruler.** The board can't be compared
+   company-to-company or delta-over-time across different instruments (F1/G5). Adding
+   20 fresh interim-instrument companies means batch 4's values *also* can't be
+   trusted against the eventual Sales Nav values — a quiet correctness cost hidden as
+   "progress."
+3. **The re-measure IS the Sales Nav lane's proving run, for free — and it's
+   calibrated.** Re-measuring the existing ~44 exercises the new instrument at bounded
+   volume, attended, under the 80-view throttle, with the just-built observe tripwires
+   live — the ideal low-risk first flight. And because you already hold interim values
+   for those same companies, the re-measure **doubles as a calibration**: Sales Nav vs
+   interim, company by company. Batch 4 first would instead debut the instrument in
+   anger on 20 *unknown* companies with no ground-truth to check against.
+
+Refinement: **run it as a proving run, not a blind overwrite.** Watch the tripwires
+during it; if Sales Nav diverges wildly from the interim value on many companies, that
+is a *calibration finding* about one of the two instruments — pause and look, don't
+overwrite. Replay-audit-gate it (the agent already plans to). Sequence: **re-measure
+(calibrated, gated) → confirm one ruler → then batch 4 on the clean single ruler.**
+
+## N2 — Board deletion: "delete" is a VIEW operation, never a TRUTH operation. Everything that leaves is tombstoned, never erased.
+
+**Ruling: nothing is ever hard-deleted from the datastore. A company that leaves the
+board is tombstoned — retained as truth with a terminal state + typed reason + date —
+and filtered out of the active board view.** This is the datastore/view split (ADR
+0001) applied to removal, and it resolves "drop vs Do Not Pursue" cleanly. The whole
+architecture is an append-only memory (change-log, receipts, "nothing erased"); a hard
+delete from the truth violates three things at once: it **loses the reason** the
+company was disqualified, it makes **rediscovery re-process a company you already
+rejected** (wasted budget), and it **breaks the no-duplicate identity anchor** (the
+company gets re-created as "new" on next discovery). So:
+
+- **"Do Not Pursue" and "Drop" are both tombstones — distinguished by reason type
+  (reusing J5's owner-typed `exclusion_reason`), not by whether the record survives:**
+  - **Do Not Pursue** = a *qualified business rejection of a real candidate* (repped /
+    CBRE conflict / big-tech / acquired / shut down). Kept on a DNP reference view; JD
+    may resurrect. Human-owned exits (repped, conflict) the machine may **never**
+    auto-lift; machine-derived exits (big-tech size) it may re-evaluate (J5).
+  - **Removed / Dropped** = a *data-quality* exit for something that should never have
+    been a candidate (duplicate-of-X, not-a-company, mis-sourced, spam). Tombstoned as
+    `removed` with the data reason **so rediscovery skips it** and never re-ingests it.
+- **Board mechanics:** the reconcile projection **stops maintaining an active page**
+  for a tombstoned company (filters it from active views; keeps it reachable in a
+  DNP/Archive view). Because Notion is a *rebuildable* view (ADR 0001), even deleting
+  the Notion page is safe — the datastore can reproject it. **The board page may be
+  removed; the record may not.**
+- **The one true hard-delete is rare and human-gated:** must-erase PII, a legal/
+  compliance erasure, or a pure garbage/test row with zero evidentiary value. That is
+  a deliberate, logged, human-authorized operation — never a routine status
+  transition, and never machine-initiated.
+
+The one-liner: **the memory of *why* you rejected a company is exactly what stops you
+re-doing the work and re-creating the duplicate — so removal takes it off the
+operator's screen without taking it out of Norman's memory.** Grounding: brain/04
+(identity, no-duplicate, SoR+index), brain/08 (tombstones / catalog governance,
+justhireme), J5 (owner-typed exclusion reasons), ADR 0001 (rebuildable view).
+**Action: write this as a build-repo ADR** — it's an expensive-to-reverse data
+decision (brain/02), and it belongs next to ADR 0001 as its removal corollary.
+
+## N3 — Watcher's fidelity flag: confirm the breaker still halts on challenge #1, with the "2/day" tripwire layered on top
+
+**Not a ruling — a verification the watcher requires before batch 4.** The new
+tripwire "challenge 2/day" is correct *as an escalation counter* (a second challenge
+in a window → stop and bring data to JD, per L1). But it must sit **on top of** the
+F3/L1 non-negotiable: **the circuit breaker halts on the *first* challenge**
+(halt-and-alert, never retry into a challenge — the highest-consequence account-safety
+rule). Confirm the two mechanisms are layered — breaker halts at #1, tripwire escalates
+at #2 — and not collapsed into "continue until 2/day," which would be a silent
+regression against the one rule that protects JD's real LinkedIn identity. Likely fine
+(the cleanup was careful); verify explicitly because the cost of being wrong here is
+the account.
