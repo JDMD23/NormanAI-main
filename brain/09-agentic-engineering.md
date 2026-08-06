@@ -68,6 +68,18 @@ context-free, so the division of labor is **prose for judgment, references for
 rare depth, scripts for anything deterministic** — the skill file is a thin
 interface over real software (brain/01, with tokens as interface cost).
 
+When the curated knowledge itself exceeds any context budget (hundreds of styles,
+rules, API entries), retrieval becomes the deterministic part: ship the corpus as
+**structured, schema-validated data plus a boring local search tool** (BM25/regex,
+zero dependencies — portability beats recall for installed tooling), and make the
+loaded tier a *priority-ordered triage index* over it; the agent pulls 3 ranked
+rows per query, never the corpus (ui-ux-pro-max). Validate the data, not just the
+format — where data is the product, it gets schemas, lint, and tests.
+
+Corollary for anything that routes on the environment (stack, framework, platform):
+**detect from artifacts, ask when unknown, never default silently** — a hardcoded
+default misroutes every downstream recommendation without ever erroring.
+
 ## Interfaces leak harder with LLM consumers
 
 Hyrum's Law (brain/05) applies with more force, not less: an agent will treat any
