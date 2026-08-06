@@ -749,3 +749,148 @@ with one real correction and one thing the select-heavy choice *obligates*.**
   **scripted select-migration playbook (H1) and case-normalization-on-write (H2) are
   now load-bearing infrastructure, not nice-to-haves.** The design is fine; it
   *obligates* those two mechanizations. Build them as owned pieces of reconcile.
+
+---
+
+# Follow-up rulings (round 4, addendum 2)
+
+Two operator-caught data misses (both fixed) plus an instrument decision, from JD
+using the live board hard before batch 3. The finding that frames the whole
+addendum: **JD has now out-measured the machine's conservatism twice the same way**
+(Cluely and Alta — both "NYC not in the top-5 chart → machine recorded Unknown → JD
+got the real count in one click"). That is not two anecdotes; it's a **calibration
+result** — the geo-chart's failures systematically cost real signal, and the operator
+keeps paying to patch it by hand. K3 is the structural fix for exactly that pattern.
+
+## K1 — Render protocol: ratify, and strengthen along the structure-not-text line
+
+**Ruling: ratify all three, and recognize this as the careers-lane version of the
+breaker taxonomy's core rule (F3): classify on *structure*, never on displayed
+text.** Brandlight failed three reinforcing ways — didn't scroll (missed lazy-loaded
+listings), anchored on the first section match (took the hero, not the real board),
+and read "Coming soon!" as evidence of zero (text-as-evidence). Each is a named
+anti-pattern; strengthen the protocol so none can recur:
+- **Scroll-triggered settle, not a timer.** Listings load *on scroll*, so
+  network-idle-on-a-clock isn't enough: scroll to bottom, wait until new DOM nodes
+  *stop appearing*, then extract. Time-based settle would repeat the miss.
+- **Scan the whole document for role-structures; never anchor on the first heading.**
+  First-match extraction is the same fragility family as H3's first-match-wins
+  taxonomy bug. Count *all* role-structures across the full rendered page and take the
+  union, not the first section.
+- **"Coming soon" / "no open roles" are CLAIMS, not evidence.** A zero requires *zero
+  role-structures across the entire settled page*, corroborated — never a string.
+  Same discipline as F3: a page's words are localized/marketing; its structure is the
+  fact.
+- **Add the internal-contradiction check (the G-series plausibility layer).** A page
+  that *lists office cities* ("NYC · London · TLV · Madrid") but extracts *zero roles*
+  is internally contradictory — office cities are a claim of presence that a zero
+  contradicts. That contradiction routes to "needs a real read," not to a confident
+  zero. The hero asserting NYC while the extractor says 0-NYC *is* the drift signal.
+- **Name the systemic trap:** a deterministic reader bug re-runs identically forever
+  — "same reader, same bug." A scheduled recheck does **not** self-heal a false zero;
+  only a fixed reader or an independent corroboration gate (K2) breaks the loop.
+
+## K2 — Cap DOM-adapter zero/pending at Partial until *independently* corroborated
+
+**Ruling: yes — and the asymmetry is the whole point. A DOM zero is Partial; a DOM
+positive with role-level evidence is Verified.** Verified-write confirms you *wrote
+what you meant*, not that *what you meant is true* (the F/G distinction) — and a
+DOM-extracted zero, on a page with no ATS API, is exactly where "what you meant" is
+most likely wrong (lazy-load traps, text-as-evidence, first-match). So:
+- A **zero or board-pending** conclusion from a DOM adapter is capped at
+  `Data Status = Partial`, never Verified, until an **independent** corroboration.
+- A **positive count with role-level evidence** (Brandlight → 3 actual roles
+  extracted) may be **Verified immediately** — presence of 3 named roles is
+  self-corroborating in a way absence never is. Absence of evidence isn't evidence.
+- **Independent, not merely repeated.** "Two consecutive checks agree" only counts if
+  the second check is a *different instrument, cross-source, or a fixed reader* — two
+  runs of the *same buggy reader* agreeing proves nothing (the scheduled recheck
+  would have "confirmed" Brandlight's false zero). The corroboration must come from a
+  different signal, or the cap doesn't lift.
+This mechanizes Unknown≠0 at the Data-Status layer: the board visibly distinguishes
+"measured, corroborated zero" from "one reader said zero, unconfirmed."
+
+## K3 — Ratify: pin Sales Nav geo-search as THE NYC-headcount instrument for every company
+
+**Ruling: confirmed — Sales Nav geo-search is the primary NYC-headcount ruler for
+*every* company, with chart + people-page filter *demoted to tagged fallback/
+corroboration*, not retired.** The consistency argument (F1) is decisive and JD's
+"is it easier to just always use Sales Nav?" is correct: the scorer compares
+companies against each other and deltas across time, so **one ruler beats a mix of
+individually-fine instruments** — you cannot compare a geo-chart-top5 value against a
+people-page-city value against a Sales Nav value; they're different measurement
+devices (G5). Reinforcing reasons: the fallbacks are demonstrably unreliable exactly
+where it matters (geo-chart ~20% lossy per G5; DOM careers zero trap-prone per K1);
+Sales Nav people-search with `current-company + NYC-metro` is the *definitional*
+instrument for F1's named metric (everything else is a proxy-for-the-proxy); and it
+**shares the warm_path session**, amortizing session cost and account-risk surface
+onto one instrument instead of two.
+
+Three consequences to accept with eyes open:
+1. **Budget is now the binding constraint on headcount cadence.** Every company
+   consumes a Sales Nav search *per cycle*, not just edge cases. Size the recurring
+   cadence so monthly search volume stays under Sales Nav's search/commercial-use
+   limit; if the cap allows N searches/day, that caps how many companies you
+   re-measure per day — which the **priority queue already allocates** (hot companies
+   first). The budget doesn't block A3; it *sets the cadence*, and the queue handles it.
+2. **The whole headcount signal now rides the single riskiest source.** F2 (supervised
+   aging), F3 (breaker taxonomy), and G7 (interleave + rate-limiter) now protect the
+   *core metric*, not an edge case — so their priority rises accordingly. And if Sales
+   Nav is down/challenged you have *no* primary instrument — which is why the fallbacks
+   are **demoted, not deleted** (degraded mode + corroboration).
+3. **One-time instrument migration.** The live 25 were measured on chart/people-page;
+   going forward they're Sales Nav. Per G5 you don't compare across instruments, so
+   **re-measure the live set on Sales Nav** to put everyone on the same ruler before
+   trusting cross-company or cross-time deltas.
+
+## K4 — Ratify the operator-dispute flow, and treat the dispute as an instrument-drift signal
+
+**Ruling: yes, formalize "JD supplies/edits a value" as a first-class event in the
+reconcile slice — and it does *two* jobs, not one.** (1) **Adopt with provenance:**
+the value lands with `jd-manual` provenance, which outranks machine-measured for that
+field and is **never silently overwritten** by a later machine measurement (a
+disagreeing measurement surfaces as a delta, same never-revert invariant as J4). (2)
+**Treat the dispute as a drift signal on the instrument:** JD supplying a value the
+machine recorded as Unknown/wrong is *evidence the instrument underperformed* — log
+it so a *pattern* of the same miss (Cluely + Alta, both geo-chart-fails) becomes
+**countable**, not anecdotal. That's how "the geo-chart is unreliable" gets learned
+from data (feeding K3) rather than noticed by luck. Mechanics: on a dispute event,
+adopt `jd-manual`, **force a recheck of that field on the best instrument** (now Sales
+Nav) to corroborate onto the common ruler, and record whether JD's manual value and
+the instrument agreed — that agreement/disagreement *is* your instrument-calibration
+metric. Provenance order: `jd-manual > machine-verified > machine-partial`.
+
+## K5 — Entity-confirmation guard: resolve-then-echo the canonical entity, don't just repeat the string
+
+**Ruling: ratify the echo-back, but make it an *identity-resolution + disambiguated*
+echo-back — this is identity-before-write applied to the manual/voice intake path,
+the one write path that has no entity binding.** A board edit already targets a
+specific page (bound); a voice/chat value ("Cluely") is unbound, which is exactly the
+gap that let "Clarity" receive Cluely's 4 heads. Close it by routing manual entry
+through the **same identity resolver every other write uses** (rapidfuzz/splink):
+- Resolve the spoken name against the canonical entity table, then **echo back the
+  canonical identity *with keys*, not just the name** — "applying heads=4 to Cluely,
+  cluely.com, Prospect — confirm?" Near-names rarely share a domain: "Cluely" and
+  "Clarity" sound identical but `cluely.com ≠ clarity.com`, so **the domain is the
+  disambiguator the ear can't hear but the eye can.** Echo the domain/slug.
+- **Ambiguous match (Adaptive ×7, Complyance ×2) → force a pick.** Present candidates
+  with distinguishing keys; never auto-select under ambiguity (the identity auto-bind
+  bar — a low-confidence match is never auto-bound).
+- **No match → confirm "new entity" before creating**, so voice entry can't silently
+  spawn a near-duplicate.
+The append-only log handling the Cluely/Clarity error cleanly (nothing erased, error
++ correction both on record) is the right *recovery*; the guard is the *prevention* —
+blocking the wrong write beats a clean revert of it.
+
+## K6 — Sequencing: reconcile before batch 3, now reinforced
+
+**Ruling: unchanged and strengthened.** J2 already put reconcile before batch 3; this
+addendum makes the case tighter. K4 (dispute intake) and K5 (manual-entry guard) are
+*part of the reconcile slice* — they're how JD's manual measurements and corrections
+get a **systematic home** instead of taking effect only when the machine happens to
+re-read the board. JD is *actively out-measuring the machine* (K3's calibration
+finding); every one of those corrections needs the reconcile intake path to persist
+with provenance and to trigger the instrument audit. Loading 20 more companies before
+that path exists widens the board JD is hand-correcting **faster than the machine can
+systematically absorb the corrections** — the exact opposite of what you want while
+the operator is the most reliable sensor on the board. Reconcile first.
