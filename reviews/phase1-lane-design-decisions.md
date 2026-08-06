@@ -1374,3 +1374,117 @@ holds and the account is protected. The moment any lane goes unattended, L2's
 mechanized caps must exist first (and `unattended-without-caps` must be a config-
 invalid state). Nothing about batch 4 requires that yet; name it so the line stays
 bright.
+
+---
+
+# Follow-up rulings (round 9)
+
+Batch 4 — the first batch born on the clean ruler (65/65 converged, 193 green). Every
+round-6/7 rule earned its keep in live fire: **M3's first real catch** (GTE's own
+investment in Legend.trade, excluded as outbound), M2 cross-check clean on all 20, the
+O1 zero-state-first extractor on every Sales Nav read. Four hurdles — P1 and P2 are the
+same theme (**entity-identity drift**) and converge on one mechanism; P4 is a
+prioritization signal, not a question. The meta-observation worth recording: **the
+nature of the hurdles has shifted from "is the measurement right?" (largely solved) to
+"can it run without JD?"** — which is the healthy direction, and points at the next
+build.
+
+## P1 — "Funded + live team + dead primary web presence" is a typed review trigger, fired on the CONFLICT, not on "dead website"
+
+**Ruling: yes — make it a typed review reason (`rebrand-or-transition-suspected`),
+not an ad-hoc note (J5: structured reasons, never prose).** Jolly (dead SSL on both
+hosts, but Sales Nav shows a live 12-person NYC team and a $16.5M Feb-2025 A) is a
+recognizable, recurring pattern. But type it on the **cross-source conflict**, not on
+"dead website" alone: the signal is *strong liveness evidence* (recent funding OR
+active LinkedIn team) **contradicted by** a dead primary presence. Three rules keep it
+honest:
+1. **Route to review with a hypothesis; never auto-conclude "rebrand."** The same
+   signals can mean a transient SSL lapse (very common — an expired cert is neglect,
+   not always a pivot), a wind-down (team hasn't updated LinkedIn yet), or an
+   acquisition. The type says "these sources conflict, likely explanation X, a human
+   should look" — it does not decide.
+2. **Grade the "dead" signal.** SSL failure = weaker/possibly-transient; NXDOMAIN /
+   parked domain = stronger rebrand/dead signal. Record which, so the review carries
+   its own confidence.
+3. **It triggers alias/rediscovery (→ P2).** A rebrand-suspected company is a prime
+   candidate for a new domain/name — fire the alias-capture path, don't just flag.
+This is J5 (typed reasons) + the G-series cross-source-plausibility layer + the
+K-series rebrand handling, converging — and it's countable, so you learn how often
+"dead site + live team" really is a rebrand and can tune the trigger.
+
+## P2 — Promote alias capture to a first-class `aliases` table — the K-series behavior now needs a durable home
+
+**Ruling: yes, build a standing `aliases` table. K6 ruled the *capture*; the aliases
+are now accumulating every batch, so they need a *home*.** GTE's LinkedIn entity is
+"Liquid Labs" (the builder company behind the GTE product; the name-echo caught it and
+the bind held) — the fourth+ identity-drift case after Bolto/onnix,
+aryaworks→aryahealth, and Clarity/anecdote-ai. These are load-bearing for the
+no-duplicate invariant and for reconcile self-healing, and they belong in a queryable
+structure, not scattered notes. Shape:
+- `aliases(entity_id, alias_value, alias_type, source, observed_at, confidence)`, with
+  **`alias_type` ∈ {former-name, builder-vs-brand, legal-vs-brand, slug-redirect,
+  domain-alias, …}** — GTE↔Liquid Labs is `builder-vs-brand`; Bolto↔onnix is
+  `former-name`.
+- **The identity resolver checks aliases before creating a new entity** (identity-
+  before-write extended: resolve against canonical names *and* aliases, so a company
+  is never re-created under an alias). Rediscovery hits the alias, not a duplicate.
+- **The K6 guard holds:** auto-capture *same-entity* aliases (rename, brand↔builder);
+  a redirect/link to a *different* entity (acquisition) routes to review, never
+  auto-merges.
+- **One scope-honesty caveat:** if a builder company (Liquid Labs) turns out to build
+  *multiple* tracked products, it's a parent→many relationship, not a simple alias —
+  don't model that until it appears. For now GTE↔Liquid Labs is one pursuit target;
+  record the type so the distinction stays legible if it ever becomes one-to-many.
+Grounding: brain/04 (identity, no-duplicate, splink/rapidfuzz), K6 (opportunistic
+capture), linkedin-mcp-server (provable brand-vs-legal-entity ownership).
+
+## P3 — Foreign-currency rounds: trust the Crunchbase USD headline, leave un-converted per-round amounts Unknown, type the cross-check exemption
+
+**Ruling: the agent's handling is already correct — formalize it as the standing
+rule.** Haast's early rounds are AUD-denominated. Converting a foreign round amount to
+USD needs a *dated* historical FX rate you may not have reliably, and fabricating one
+violates Unknown≠0. So:
+- **Trust Crunchbase's USD-normalized headline total** ($16.6M) — it's already
+  converted, and per M2 the headline is the authoritative aggregate anyway.
+- **Leave un-converted per-round USD amounts `Unknown`** — never fabricate an FX
+  conversion. Round *structure and velocity still work* (dates are currency-agnostic);
+  only the per-round *amounts* are Unknown in USD, which costs Fit almost nothing (the
+  total drives the capital-to-lease signal, and you have the total).
+- **Exempt the company from the M2 row-sum cross-check with a TYPED note**
+  (`fx-denominated, rows-not-USD-comparable`), not an ad-hoc one — summing AUD rows
+  against a USD headline would be a false divergence flag.
+- **Don't build FX conversion yet** (scope honesty — one company; the headline covers
+  the need). If dated-FX volume grows, add a historical-FX source and backfill.
+
+## P4 — Build the LinkedIn-jobs fallback lane next: it's the board's biggest bottleneck and it clears without JD
+
+**Ruling: not a question — a prioritization signal with a clear answer. The
+LinkedIn-jobs fallback lane (ruled round-5, not yet built) is now the highest-value
+next lane.** 8 of 20 this batch had no findable careers page (40%, vs. far lower in
+batches 1–3 — crypto/consumer/CPG rarely run standard ATS boards), so the "Joe: paste
+careers link" queue is the board's biggest *manual* bottleneck, and several waiting
+companies (Hook — worst-case still Prospect 64–89; Hera 70; Luzern Risk 27 NYC heads)
+are held back **only** by the missing jobs signal. Why it's the right next build:
+- **It clears the bottleneck without JD** — turns 8 manual asks into automated
+  measurements, and auto-promotes the Prospect-range holds.
+- **It's no longer an edge case** — same lesson as M5 (embed boards): a 40% miss rate
+  makes the fallback a *primary* path for whole company categories, i.e.
+  infrastructure, not an exception.
+- **It's the natural first enrichment lane on the now-proven substrate** (observe +
+  Sales Nav instrument + layered breaker).
+Three constraints it must be built within:
+1. **Same LinkedIn governance** — it runs on the account-risk source, so it shares the
+   throttle (69/80 today — a jobs-tab read per fallback company consumes more), the
+   layered breaker, and the tripwires. More LinkedIn surface must stay inside the same
+   guards.
+2. **O1 applies here too** — the LinkedIn Jobs tab has its own version of the
+   "N available if you remove filters" zero-state trap; **read the empty-state
+   structurally first**, same discipline.
+3. **It's a DISTINCT instrument** — a LinkedIn-jobs count is not comparable to an
+   ATS-page count (G5/K3). Instrument-tag it `linkedin-jobs-fallback`; comparable
+   within the fallback cohort, not across to ATS-measured companies.
+
+**The build has crossed a threshold:** correctness is largely solved (the measurement
+rules earned their keep this batch); the remaining hurdles are about *autonomy and
+throughput* (clear the queue without JD). That's the signal to move from hardening the
+substrate to building the enrichment lanes on top of it — starting with this one.
