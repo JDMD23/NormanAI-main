@@ -1304,3 +1304,73 @@ at #2 — and not collapsed into "continue until 2/day," which would be a silent
 regression against the one rule that protects JD's real LinkedIn identity. Likely fine
 (the cleanup was careful); verify explicitly because the cost of being wrong here is
 the account.
+
+*Resolved (round 7 execution): the halt was procedural, not code — no automated lane
+existed for it to regress. Rather than accept "correct because unimplemented," the
+layer split was codified before the first Sales Nav flight: `should_halt(run_id)`
+returns true on a run's first recorded challenge (the breaker, checked after every
+page); the 2/day counter is a separate escalation layer. Two locking tests prove the
+layers are independent — one challenge halts the run while the daily counter is
+untripped. They cannot collapse without a test failing. This is the correct outcome:
+the watcher's flag turned a procedural rule into a tested invariant at exactly the
+moment it started to matter.*
+
+---
+
+# Follow-up rulings (round 8)
+
+The Sales Nav re-measure ran (N1): all 44 companies on one ruler, 46 views under the
+80 throttle, zero challenges, calibration 39/44 exact + 5 off-by-one + zero real
+divergences. It surfaced one durable instrument finding that matters board-wide,
+because Sales Nav is now the ruler for **every** headcount.
+
+## O1 — Sales Nav's zero-state banner is a false-POSITIVE trap: read the empty-state first, and always migrate onto a new instrument as a calibrated proving run
+
+**Ruling: pin "read the zero-state first" into the Sales Nav instrument protocol, and
+make "calibrated proving run, never blind overwrite" the standing rule for any
+migration onto a new instrument.** Two linked lessons:
+
+1. **The trap.** Sales Nav's empty-result page reads *"No matches found — 21 leads
+   available if you remove the Region filter."* A naive reader grabs the `21` as the
+   count when the **true filtered count is 0**. This is the K1 careers rule inverted
+   onto the LinkedIn instrument — but *more* dangerous, because it's a false
+   **positive**: where the careers false-zero *hid* a real number, this *fabricates* a
+   number over a real zero, which would **inflate** headcount and could silently
+   promote a dead company. The pinned protocol now **reads the zero/empty-state
+   structurally first** (same spirit as K1: trust structure, not the displayed
+   number) — if the page is the "no matches" state, the answer is 0 regardless of any
+   "N available if you remove filters" banner. It bit exactly once (Bolto), where the
+   banner's `21` masked a real `0` that in fact corroborates the interim measurement.
+
+2. **Why it was caught — the deeper, transferable rule.** The trap surfaced *only*
+   because the migration ran as a **calibrated proving run**: the interim value (Bolto
+   = 0) was there to contradict the banner's 21. A blind overwrite would have written
+   21 and silently promoted a dead company. So the durable process ruling: **migrating
+   the board onto a new instrument is always a proving run cross-checked against the
+   old instrument, never a blind overwrite** — the cross-check is precisely what
+   surfaces the new instrument's traps, and the traps are invisible without it (N1's
+   "run it as a proving run, not a blind overwrite," now validated by a real catch).
+
+**Calibration verdict (recorded):** the interim geo-filter instrument was *good* —
+39/44 exact, the 5 movers all off-by-one (Adaptive 46→45, AegisAI 9→8, Arya +1, Ease
+Health 15→14, FINNY 25→24), no status changes, replay audit clean. That both
+instruments agree to within ±1 on 44 companies is strong evidence the headcount signal
+is sound. **One boundary company to watch, not fix:** Ease Health's fit moved 68→60 as
+14 heads crossed a band — it holds Prospect on hysteresis, which is the hysteresis
+doing its designed job (J1/J3). It is now a *boundary* company; if its next
+measurement drops heads further it demotes, and that demotion will be correct, not a
+regression. Flag for monitoring; take no action.
+
+## O2 — Watcher's go/no-go on batch 4: cleared, with one standing condition
+
+**Batch 4 is cleared to proceed** — the foundation passed audit: one ruler under every
+headcount, the observe floor live and watching, the breaker layered and tested, 193
+tests green, board 45/45 converged, tombstoning ruled and built (N2 / ADR 0008). The
+one **standing condition, not a blocker: batch 4 must stay ATTENDED.** The budget
+waiver (L1/L2) is explicitly mode-scoped to attended build-phase; the re-measure was
+attended and scripted-but-supervised, which is the correct posture. As long as batch 4
+runs the same way — JD present, tripwires live, no unattended scheduler — the waiver
+holds and the account is protected. The moment any lane goes unattended, L2's
+mechanized caps must exist first (and `unattended-without-caps` must be a config-
+invalid state). Nothing about batch 4 requires that yet; name it so the line stays
+bright.
