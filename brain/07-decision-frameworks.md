@@ -1,0 +1,76 @@
+# 07 — Decision frameworks: how to choose
+
+Principles tell you what good looks like; frameworks tell you what to do when goods
+conflict. These are the reusable decision procedures.
+
+## The universal tradeoff procedure
+
+For any significant decision:
+1. **Name the forces.** What actually varies here — load? team size? change frequency?
+   correctness stakes? Most bad decisions optimize for a force that isn't present
+   ("web scale" for 100 users) or ignore one that is (compliance, on-call reality).
+2. **Sketch two+ genuinely different options** (see 00 — design it twice). Include
+   "do nothing / do the boring thing" as a real option, not a strawman.
+3. **Compare against the forces, not against vibes.** A table of options × forces,
+   three lines each, is usually enough.
+4. **Classify reversibility.** Reversible → decide fast, try it, keep the exit.
+   Irreversible (data model, public API, vendor lock) → slow down, prototype, decide
+   with evidence.
+5. **Write it down** — an ADR (architecture decision record): context, options,
+   choice, consequences. Ten minutes of writing saves the next person a week of
+   archaeology and prevents relitigating. A repo with zero ADRs and non-obvious
+   architecture is a repo where knowledge lives in one person's head.
+
+## Build vs buy vs adopt
+
+- **Core vs context** (the only question that matters): does this capability
+  differentiate the product? Core → own it. Context (auth, payments, email, search,
+  monitoring) → buy/adopt the boring standard and move on.
+- Adopting a dependency = marrying its maintenance, security surface, upgrade
+  treadmill, and project health. Check: maintenance activity, issue responsiveness,
+  your ability to read its source, exit cost. A 200-line utility you understand
+  beats a 50k-line framework you use 2% of.
+- The trap in both directions: NIH (rebuilding Postgres features in app code) and
+  dependency-maximalism (leftpad syndrome; a dependency for every function). The
+  test is total cost of ownership over 3 years, not initial effort.
+
+## When to refactor vs rewrite vs leave alone
+
+- **Leave alone:** ugly but stable, rarely-touched, well-isolated code. Ugliness
+  only costs when read or changed. Don't polish corners nobody visits.
+- **Refactor (default):** code that's touched often and hurts every time. Do it
+  incrementally, preparatory-style (see 03), behind tests, never as a feature freeze.
+- **Rewrite (rare, dangerous):** justified only when the *foundation* is wrong —
+  wrong runtime, wrong data model, unsalvageable coupling — AND the system's behavior
+  is well-understood (tests or unambiguous spec). Big-bang rewrites fail at
+  spectacular rates because the old system encodes years of invisible requirements.
+  If rewriting: strangler-fig — new system takes traffic slice by slice, old one
+  keeps running, at no point is there a cliff-edge cutover.
+
+## Technical debt, honestly
+
+Debt is a *deliberate* shortcut with known interest — logged, visible, scheduled.
+Most "tech debt" is actually just cruft (unintentional bad code) or drift (the world
+changed). Triage by interest rate, not by ugliness:
+- High interest (slows every feature, causes incidents, blocks upgrades) → schedule
+  now, alongside features, as first-class work.
+- Low interest (ugly, isolated, stable) → log and ignore, guilt-free.
+A standing ~10–20% capacity for debt/upgrades beats episodic "quality sprints,"
+which arrive only after velocity has already collapsed.
+
+## Optimization discipline
+
+1. Don't, yet. 2. Measure — profile with real workloads; the bottleneck is never
+where intuition says. 3. Fix the algorithm/query/N+1 before micro-optimizing.
+4. Keep the fast path boring: most performance wins in typical systems are removing
+accidental waste (chatty queries, missing indexes, serialization in loops,
+sync-waiting on parallelizable I/O) — not clever code. Set a budget (p99 target)
+so "fast enough" is defined and optimization has a stopping point.
+
+## Choosing technologies
+
+Innovation tokens: a team can afford *one or two* exciting choices; everything else
+should be boring, proven, operable tech the team already knows (Postgres, the
+mainstream framework, the standard queue). Novelty costs on-call knowledge, hiring,
+ecosystem maturity, and Stack-Overflow-density. Spend the tokens where they
+differentiate the product — never on plumbing.
