@@ -550,3 +550,202 @@ Two things to encode so it doesn't rely on luck:
   satisfies it at zero idle cost, the rate-limiter guarantees it when interleaving
   can't. Don't rely on interleaving *alone* — it degrades exactly when a company is
   LinkedIn-only, which is the case you least want unpaced.
+
+---
+
+# Follow-up rulings (round 4)
+
+Requested before batch 3, after a big interactive stretch that locked most of the
+operator surface (Fit scorer v1 harness-first, 18→14 status vocabulary, operator-
+surface redesign; 25 live/scored/routed, 135 invariants passing). Two things to
+affirm before the rulings, because they're evidence the discipline is holding:
+**the scorer was pulled forward from Phase 2 but stayed harness-first** (eval before
+scorer, brain/09 / justhireme) — jumping the phase *number* is fine because the
+*invariant* held; and **H2 (readback caught "Fintech" silently binding to legacy
+"FinTech") is the verified-writes invariant paying out on live data** — that's the
+failure it exists to catch, caught. Keep both.
+
+The through-line of this whole round: **hysteresis is not a score feature, it's a
+router property**, and **a display merge is only safe if the machine keeps the finer
+reason in a structured field.** Most of Q1–Q5 are those two ideas applied.
+
+## J1 — Evidence-hysteresis: entering a band needs full evidence; holding tolerates one absence
+
+**Ruling: yes — mirror score-hysteresis with evidence-hysteresis, and the
+asymmetry is the point.** Promotion and demotion already have different *score* bars
+(60 to enter Prospect, 57 to hold). Give them different *evidence* bars too:
+- **ENTER a band requires full NYC evidence** (both components measured). You never
+  promote a company into Prospect — a high-consequence write that lands on JD's
+  action queue — on incomplete evidence. Entering at exactly 60 with `heads=Unknown`
+  does **not** enter.
+- **HOLD a band tolerates one *absent* component** (evidence-hysteresis). Demoting a
+  company you already believe in because a measurement is merely *missing* is the
+  false-negative the whole system is built to avoid. Astelia holding Prospect at 60
+  with `jobs=0 measured` + `heads=Unknown` → **holds** (one real signal present, one
+  absent).
+
+The load-bearing distinction is **absent vs contradicting.** A *measured* low/zero is
+evidence and can route a company *down* (the Low-NYC exit); an *Unknown* is absence
+and may **block a promotion but must never cause a demotion.** So: both NYC
+components *measured-low* → route down (real evidence); one *measured*, one *Unknown*
+→ hold; both *Unknown* → not a hold, route to pending/review (you're flying blind, so
+say so rather than silently holding). "Missing evidence never demotes; it only blocks
+promotion and, when total, forces a review" — that's the rule.
+
+## J2 — Sequencing: reconcile BEFORE batch 3
+
+**Ruling: build the reconcile loop next, before batch 3.** Batch 3's *load* is
+safe in isolation (creating 20 fresh pages clobbers nothing) — but that's not the
+real question. H6 shows the input surface is now live *in JD's head*: he's asking
+"if I paste a careers link, how does the system know?", which means he will start
+editing the board now. The moment he edits an existing page and any full-projection
+write fires, the machine **silently reverts an operator edit** — and for an
+operator-*trust* product, silently undoing the operator's action is the single most
+destructive failure there is (worse than any delay). Reasons reconcile wins the next
+slice:
+1. The clobber risk is **no longer hypothetical** (H6), and loading 20 more pages
+   just *widens* the surface where it can happen.
+2. The **change-log table just landed** — the substrate reconcile needs is already
+   there. Reconcile is the natural next slice; batch 3 adds volume but no new
+   *capability*.
+3. Reconcile is a **prerequisite for J4** (honoring JD's Tracking placements) — the
+   router can't respect a JD edit it never read.
+
+**Escape hatch (pragmatic honesty):** if batch 3 must run first for some reason, it
+is acceptable **only if** the loader is *proven append-only* (creates fresh pages,
+zero writes to any existing page) **and** the recurring full-projection writer stays
+disabled until reconcile lands. Append-only creation is safe; re-writing live pages
+is not, until read-board-first + adopt-JD-edits exists. Default: reconcile first.
+
+## J3 — Exit-shelf flapping: hysteresis is the damper, cadence is not
+
+**Ruling: give the exit shelf a threshold *gap*, not a single boundary — cold
+cadence alone does not damp, it just slows the oscillation.** A company sitting at
+the `heads=5/6` boundary rechecked monthly will flap *monthly*; cadence changes how
+*often* it flaps, never *whether*. Damping requires either a threshold gap
+(hysteresis) or a dwell requirement. Prefer hysteresis — it's stateless and it's the
+tool you already use for score:
+- **Exit to Low NYC at `heads ≤ 4`; return to Tracking at `heads ≥ 7`** (numbers
+  illustrative); `5–6` is a **hold zone** where the current state persists. Same shape
+  as the 57/60 score band.
+- **Reserve dwell time (N confirming checks) for high-consequence exits only** — e.g.
+  routing to Do Not Pursue — where a single confirming check isn't enough to justify
+  the cost of being wrong. Don't spend the extra state (a pending-transition counter)
+  on routine boundary shelving; a threshold gap covers that for free.
+
+Generalize it: **every band boundary a recurring recheck crosses needs asymmetric
+thresholds**, because single boundary + repeated measurement = guaranteed flap. Make
+hysteresis a *property of the router*, not a special case bolted onto the score.
+
+## J4 — Tracking handover: no new router rule; the guard is in reconcile, and it's "never silently revert"
+
+**Ruling: a JD hand-placement into Tracking is a *JD placement* and already wins by
+the router's existing precedence (`JD placement > score bands`) — the missing piece
+is not a router rule, it's reconcile.** Today the router overwrites JD's Tracking
+placement on rescore only because, without reconcile reading the board, **it doesn't
+know JD placed it** — it sees a machine-owned band and re-derives. So:
+- Reconcile reads the board, detects the JD edit, and **tags it JD-sourced with
+  provenance.** Now the router sees a *placement*, not a machine state, and honors it.
+- On a later rescore that disagrees, the machine **never silently overwrites** — it
+  pins to JD's placement and **surfaces the disagreement** in the Changes column
+  ("machine scores this Prospect; you have it in Tracking"), or routes a light review.
+  JD resolves once; the machine annotates, it doesn't revert.
+
+This is the same invariant as J2 (never silently revert an operator action) and it's
+why J4 *depends on* J2's reconcile. No heavy pinning system — just: read the edit,
+tag it, honor it, show the delta.
+
+## J5 — The merges are good at the status layer, but each needs a structured reason enum
+
+**Ruling: collapsing 18→14 is right for the operator (fewer statuses = a clearer
+board), but a merge is only safe if the machine keeps the finer distinction in a
+*structured, queryable* field — not free-text notes.** The operator sees the merged
+business state; the machine keeps the operational reason (brain/10 #7: operational
+vocabulary is separate from business state). Test each merge by "is there an
+automation that would branch on the lost distinction?" — and two of them fail it:
+- **Bad Data vs Needs Review** have **different owners and next-actions** (Bad Data =
+  machine retries when the source recovers; Needs Review = JD decides) — which by
+  JD's own merge rule ("same owner + same cadence + same next-action") argues they
+  shouldn't fully merge. Keep the *status* merged, but **`review_reason` must be a
+  structured enum** (`source-failed`, `ambiguous-evidence`, `conflicting-source`…) so
+  the machine can auto-retry the source-failed ones and hold the human-needed ones.
+  If that reason is currently free-text, structure it **before batch 3**.
+- **Big Tech vs Do Not Pursue** differ on **write-authority**: Big Tech is a
+  *machine* evidence-exit (re-derivable every check — the machine may lift it if the
+  company shrinks below the bar); "repped already / CBRE conflict" is a *human/
+  relationship* exit (the machine must **never** auto-clear it). Merge the status, but
+  store `exclusion_reason` structured **and typed by owner** (machine-exit vs
+  human-exit), so the reconciler knows which exclusions it may re-evaluate and which
+  are sacred.
+
+Net: keep the merges; promote every merged status's reason from prose to a structured
+enum tagged with its owner. That preserves operator clarity *and* the machine's
+ability to take the right next action.
+
+## J6 — Industry taxonomy: split it — ordering to config, regexes to code
+
+**Ruling: it's not one thing, it's two, and they have different homes.** (1) The
+**priority ORDER** (which vertical wins when several match — the exact thing H3's bugs
+were about: Web3/HR > Fintech) is *domain judgment JD holds and an engineer doesn't*
+→ move it to **validated config**, a boot-checked ordered list JD can reorder without
+an engineer. (2) The **regex matchers** (does this company read as Fintech at all)
+are code, and H3 proved they need **adversarial ordering tests from real data** →
+keep them in code with those tests. Config holds the *ordering and vocabulary*; code
+holds the *matching and the test suite* — exactly mirroring the Fit formula (config =
+tunable bands/weights, code = the pure function). The taxonomy being the lone tunable
+living in code is a small consistency smell; splitting it removes the smell *and*
+gives JD the one knob he'll actually want. The adversarial tests are the real safety
+mechanism and travel with the regexes regardless of where the ordering lives.
+
+## J7 — Most likely latent bug: (a) partial-evidence routing. Cheapest catch: a pure-scorer replay audit
+
+**Ruling: rank them (a) > (b) > (c) by *latency*, and fix-readiness inverts it.**
+- **(b) clobbering JD edits** is the highest *consequence* but it is **not latent** —
+  it's *named* (H6) and time-gated (bites only on JD-edit + projection-write), and
+  J2 closes it by sequencing. Dangerous, but on the radar and scheduled.
+- **(c) select-option drift** is real (H1/H2) but **already defended** — verified
+  readback is the detector, and it *worked*. Least latent.
+- **(a) partial-evidence routing is the true latent bug**: it's **live, silent, and
+  in the routing core** right now. Astelia-at-60-with-`heads=Unknown` is *already*
+  holding Prospect on partial evidence; if J1's line is even slightly off, companies
+  are mis-routed today and the 60 "looks valid," so nobody sees it.
+
+**Cheapest catch — a pure-scorer replay audit** (you can do this today because the
+scorer is a pure function over stored evidence): list every live company whose
+current band was entered or held with any NYC component `= Unknown`, and for each,
+re-run the scorer three ways — (i) as-is, (ii) missing component forced to its
+*worst plausible* value, (iii) forced to its *best plausible* value — and show where
+the band *changes*. Any company whose band flips between (ii) and (iii) is routed on
+evidence it doesn't have. That one query surfaces exactly Astelia/Cluely/Camp as a
+reviewable list, costs nothing (no new instrumentation), and doubles as the
+**validation of J1** against live data before you commit the rule. Run it before
+batch 3.
+
+## J8 — Operator surface vs the studied repos: aligned, with one correction and one obligation
+
+**Ruling: the surface is well-aligned — the anti-default judgment is notably good —
+with one real correction and one thing the select-heavy choice *obligates*.**
+- **rendergit dual-reader (E4): aligned.** Selects/tags are both human-skimmable and
+  machine-parseable; the change-log is a structured episodic record that also renders
+  readable; detail-in-page-body is progressive disclosure. Skim the board, drill the
+  page — that's dual-reader done right.
+- **ui-ux anti-defaults (C6/E4): aligned, and good.** "Short over long," one-word
+  selects, and especially **removing "Needs Sales Nav count" from JD's Action Needed
+  because it was asking JD to do the machine's work** — that's textbook detect-then-
+  ask / anti-default. Action Needed being *strictly Joe's queue* is the correct
+  ownership boundary made visible.
+- **brain/10 #11 score-vs-state legibility: one correction.** Pushing detail to the
+  page body is right for *rich* detail (the review question + resolution options) but
+  the **one-line triage reason must stay on the board.** rendergit's dual-reader is
+  *skim THEN drill* — the skim layer has to carry enough to *triage without opening*.
+  For a 250-row board, a "Needs Review" with no on-board reason forces a click per
+  company, which breaks the "act without re-checking" mandate (the product is *ranked
+  trust*). Keep the **reason** on the board (in Action Needed or a short tag); push the
+  **options** to the body. The Changes split already gets this right (delta tags on
+  the board = triage; full change-log = drill) — apply the same split to review.
+- **The obligation:** a select/tag-heavy board *bakes in* the H1/H2 failure modes
+  (recolor-requires-rebuild, case-collision-binds-silently). That's not a design
+  contradiction — it's the operational cost of a sound choice — but it means the
+  **scripted select-migration playbook (H1) and case-normalization-on-write (H2) are
+  now load-bearing infrastructure, not nice-to-haves.** The design is fine; it
+  *obligates* those two mechanizations. Build them as owned pieces of reconcile.
