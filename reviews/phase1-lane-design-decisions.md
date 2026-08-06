@@ -1488,3 +1488,135 @@ Three constraints it must be built within:
 rules earned their keep this batch); the remaining hurdles are about *autonomy and
 throughput* (clear the queue without JD). That's the signal to move from hardening the
 substrate to building the enrichment lanes on top of it — starting with this one.
+
+---
+
+# Follow-up rulings (round 10) — parallelism, write discipline, and the data-vendor decision
+
+The build agent asks whether 3 agents can enrich in parallel to cut batch time, and
+mostly answers itself correctly. The verdict concurs on the constraint, sharpens the
+wall-time math (it's more Amdahl-bound than the estimate suggests), and rules
+decisively on the real question — the compliant-data vendor — which is not a speed play
+but the **unattended-operation unlock**, open since the original architecture (E3).
+
+## Q1 — Concurrency is bounded by the IDENTITY, not the agent. Serialize account-bound lanes per identity — and mechanize it as a single-holder lock.
+
+**Ruling: concur, fully, and generalize it into a durable principle.** The binding
+resource is not agent labor — it's the **non-replicable authenticated identity.** You
+have *one* real LinkedIn identity; it must present to LinkedIn as *one human*, which
+means *one serial request stream at human pace.* N agents sharing that session don't
+add capacity — they multiply the request rate on a single identity, which is precisely
+the bot signature F3/L1 exist to prevent. So:
+- **The principle (worth its own line in the brain):** *concurrency is capped by the
+  scarcest non-replicable resource, not by available labor.* Adding workers to a
+  single-identity bottleneck spends the same safety budget faster and riskier — it
+  never enlarges it. This is the resilience4j **bulkhead at the identity level: the
+  LinkedIn identity is a bulkhead of size 1.**
+- **Mechanize it, don't discipline it.** "We'll be careful to serialize" is exactly
+  what breaks under parallelism. Enforce a **single-holder lock/token per
+  service-identity**: exactly one worker may hold the LinkedIn token and do LinkedIn
+  work at a time; a test fails if two concurrent LinkedIn requests can occur on one
+  identity (C1 enforcement hierarchy). Agent count is orthogonal — 1 agent or 10, the
+  LinkedIn work funnels through the one token.
+- **The unit is the *service-identity*, not "the account" loosely.** LinkedIn and
+  Crunchbase are different services with different identities — they may proceed in
+  parallel *with each other* (see Q2), each with its own serial spine. What may never
+  parallelize is two streams on the *same* identity.
+
+## Q2 — Pipeline-by-source is valid; writes go through the outbox to a single guarded writer. But the honest wall-time gain is smaller than 30–40%.
+
+**Ruling: the split is architecturally sound, with two sharpenings — one that makes it
+safe, one that makes the estimate honest.**
+
+**Safe:** parallelize *across* services, never *within* one. Agent A (Crunchbase, its
+own identity + its own browser context), Agent B (ATS-API sweeps — public endpoints,
+no account, freely parallel), Agent C (scoring/board writes). Each account-bound
+service keeps its own serial spine (Q1) and its own browser context so they don't race
+one browser. On the **write-discipline question — this is the important one:**
+- **Single-write-path means single-GUARD, not single-producer.** Multiple agents may
+  *produce* results concurrently; they must *funnel* every write through the one
+  guarded path. The mechanism is the **outbox** (`core/outbox`, already in the
+  architecture, brain/02 durable execution): each producer appends its evidence to a
+  durable, entity-keyed outbox; **a single guarded writer drains it serially**,
+  applying verified-writes + identity-before-write + field-authority + idempotent
+  rescore. This preserves the invariant, gives producer parallelism, and yields
+  all-or-nothing-per-company atomicity and crash-safety for free.
+- **The sources already partition the write surface by field ownership (D3):**
+  Crunchbase owns funding fields, careers owns jobs, LinkedIn owns headcount — so
+  concurrent producers don't even contend for the same fields. Outbox + field-
+  partitioning = conflict-free parallelism. Prefer the outbox to per-record locks
+  (locks prevent races but don't give durability/atomicity/idempotency).
+
+**Honest:** the estimated 30–40% wall-time cut is likely **optimistic, because G7
+interleaving already hides most non-LinkedIn work in the LinkedIn pacing gaps.** Human
+pacing *requires* ~2–3 min gaps between LinkedIn requests; G7 already fills those gaps
+with Crunchbase/careers work. So the LinkedIn serial spine's length
+(`LinkedIn-request-count × mandatory-pace-interval`) is largely *already absorbing* the
+other sources' time. Formalizing the pipeline only helps to the extent non-LinkedIn
+work *exceeds what fits in the gaps*, or setup/teardown is currently serial. **Measure
+before building** (the observe layer can report what fraction of wall-time is
+LinkedIn-pacing-gaps vs. actual non-LinkedIn compute); if the gaps already swallow the
+other sources, the pipeline optimizes a part that's already free (Amdahl / scope
+honesty, brain/00 — the agent's own "speeding up the fast parts doesn't move the
+total" is the correct instinct, and it argues *against* over-investing here). **The
+real levers are Q3 and Q4, not Q2.**
+
+## Q3 — Scope the data vendor NOW, as a bounded evaluation — because it's the UNATTENDED unlock, not a speed play. Calibrate it against the 44-company Sales Nav ground truth.
+
+**Ruling: yes — scope it before scaling past ~100 companies, but scope it as an
+*evaluation*, not a commitment. And frame it correctly: the vendor is not primarily
+about speed — it is the thing that lets Norman's core signal run *unattended*, which is
+the entire endgame.** The reasoning that makes this the highest-leverage decision on the
+table:
+- The account is simultaneously the **throughput cap, the single highest risk in the
+  system (a real professional identity that can be banned), AND the hard blocker to
+  unattended operation** — you cannot run logged-in LinkedIn unattended, because
+  halt-on-first-challenge needs a human. **As long as headcount comes from Sales Nav,
+  Norman is permanently attended for its core signal.** A compliant API vendor removes
+  all three at once. That's why it's an architecture decision, not an optimization.
+- **The risk and the re-migration cost both grow with the board.** De-risk before
+  scaling, not after a ban — and re-rulering 100 companies costs more than re-rulering
+  65. Decide before ~100.
+
+**How to scope it (you already built the method):** run the vendor as a **calibrated
+proving run against the 44 companies for which you already hold Sales Nav ground
+truth** — the exact N1/O1 pattern. The acceptance test is precise: does the vendor
+deliver **NYC-metro-current-company headcount at Sales Nav's granularity and
+precision?** Two outcomes, both governed by G5 (one ruler; never compare across
+instruments):
+- **Vendor matches on the calibration set** → the **ruler pin MOVES to the vendor**
+  (it's strictly better: no account risk, parallelizable, unattended-safe). One-time
+  calibrated re-migration; Sales Nav demotes to a fallback/spot-check instrument. The
+  pin was never sacred — it's held by whatever best delivers the *definitional* metric
+  at acceptable cost/risk, and a vendor that ties Sales Nav while removing the account
+  risk wins.
+- **Vendor lacks NYC-metro granularity** (only company-level headcount) → it becomes a
+  **third instrument cohort (G5)** for what it *does* cover well (funding, total
+  headcount, firmographics — and those can then parallelize freely and run unattended),
+  while **Sales Nav stays the NYC-metro ruler** and the attended constraint persists
+  for that one signal. Tag cohorts per G5; don't cross-compare.
+So the answer to "does the Sales-Nav pin survive?" is *it survives only if no vendor
+meets the pinned metric's granularity — and you find out by calibrating against the
+ground truth you already have.* Scope it now.
+
+## Q4 — Batch size is bounded by the daily throttle, not by a number. ~30–35 is fine today; the vendor removes the cap entirely.
+
+**Ruling: size each batch to fill the daily Sales Nav/LinkedIn throttle at human pace —
+currently ~30–35 companies — not to a fixed "20."** The 80-view/day throttle is the
+real cap; the batch label is bookkeeping. Do the arithmetic per batch:
+`(companies × Sales-Nav-headcount-reads) + (no-careers-page-fraction × jobs-fallback-
+reads) ≤ 80`. At ~40% no-careers-page and one view each, 30–35 companies ≈ 42–49
+views — comfortably under 80, and the fixed per-batch setup amortizes better. If a
+batch's arithmetic would exceed 80, **split it across two attended sessions** (the
+throttle caps the day, not the batch). Keep it attended (L2). And note the tie to Q3:
+**a vendor's API rate limits are far above 80/day, so adopting one removes the
+throttle as the batch-size constraint entirely** — batch size is throttle-bound today,
+vendor-unbound tomorrow. One more reason the vendor is the decision that unlocks the
+others.
+
+**The synthesis:** Q1/Q2 are the *safe* answer (serialize per identity, pipeline by
+source through the outbox) and they buy a bounded, possibly-marginal gain. Q3 is the
+*real* answer — the vendor is the single move that removes the account bottleneck, the
+ban risk, the throttle, AND the attended constraint in one decision. Scope it now, as
+a calibrated eval against ground truth you already own, before the board scales past
+~100 and the re-migration cost compounds.
