@@ -88,7 +88,11 @@ document skills): not what the model already knows (wasted tokens), not generic
 best practice (noise), but the **delta between model belief and ground truth** —
 footguns, each harvested from an observed failure and compressed to a rule ("the
 model knows the API; these are the footguns"). Superpowers' rationalization tables
-are the same principle for behavior; this is it for technical knowledge.
+are the same principle for behavior; this is it for technical knowledge. The third
+delta species is the **output prior** (taste-skill): name the model's
+collapsed-mode defaults explicitly — the AI-purple gradient, the three equal
+feature cards, the boilerplate test shape — and forbid them. Slop is mode
+collapse, and escaping a default requires naming it.
 
 Two corollaries (obsidian-skills): **the format/API owner should ship the
 skill** — a skill is to an agent what an SDK is to a developer; the canonical
@@ -237,6 +241,12 @@ whole frontier (every question whose prerequisites are settled), numbered, each 
 a recommended answer. Split strictly: *facts* are the agent's job (dispatch lookups,
 don't block unrelated questions on them); *decisions* are the human's. Terminate when
 the frontier is empty — nothing left silently assumed.
+
+For single-shot generation, the lightweight sibling is the **declared
+interpretation** (taste-skill): state a one-line reading of the brief — audience,
+register, direction — *before* acting, and ask at most one clarifying question,
+only on genuine divergence. The user can redirect at the cost of one line;
+grilling stays for work too big to hold in one shot.
 
 ## Diff discipline: agents are guests in the codebase
 
