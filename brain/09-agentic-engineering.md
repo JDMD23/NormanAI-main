@@ -90,6 +90,14 @@ footguns, each harvested from an observed failure and compressed to a rule ("the
 model knows the API; these are the footguns"). Superpowers' rationalization tables
 are the same principle for behavior; this is it for technical knowledge.
 
+Two corollaries (obsidian-skills): **the format/API owner should ship the
+skill** — a skill is to an agent what an SDK is to a developer; the canonical
+source beats community reverse-engineering, and stating the delta scope in one
+sentence ("covers only X-specific extensions; standard Y is assumed") keeps it
+honest. And **place footgun warnings inside the workflow step where they fire**
+(the validate step lists the likely validation errors), not in a separate
+gotchas appendix the agent may never reach.
+
 Package the capability in three loading tiers: metadata (always in context, ~100
 words) → body (loaded on trigger, <500 lines) → bundled resources (unlimited —
 references read as needed, and *scripts execute without ever entering context*).
