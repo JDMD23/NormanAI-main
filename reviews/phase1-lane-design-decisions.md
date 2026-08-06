@@ -375,3 +375,178 @@ cadence window (you don't want a 2019 article scored as a fresh signal); **dedup
 seen URLs** so the same story across three feeds is one piece of evidence, not three;
 and **no URL, no angle** — an interpretation with no citable input is discarded at
 the guard, never written to the board.
+
+---
+
+# Follow-up rulings (round 3)
+
+Field-tested against batch-2 (20 companies × 3 sources, 55 checks, hand-driven, zero
+challenges, all writes verified). These are refinements the real data forced, plus
+two genuinely new states. The priority-queue and per-company-interleave behaviors
+*emerged* under the existing rulings — good evidence the rulings are load-bearing.
+
+## G1 — The ATS roster is open by design; client-side rendering *means* there's an endpoint
+
+**Ruling: the adapter count is not 4 — it's open-ended, and that is the whole point
+of the provider registry (ats-scrapers, A5).** Encountering Gem and Dover outside the
+Greenhouse/Ashby/Lever/Workday set is not a gap in the ruling; it's the registry
+doing its job — each new ATS is one more registered adapter behind the same
+interface. Don't hardcode a roster; hardcode the *interface* and let the roster grow.
+
+On "no obvious public JSON API": **a client-side-rendered board is proof a JSON
+endpoint exists — the browser is calling one via XHR to paint the page.** Gem
+renders client-side, so `jobs.gem.com/casap` is fetching JSON from some
+`api.gem.com/...`-shaped URL; Dover's iframe `src` is a page that itself calls an
+API. The discovery move is: open the board once in the browser daemon, watch the
+network tab, and capture the XHR the app fires. Prefer that captured endpoint (it's
+the same data the page renders, structured, and it's stable within a provider). Only
+if there is genuinely no callable endpoint does the adapter fall back to a **DOM
+adapter behind the same registry interface** — the caller never knows the difference.
+So: **probe for the XHR endpoint first (always present for a CSR board), DOM adapter
+as the documented fallback**, both registered as `provider=gem` / `provider=dover`
+with a `bound_via` note recording which path won. This is scrapling's "find the
+resilient handle" applied to APIs, not just selectors.
+
+**Board-pending is a real third state — add it.** Brandlight (office cities listed,
+zero postings, "coming soon" board) is *not* a measured-0 and *not* Unknown. It is
+**evidence of hiring intent without measurable volume** — they stood up a board and
+declared office locations, which is a weak *positive* signal, the opposite of a true
+zero. Three distinct states, never collapsed (Unknown≠0 extended):
+- `measured-0` — board found, readable, genuinely zero open roles (a real, scored
+  data point: they're not hiring right now).
+- `board-pending` — board found but unpopulated / "coming soon" (intent present,
+  volume unmeasurable; score as a weak-positive/Unknown-volume, **not** 0; set a
+  **short recheck cadence** because a coming-soon board flips to populated fast).
+- `Unknown` — no board found or unreadable (no evidence either way).
+Collapsing board-pending into measured-0 would score an *about-to-hire* company as a
+*not-hiring* one — a false negative on exactly the signal Norman exists to catch.
+
+## G2 — Confirm the two-phase careers lane: browser discovers once, API counts forever
+
+**Ruling: confirmed, and the ~30% static hit-rate is the proof.** The careers link
+and ATS embed live in the JS-rendered DOM on ~70% of homepages, so **discovery is a
+rendered-browser problem**; but once you've bound the company to `(provider, board
+token/endpoint)`, **counting is a cheap deterministic API call** that never needs the
+browser again. The lane is explicitly two-phase:
+- **Bind (expensive, rare):** browser daemon renders the homepage → finds the careers
+  link → identifies the ATS → captures the endpoint/token. Runs **once per company**,
+  re-runs *only* on a self-heal trigger (careers URL 404s, ATS changes, endpoint
+  shape breaks). Store the binding with `bound_at` + `bound_via` provenance.
+- **Count (cheap, recurring):** hit the cached endpoint on cadence. No browser, no
+  account-risk surface, no selector fragility.
+
+This is the highest-leverage shape in the whole careers lane: it moves the *recurring*
+cost and the *fragility* into a once-per-company step, so the daily budget spends API
+calls, not browser sessions. It's the same split as F2 (discovery carries the browser
+cost; the recurring path is deterministic) and scrapling's bind-then-reuse. A binding
+that fails to count re-enters *bind*, not *count* — a 404 on the cached endpoint is a
+re-discovery trigger, not a measured-0 (don't confuse "my cached handle broke" with
+"they have no jobs" — that's the G1/F3 structure-present-vs-absent check again).
+
+## G3 — Velocity: collapse same-disclosure-window rounds; the pattern is its own signal
+
+**Ruling: the ≤7-day merge rule is sound — adopt it, with three refinements.**
+Announcement date ≠ event date, and out-of-stealth companies disclose multiple rounds
+on one day (Artemis: Seed $15M + Series A $55M, same date → seed→A = 0.0 months =
+"Fast," which is semantically noise). The metric requires **two independently dated
+events separated by a real interval**; when the interval is a disclosure artifact,
+suppress the velocity computation. Refinements:
+1. **Make the window a tunable constant, not a literal.** `SAME_DISCLOSURE_WINDOW =
+   7d` as config, validated at boot (config-schema invariant). I'd lean 7–14 days —
+   a stealth reveal sometimes spreads across two press hits a week apart — but pin it
+   as one number and let it move with evidence, don't hardcode `7` in the scorer.
+2. **Don't discard the event — re-label it.** Rounds inside the window collapse to one
+   *disclosure event* tagged `announced-together (out-of-stealth)`. That pattern is
+   **itself a signal** (simultaneous seed+A + stealth exit often means well-capitalized
+   and hot) — so it's not "no signal," it's "not a *velocity* signal; it's a
+   stealth-reveal signal." Preserve it as evidence; just don't let it drive velocity.
+3. **Fall back to the founded-anchor estimate, marked provisional** (→ G4). Overall
+   velocity for a collapsed-round company is founded→first-real-round, flagged
+   provisional, never presented as a measured seed→A interval.
+
+## G4 — Provisional velocity must be visually AND sortably distinct (the leaderboard consumes it)
+
+**Ruling: yes — and this is the most important round-3 fix, because a ranking is
+consuming the field.** A founded-anchor / single-dated-round estimate that renders as
+the same `Fast`/`Slow` select as a two-dated-rounds measurement is **inferred data
+masquerading as measured** (graphify extracted/inferred/ambiguous, brain/10 #2 / D2) —
+and when the leaderboard *sorts* on it, a guess can outrank a measurement. That's the
+failure mode the evidence-confidence discipline exists to prevent, surfaced in the UI.
+
+Don't over-correct by hiding the estimate (it carries real information); make the
+*confidence* legible and keep it out of the measured tier:
+- **Display distinctly:** `Fast (est.)` / a `(prov)` variant / muted styling —
+  never identical to a measured tag. The operator must tell "measured Fast" from
+  "estimated Fast" **at a glance** (operator-clarity mandate).
+- **Sort in a separate tier:** the leaderboard ranks *measured* velocities first;
+  provisional ones sort into a clearly-separated lower/greyed tier, or are excluded
+  from the primary sort. A provisional value may **never rank above a measured value
+  as if equally trustworthy.**
+- **Promote on evidence:** the moment a second independently-dated round lands, the
+  tag graduates from provisional to measured and re-enters the primary sort. Store
+  `velocity_basis ∈ {measured, founded-anchor, collapsed-rounds}` so the display and
+  the sort both read from provenance, not a boolean.
+
+## G5 — LinkedIn geo-chart is a ~20%-lossy fallback instrument; tag every value with instrument + granularity
+
+**Ruling: confirmed, and now quantified — the top-5 geo chart failed on 3/15 (20%),
+which is precisely why the Sales Nav pinned-instrument lane (F1) is necessary, not
+optional.** Two failure shapes, both recorded, neither silently coerced:
+- **NYC not in top-5** (Astelia, Bolto): the instrument literally cannot read the
+  value → record `Unknown (instrument: geo-chart-top5, NYC-not-shown)`, **not 0**.
+- **City-granularity only** (Bold Security: "New York, New York: 3", metro not shown):
+  city is *narrower* than metro (metro includes NJ/CT/Westchester/LI), so a city count
+  is a **floor**, not the metro figure. Record `3 (instrument: geo-chart-city,
+  granularity: city, is-floor: true)`.
+The rule from F1 holds and is reinforced: **store the instrument and granularity with
+every value; never compare across instruments.** The scorer treats `geo-chart-top5`,
+`geo-chart-city`, and (future) `sales-nav-filter` as different measurement devices —
+comparable within a device, not across. When the Sales Nav lane lands, **the ~20% the
+geo-chart couldn't read are the highest-value backfill re-checks** (they're currently
+Unknown on the very field that drives Fit).
+
+## G6 — Capture redirect-observed aliases opportunistically — but only same-entity renames
+
+**Ruling: yes, record aliases opportunistically on any check — this is identity
+reconciliation for free, with one guard.** When a canonical URL 301/302-redirects
+during a check (Bolto's Crunchbase slug `onnix`; LinkedIn `aryaworks→aryahealth`,
+`numeric-id→join-blossom-health`), the redirect *is* evidence of a slug rename, and
+you already followed it — capturing it costs nothing and prevents a future
+duplicate-entity (identity-before-write invariant, brain/04). Record `(observed_alias
+→ canonical, source, observed_at)` **idempotently** (skip if the alias already
+exists). This is level-triggered identity reconciliation (controller-runtime): the
+world drifted, the check observed it, the alias table converges — no separate crawl.
+
+**The one guard — distinguish a rename from an acquisition.** A slug redirect that
+still resolves to the *same* canonical entity (same domain root / same Crunchbase org
+id) is a **rename → auto-capture**. A redirect that lands on a *different* company
+(acquired-into, merged) is **not an alias** — auto-merging two distinct entities is a
+high-bar, human-owned decision (the identity auto-bind bar from the earlier rulings).
+So: **auto-capture same-entity slug aliases; route cross-entity redirects to review,
+never auto-merge.** The discriminator is "does the redirect target share the entity's
+existing identity keys?" — if yes, converge; if no, flag.
+
+## G7 — Interleave-by-company is the recommended execution order — because it paces the risky lane for free
+
+**Ruling: yes, interleave-by-company, not batch-by-source — and the pace data proves
+why.** Batching all LinkedIn checks back-to-back clusters the account-risk requests
+into a dense burst, the exact pattern that trips challenges. Interleaving sources
+*within* a company means every LinkedIn hit is separated by a Crunchbase + a careers
+check — which spaced LinkedIn to ~2–3 min effective cadence **with no artificial
+sleep**: the gap is filled with real work, not an idle timer. That's a rate-limiter/
+bulkhead behavior *emerging from execution order* (resilience4j), and it's why 55
+checks ran clean in 75 minutes.
+
+Two things to encode so it doesn't rely on luck:
+- **Per-company is also the atomicity unit.** All-or-nothing per company, one receipt
+  per company, one company fully enriched before the next — interleave-by-company
+  aligns the execution order with the transactional boundary (all-or-nothing lanes).
+  This is a second, independent reason to prefer it.
+- **The rate-limiter is the floor; interleaving is the cheap spacer — keep both.**
+  Interleaving spaces LinkedIn *for free when a company has other sources to check*,
+  but a company with **only** a LinkedIn check has nothing to interleave against. So
+  the LinkedIn lane still carries a hard `min-interval` rate-limiter set to the
+  observed-safe spacing (~2–3 min); interleaving is the default order that usually
+  satisfies it at zero idle cost, the rate-limiter guarantees it when interleaving
+  can't. Don't rely on interleaving *alone* — it degrades exactly when a company is
+  LinkedIn-only, which is the case you least want unpaced.
