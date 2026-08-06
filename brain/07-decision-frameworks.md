@@ -49,7 +49,11 @@ For any significant decision:
   is well-understood (tests or unambiguous spec). Big-bang rewrites fail at
   spectacular rates because the old system encodes years of invisible requirements.
   If rewriting: strangler-fig — new system takes traffic slice by slice, old one
-  keeps running, at no point is there a cliff-edge cutover.
+  keeps running, at no point is there a cliff-edge cutover. For a *library* with a
+  regretted API, the production-proven form is rename-and-freeze: the old surface
+  gets an explicit legacy name, stays installable with no new features, and lives
+  beside the (much smaller) replacement while the ecosystem migrates — LangChain
+  v1 shrank its flagship ~12x this way (see studies/langchain.md).
 
 ## Technical debt, honestly
 

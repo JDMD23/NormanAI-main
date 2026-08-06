@@ -60,6 +60,14 @@ removing later is a breaking change. Private-by-default everything.
   your usage, not theirs. When the vendor changes or gets replaced, one file changes.
   Exception: don't wrap the standard library or the framework you've committed to;
   wrapping everything is ceremony (see 02, failure modes).
+- When third parties implement *your* interfaces (plugins, providers, drivers),
+  ship the conformance test suite as a versioned artifact they subclass and run —
+  the contract becomes executable and evolves centrally. Treat new tests as
+  breaking changes for implementers (they'll pin; document that). Below a handful
+  of implementers, plain integration tests suffice. (Evidence: langchain-tests.)
+- Deprecation deserves machinery, not comments: decorators that emit warnings, a
+  beta marker for the opposite lifecycle end, and suppression for *internal*
+  callers so only users see warnings — warning noise is interface cost too.
 
 ## Events and messages as APIs
 
