@@ -1785,3 +1785,129 @@ discipline: **make the permanent/interim seam explicit so the interim parts swap
 without touching the permanent ones.** Cut as premature for batch 5: the two-concurrent-
 browser topology (R1) — prove the skeleton on the safe axis first. Nothing else is
 premature; nothing permanent should be built to throwaway quality.
+
+---
+
+# Follow-up rulings (round 12) — batch 5 session 1: the pipeline verdict crystallizes
+
+Batch 5 session 1 validated the skeleton (field-ownership enforced at *type
+construction* — concurrency discipline as a type; the barrier held 19 statusless
+companies in public view with zero flapping; outbox drained to 0, all writes readback-
+verified, zero challenges). The decisive number, honestly attributed per R7: **~half
+the wall-time gain is the concurrent careers-API lane (pure profit, no identity, ~10×);
+the rest is practiced instruments + tighter batching that serial-with-interleaving
+would also get.** That one finding settles S2 and reframes the roadmap: **the careers-
+API lane is the win; the two-browser pipeline is not; the vendor is still the real
+unlock.**
+
+## S1 — Build the full careers lane now (before batch 7): six parsers as a registered adapter registry — it moves the entire careers signal to the unattended-safe side of the L2 line
+
+**Ruling: yes, unambiguously.** Static ATS discovery hit only 52% *solely* because Lane
+1 lacks four parsers (Rippling/Comeet/Polymer/Kula) — and all four proved trivially
+DOM-readable, so these are **missing parsers, not hard cases** (M5, confirmed again).
+Build them out as the permanent `core/lanes` careers registry (A5 / ats-scrapers
+provider pattern): **each ATS is a registered adapter behind one interface, with a
+per-provider contract test** (mirofish/ats-scrapers consumer-contract discipline).
+Codify the URL-guessing heuristic (the autonomous /careers guess that found Novellia)
+as an explicit, tested rule — **with its K1/K2 failure semantics**: a guessed URL that
+404s is "no page found" (not "no jobs"); a guessed page returning zero is DOM-zero-
+capped (not a confident zero). The strategic payoff beyond speed: **careers becomes
+API-first and identity-free, so the entire careers signal crosses to the unattended-
+safe side of the L2 line (R6)** — the first enrichment signal to do so, a real autonomy
+milestone independent of the vendor. Phase-1 permanent work (R9), build to quality.
+
+## S2 — Skip batch 6's two-concurrent-browser experiment — the data already answered it
+
+**Ruling: concur with the build agent — skip it. This is the elite move being the
+thing you *don't* build.** Round 11 made the two-browser topology a hypothesis worth
+testing; session 1's data updated the priors and the answer is now clear:
+- **Crunchbase interleaved comfortably inside the LinkedIn pacing gaps** — so a second
+  concurrent browser would reclaim very little (the Crunchbase work is already hidden in
+  LinkedIn's mandatory idle), while adding real R1 mechanical/shared-profile risk on
+  JD's *real* professional account. That's paying complexity + account-risk for a gain
+  that's already captured for free — the exact weight-class mismatch brain/00 warns
+  against.
+- **A passing vendor eval moots it entirely** (headcount → API, no browser lane).
+- So the R7 fallback fires empirically: **serial-with-interleaving + a concurrent
+  careers-API lane is now the STANDING enrichment pattern.** Revisit two browsers only
+  if the vendor fails *and* throughput becomes a hard constraint at 200+ — not before.
+
+## S3 — Pre-load domain-liveness pass: yes; dead-domain is a classification TRIGGER, not a verdict
+
+**Ruling: yes to the cheap liveness pass (Lane 1, HEAD requests, no identity) over the
+39 queued before load — it saves throttle budget by catching dead-on-arrival before
+expensive Sales Nav reads.** But **a dead domain is a trigger to classify, never a
+classification by itself.** Radial ($50M GC round Dec 2025, both domains dead) is
+*alive and rebranding*, not mis-sourced — and because the intake CSV is **funding-
+sourced** (these companies are on the list *because they raised*), the default lean is:
+- **Dead domain + any liveness signal (recent funding / active LinkedIn team) →
+  `rebrand-or-transition-suspected` (P1)** → review + trigger alias/rediscovery; the
+  new domain, once found, becomes an alias (P2).
+- **Dead domain + no liveness signal at all → tombstone `mis-sourced`/defunct (N2).**
+This makes the liveness pass a permanent **intake-freshness gate** — the CSV is a
+snapshot and companies drift (rebrand, die) between export and enrichment; catch it at
+the door, classify by corroboration, never auto-tombstone a live company.
+
+## S4 — Judgment calls belong in BOTH places, by grain — on the company (drill) and in a batch digest (skim) — and outcome-affecting calls escalate
+
+**Ruling: not one location — two, at different grains, plus an escalation tier
+(J8/rendergit skim-vs-drill).**
+- **The per-company call lives ON the company** (evidence note / short tag): "jobs=1 —
+  catch-all 'Pitch Yourself' posting, low-confidence"; "careers live, 0 listings, DOM-
+  zero-capped." Context belongs where the number is — never make JD correlate a
+  separate digest back to a company for the meaning of its own value.
+- **The batch digest collects them for supervision-by-exception** (in the State-of-
+  Build report / close-out): "batch 5 judgment calls: 3, all low-stakes, listed." Short
+  and low-stakes → JD moves on; long or a call looks wrong → he drills to the company.
+  The digest is the *index*, the company note is the *detail*.
+- **Escalation tier:** a judgment call that would *change a routing outcome* (if Phia's
+  catch-all "1" were the Prospect/Watchlist boundary) is **not** a silent note — it
+  raises a **review flag** (detect-then-ask, scaled by stakes). Low-stakes → note +
+  digest line; outcome-affecting → review.
+
+## S5 — Vendor migration: shadow mode first, with exit criteria fixed BEFORE it starts
+
+**Ruling: concur — shadow mode, not immediate pin migration. It's the N1/O1 proving-run
+pattern applied forward, and it's the right conservatism for moving the ruler the whole
+board depends on.** A one-time 44-company eval proves a *snapshot* match; the vendor
+will be the *ongoing* ruler, so you need ongoing evidence. Shadow mode = **both
+instruments recorded and G5-tagged, calibration (vendor−SalesNav delta distribution)
+computed continuously** for a batch or two. It also surfaces the vendor's *own* failure
+modes on live data (its "21-available"-style traps, coverage gaps, freshness lag)
+before you depend on it. **Define the pin-move exit criteria up front, don't move the
+goalposts:** (a) calibration holds across N companies within tolerance, (b) **no
+*systematic* bias** (check the vendor isn't consistently high/low — low variance isn't
+enough), (c) failure modes understood and guarded. **Even after the pin moves, keep
+Sales Nav as a periodic spot-check** so later vendor drift is detectable.
+
+## S6 — Working views: yes — three TASK-shaped machine-maintained projections, resist per-status sprawl
+
+**Ruling: yes, it's the scaling point — a flat 95-row board violates "act without
+re-checking" (brain/10 #11). Build machine-maintained working views as derived
+projections (kept converged by reconcile, never hand-curated), shaped by JD's ACTIONS,
+not by schema facets (the anti-default discipline — views are task-shaped).** Minimum
+set = three, mapping to his three actual actions:
+1. **Prospects (ranked)** — the pursue-now surface, Prospect status sorted by Fit/
+   Priority. The ranked-trust product itself.
+2. **Action Needed: Joe** — his input queue (paste-careers-link, reviews, protected-
+   status decisions). Strictly Joe-owned (J8); it should be *short and clearing*.
+3. **Changed Recently** — the what's-new-since-I-looked surface, off the change-log,
+   with tombstoned/DNP companies filtered out (N2).
+Keep the flat board as **reference**, not the daily surface. **Resist per-status view
+sprawl** — most statuses (Do Not Pursue, tombstoned, Tracking) are archive, not daily;
+add a 4th view only when a real recurring action demands it (weight-class honesty).
+This is a *small* board-schema round that mostly **consumes substrate already built**
+(projection layer, change-log, tombstones) — a sign the foundation supports it.
+
+## Watcher's note — the two exposures the report named honestly, and their sequencing
+- **Crunchbase is now the least-defended instrument carrying real weight** (DOM regex,
+  no zero-state, no layout tripwire, ~60% of Lane 0 browser time) — and its failure
+  would be *silent*. Don't over-invest in hardening it *if* the vendor eval is imminent
+  and may cover funding — but add the **minimal K1/O1 guard now (zero-state read +
+  layout tripwire)** so it can't fail silently in the interim. Full harden-vs-retire
+  decides after the vendor eval.
+- **Observability is B-minus** (R5's collapsed health line + per-lane liveness aren't a
+  glanceable surface yet; supervision was narration). Batch 5 was fine because attended
+  + narrated + not scaling concurrency (S2). But R5 said supervised-concurrency is only
+  safe with the collapsed signal — so **land the health-line CLI before any concurrency
+  increase**, and before the vendor shadow batches add a lane. Important, not yet urgent.
