@@ -272,6 +272,23 @@ register, direction — *before* acting, and ask at most one clarifying question
 only on genuine divergence. The user can redirect at the cost of one line;
 grilling stays for work too big to hold in one shot.
 
+## Two security lessons from agent tooling
+
+- **Coherence, not invisibility** (linkedin-mcp-server's browser-identity rules,
+  general far beyond scraping). A system that must not be detected should present
+  a *consistent true story* rather than maintain a lie across surfaces it doesn't
+  fully control: "invisibility cannot be proven, while a contradiction is a
+  fact" that anyone who looks twice can find. Don't inject spoofed identity that
+  some layers honor and others don't (the classic UA-override-that-misses-client-
+  hints bug). And *measure* every evasion/identity claim against real detectors —
+  an untested override is a guess, and overrides frequently make things worse.
+- **Destructive operations need provable ownership.** Any delete/move/rename on a
+  user-supplied path routes through a capability check ("does the server provably
+  own this root?"), and the check guards the *source root, once, before any
+  short-circuit* — a check on a derived path reads as protection while guarding
+  the wrong thing. Reason about blast radius explicitly: what a rotation deletes
+  may live one level *above* the directory you validated.
+
 ## Diff discipline: agents are guests in the codebase
 
 The agent default for edits is **surgical** (karpathy-skills' formulation): every

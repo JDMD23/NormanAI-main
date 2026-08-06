@@ -96,6 +96,26 @@ reference — studies/ats-scrapers.md):
 - **Pair a contract test with each adapter** so upstream drift fails your CI,
   not production (brain/05 consumer-side contract tests).
 
+## Tools and MCP servers are APIs for agents
+
+A tool/MCP surface is an interface whose consumer is a model; design it as
+deliberately as any public API (linkedin-mcp-server is the reference —
+studies/linkedin-mcp-server.md):
+- **Annotate operation semantics** the model needs to choose safely — read-only
+  vs mutating, open-world, tags/titles. **Confirmation-gate every mutation**;
+  reads flow freely (safe-by-default at the tool layer).
+- **Expose selection arguments** (which sections/fields) so the agent fetches
+  only what it needs — index-then-fetch economics (brain/09) built into the
+  signature, not left to the agent to overfetch.
+- **Curate the agent-visible schema separately from the implementation** — hide
+  internal/DI parameters from the tool's declared inputs; validate and bound
+  inputs at the boundary (parse-don't-validate, brain/04).
+- **Return partial failure in band**: per-part results *plus* typed per-part
+  errors, so one broken piece returns the working pieces and a structured error
+  for the rest — expected failures are values (brain/01), shaped for a consumer
+  that can act on partials. Bonus: make each error carry a pointer toward its own
+  fix (an issue-template path), so tool breakage is a feedback loop.
+
 ## Events and messages as APIs
 
 Event schemas are the hardest contracts to evolve because consumers are invisible.
