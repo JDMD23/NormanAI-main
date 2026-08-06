@@ -51,6 +51,23 @@ The TDD loop transfers directly:
 Behavioral wording that has been tuned this way is load-bearing; don't "clean it up"
 without evidence, the same way you don't reformat a regex you don't understand.
 
+## Skills are knowledge deltas, packaged with progressive disclosure
+
+What belongs *in* an agent-facing doc (anthropics/skills, from their production
+document skills): not what the model already knows (wasted tokens), not generic
+best practice (noise), but the **delta between model belief and ground truth** —
+footguns, each harvested from an observed failure and compressed to a rule ("the
+model knows the API; these are the footguns"). Superpowers' rationalization tables
+are the same principle for behavior; this is it for technical knowledge.
+
+Package the capability in three loading tiers: metadata (always in context, ~100
+words) → body (loaded on trigger, <500 lines) → bundled resources (unlimited —
+references read as needed, and *scripts execute without ever entering context*).
+That last tier is the underused move: deterministic capability shipped as code is
+context-free, so the division of labor is **prose for judgment, references for
+rare depth, scripts for anything deterministic** — the skill file is a thin
+interface over real software (brain/01, with tokens as interface cost).
+
 ## Interfaces leak harder with LLM consumers
 
 Hyrum's Law (brain/05) applies with more force, not less: an agent will treat any
@@ -58,6 +75,9 @@ observable text as the contract. The documented failure: a skill description tha
 *summarized its workflow* caused agents to execute the summary and skip the full
 process. Rules that follow:
 - Triggers/descriptions state **when to invoke**, never what the process is.
+  The description is a *routing surface*: put all when-to-use information there —
+  deliberately generous with trigger phrases, since under-triggering is the
+  observed failure mode (Anthropic's own guidance) — and zero workflow summary.
 - Anything you don't want executed as instructions shouldn't look like instructions.
 - The doc the agent actually loads is the API; everything else is dead weight —
   token cost is interface cost, so compress what loads every session.
