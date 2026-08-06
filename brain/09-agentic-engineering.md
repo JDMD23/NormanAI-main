@@ -56,6 +56,19 @@ The working design (ECC's instinct system) for "the agent learns my preferences"
 The general principle: learned state is derived data (brain/04) — it needs
 provenance, a recompute path, and an invalidation story, or it becomes corruption.
 
+Memory splits into two systems with different physics (ECC = procedural,
+claude-mem = episodic; design them separately, a complete agent needs both):
+- **Procedural** — learned behaviors ("how do I usually do X here?"): atomic,
+  confidence-scored, project-scoped, as above.
+- **Episodic** — what happened ("what did we do about X in March?"): compress at
+  *write time* (raw transcripts are for recovery, not retrieval), index by time
+  as a first-class axis, and retrieve via **index-then-fetch**: a search returns
+  compact IDs (~10x cheaper), full records are fetched only for hits that survive
+  filtering. That retrieval rule generalizes to every agent-facing search tool —
+  memory, docs, tickets, logs. And a hook-fed capture daemon is a distributed
+  system: supervise it (health checks, graceful shutdown, atomic restart) or it
+  silently stops remembering.
+
 ## Prompts and process docs are code
 
 Anything that shapes agent behavior — CLAUDE.md, skills, system prompts, subagent
