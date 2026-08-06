@@ -23,6 +23,17 @@ Practical form, even in a small codebase:
   testing trivial, reasoning local, and refactors safe — it's the highest-ROI
   architectural pattern that exists for small-to-mid projects.
 
+For a cross-cutting capability that libraries *emit* but the application *owns*
+(instrumentation, logging, plugin hooks), the proven structure is a **thin stable
+API with working no-op defaults, plus a heavy swappable implementation selected at
+the composition root** (OpenTelemetry's api/sdk split — studies/opentelemetry-python.md).
+Libraries code against the API only; with no implementation installed the calls
+are cheap no-ops, so a library can adopt the capability at *zero cost and zero
+config imposed on its users*, and the application picks the real backend (or none)
+without the library ever depending on it. This is dependency inversion plus
+"return a safe default" (brain/05) fused into a distribution strategy — the only
+shape that lets library code carry optional cross-cutting hooks honestly.
+
 **Failure mode:** ceremony worship. Four-layer lasagna with pass-through mappers at
 every boundary, interfaces with one implementation, DTO↔entity↔model conversions for
 a CRUD app. If a boundary never varies independently, it shouldn't exist as a

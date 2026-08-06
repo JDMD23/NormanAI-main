@@ -75,6 +75,16 @@ accidental waste (chatty queries, missing indexes, serialization in loops,
 sync-waiting on parallelizable I/O) — not clever code. Set a budget (p99 target)
 so "fast enough" is defined and optimization has a stopping point.
 
+When speed genuinely requires multiple implementations (SIMD tiers, native
+extension + pure fallback, GPU/CPU), keep them behind one identical interface and
+(a) **detect capability at runtime, dispatch best-first with graceful
+fall-through** — try the fast path, silently degrade on failure, never *require*
+the optimal artifact; (b) **give an env-var/config escape hatch to pin the tier**
+for testing and reproduction; (c) treat the **fast path and its fallback as owing
+each other identical results** — a fallback that returns different answers is a
+correctness bug, not a slower path, so run one conformance suite against both.
+(Reference: RapidFuzz — studies/rapidfuzz.md.)
+
 ## Reviewing changes: the two-cost question
 
 A whole code-review rubric collapses into two questions (Hypothesis's review

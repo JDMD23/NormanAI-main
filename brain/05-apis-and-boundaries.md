@@ -32,6 +32,15 @@ removing later is a breaking change. Private-by-default everything.
 - Breaking changes need a version and a migration window — or better, expand/contract:
   ship new alongside old, migrate consumers, remove old. Silent behavior changes are
   the worst kind of break because nothing fails loudly.
+- Encode stability in *structure*, so a user can't accidentally depend on an
+  unstable surface: make stable vs experimental legible from the package and
+  import name (OpenTelemetry ships experimental signals `_`-prefixed in the same
+  package — `_logs` vs `logs` — "NO STABILITY GUARANTEES"), and state the
+  cross-version compatibility promise concretely (API 1.0.x works with any
+  same-major SDK). Draw the "public stays compatible, internals may break" line
+  deliberately and write it down. Keep a standing `rationale.md` explaining why
+  the versioning/architecture is shaped as it is, so the reasoning outlives the
+  PRs that made it (studies/opentelemetry-python.md).
 - Hyrum's Law: with enough users, *every observable behavior* becomes a dependency —
   error message text, ordering, timing. Minimize observable surface; document what's
   contractual vs incidental.
