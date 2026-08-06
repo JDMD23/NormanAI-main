@@ -241,3 +241,137 @@ exactly where it bites. The question to put to JD *before* scaling the riskiest
 lane: **do we move NYC-headcount to a compliant data source (a LinkedIn-data
 provider, or an API) rather than logged-in Sales Nav scraping, given the account is
 his real professional identity?** It's a business call, but it's due now, not later.
+
+---
+
+# Follow-up rulings (round 2)
+
+Four sharper questions on the enrichment lanes. These refine — not replace — the
+rulings above.
+
+## F1 — Sales Nav count fidelity: name the proxy, don't chase the truth
+
+**Ruling: apply exactly two filters and pin them forever — `current company =
+target` + `geography = NYC metro`. Filter nothing else.** Do not try to exclude
+contractors, advisors, or stale profiles: LinkedIn gives you no reliable, locale-
+independent facet for "employee vs contractor," and any heuristic you invent will be
+applied inconsistently across 250 companies — which destroys comparability, the one
+property the number exists to provide.
+
+The deeper move is to **stop pretending the metric is "true NYC employees."** It
+isn't, and it can't be. What you are actually measuring is *"LinkedIn members in the
+NYC metro who list this company as their current employer."* Name the field that
+honestly — `LinkedIn NYC Metro Count`, not `NYC Employees` — and store the exact
+filter definition alongside the value as provenance (brain/10 #6: a number without
+its definition is a lie waiting to happen). Then **calibrate Fit against the proxy,
+not against ground truth.** The scorer never needed the true headcount; it needed a
+*consistent, comparable* signal of NYC presence and growth. A consistent proxy beats
+an inconsistent truth every time.
+
+On the gap between the LinkedIn count and true employment: annotate the field as a
+**lagging, upward-biased** proxy. Upward-biased because departed employees leave
+stale "current company" entries for months (people update LinkedIn late); lagging
+because it reflects the workforce of weeks-to-months ago, not today. Two consequences
+you exploit rather than fight: (i) a *sudden drop* in the count is a high-confidence
+signal — people rarely remove a current employer unless something real happened
+(layoff, shutdown, mass departure), so a drop is worth routing to review; (ii) the
+upward bias means the count is a **ceiling, not a floor** — treat "count is high" as
+weak evidence and "count dropped" as strong evidence. Store the count history
+(brain/10 #8, change surface) so the *delta* is available to the scorer, because the
+delta is more trustworthy than the level.
+
+## F2 — Aging the dedicated profile: inherit trust, prove it behaviorally
+
+**Ruling: the dedicated profile inherits its trust from JD's real, aged account —
+it is not aged from zero.** If the dedicated automation runs on a *separate* new
+account, you have the worst of both worlds: a cold account (instantly suspicious to
+LinkedIn) that is *also* linked by behavior to JD's real one. So the warm-up protocol
+is really a *trust-transfer and ramp* protocol, not a "grow a new identity" protocol.
+
+The ramp, keyed to **clean-day tiers, not a fixed clock:**
+- **Day 0 — supervised manual login, zero automation.** JD logs in by hand, on the
+  same device/session that will run the automation, and browses normally for 20–30
+  minutes (session-as-artifact, linkedin_scraper). No scripted action touches the
+  account this day. You are establishing a warm, human-origin session the automation
+  will later borrow.
+- **Days 1–3 — ~25–33% of target budget** (LinkedIn ≈ 5–8 profile/count views per
+  day), human-paced (jitter, business hours only), circuit breaker armed to halt on
+  the *first* challenge.
+- **Days 4–7 — ~50–66% budget**, *only if* the prior tier ran with zero friction
+  (no checkpoints, no interstitials, no empty-result anomalies).
+- **Day 7+ — full budget**, again only on a clean record.
+
+"Aged enough" is **behavioral, not temporal.** The gate to each next tier is "N
+consecutive clean days at the current tier," where *clean* is defined by the breaker
+never tripping and the enrichment-plausibility layer never flagging. A profile that
+hits a checkpoint on day 5 does not advance on day 8 — it resets to the prior tier.
+The circuit breaker (F3) is the sensor that decides "clean"; there is no separate
+"aged" flag to invent. And login stays **supervised forever** — you never script the
+credential entry or the challenge response; the automation borrows an
+already-authenticated human session, it does not authenticate. That single rule is
+what keeps this on the right side of the account-safety line.
+
+## F3 — Breaker trigger taxonomy: classify on structure, never on displayed text
+
+**Ruling: the breaker classifies on machine-observable signals — HTTP status,
+response headers, final URL, and DOM *structure presence* — and NEVER on the
+human-readable text of the page.** Text is localized, A/B-tested, and reworded
+constantly; a taxonomy built on strings like "unusual activity" breaks the first time
+LinkedIn ships a new locale or copy test. The decision tree:
+
+| # | Signature (machine-observable) | Meaning | Action |
+|---|---|---|---|
+| a | Final URL contains `/checkpoint/` or `/challenge/`, or an authwall redirect, or `401` | **LinkedIn identity challenge** — the account is being asked to prove itself | **HALT-AND-ALERT.** Stop the lane immediately, do not retry, page JD. Retrying *into* a challenge is exactly how accounts get locked. |
+| b | `cf-ray` / `cf-mitigated` response header present, or `403`/`503` with a challenge body structure | **Cloudflare / edge interstitial** — infrastructure, not identity | **HALT-AND-BACKOFF.** Exponential backoff with jitter; resume later. Not an account signal, so no page — but no hammering either. |
+| c | `200` + authenticated shell present (nav/header DOM confirms you're logged in) + the *expected result structure is MISSING* | **Selector break / layout change** — you're in, the page just moved | **SELF-HEAL RE-BIND** (scrapling pattern): attempt the resilient re-selection; if it fails, flag for human selector review. Do NOT back off — the site is fine. |
+| d | `200` + authenticated shell present + expected structure *PRESENT* + result is implausibly empty (e.g. a company that had 40 shows 0) | **Soft-block or throttle** — they're serving you a hollow page | **BACK OFF, DO NOT WRITE, DO NOT RE-BIND.** This is the dangerous one. |
+
+The two discriminations that matter most:
+- **(c) vs (d): "is the expected structure present?"** If the results container/
+  selector exists but is empty, it is *not* a selector break — re-binding does
+  nothing and wastes a rebind budget. If the container is *gone*, it's a layout
+  change. This single check ("structure present but empty" vs "structure absent")
+  is what stops you from misclassifying a soft-block as a selector break and
+  "keep hammering" — the exact failure you named.
+- **(d) vs a real zero:** a genuinely empty result (a tiny company really does have
+  0 NYC members) is indistinguishable *at the page level* from a soft-block. You
+  resolve it *above* the breaker, in the enrichment-plausibility layer (ruling B
+  above): cross-source corroboration + historical continuity. A `0` that contradicts
+  a prior non-zero count, or that a second source contradicts, is treated as a
+  soft-block (back off, don't write); a `0` consistent with history and corroborated
+  is a real zero. The breaker never writes on (d); the plausibility layer decides
+  whether a clean `0` is trustworthy.
+
+## F4 — The news lane instrument: citation-by-construction, LLM as interpreter only
+
+**Ruling: the pinned instrument is a set of deterministic feeds where every item
+*arrives with* its source URL — not an LLM that you ask "what's the news?"** The
+evidence discipline (brain/10 #2, research evidence-clamp) is non-negotiable here:
+every claim Norman writes must carry a source URL, and the only way to *guarantee*
+that is to make the URL a structural property of the input, not something the model
+is asked to remember to include.
+
+The instrument, in order of trust:
+- **Crunchbase** for funding / M&A / round events — you already have it, it's
+  structured, each event carries its own record. This is the spine of the news lane.
+- **Google News RSS** (`https://news.google.com/rss/search?q="Company+Name"`) or a
+  news API for everything else. RSS is deterministic, free, and every `<item>`
+  carries a `<link>` — citation by construction. Pin the feed set so the *instrument*
+  is consistent run to run (you compare companies on the same news surface, same
+  reasoning as F1's pinned filters).
+
+The LLM (Perplexity, Grok, whatever) is an **interpretation layer over cited inputs,
+never a fact source.** It takes the feed items (each with a URL) and answers "does
+any of this indicate an office move / expansion / leadership change?" — and its
+output is **clamped to cite one of the input URLs per claim** (guardrails output
+guard; no URL → the claim is dropped, not written). Perplexity is acceptable *as an
+additional discovery feed* only if you enforce and store its citations the same way;
+its native citations are inputs to be verified, not trusted outputs. Never let the
+model assert a fact it can't tie to a fed URL — an uncited "they're expanding" is
+exactly the fabricated-evidence failure the trust boundary exists to prevent.
+
+Three mechanical rules that make the lane safe: **recency filter** every feed to the
+cadence window (you don't want a 2019 article scored as a fresh signal); **dedup on
+seen URLs** so the same story across three feeds is one piece of evidence, not three;
+and **no URL, no angle** — an interpretation with no citable input is discarded at
+the guard, never written to the board.
