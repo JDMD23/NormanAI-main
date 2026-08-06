@@ -1,10 +1,43 @@
 # 09 — Agentic engineering: discipline for AI-agent-driven development
 
-Founded by the superpowers study (`studies/superpowers.md`). This domain has its own
-physics: the "runtime" executing your process documentation is an LLM — capable,
-fast, and prone to specific, *predictable* failure modes (rationalization under
-pressure, context loss, optimistic self-reports). Elite agentic engineering is
-ordinary engineering discipline re-aimed at that runtime.
+Founded by the superpowers study (`studies/superpowers.md`), extended by the ECC
+study (`studies/ecc.md`). This domain has its own physics: the "runtime" executing
+your process documentation is an LLM — capable, fast, and prone to specific,
+*predictable* failure modes (rationalization under pressure, context loss,
+optimistic self-reports). Elite agentic engineering is ordinary engineering
+discipline re-aimed at that runtime.
+
+## Enforce mechanically; persuade only where judgment lives
+
+Prose instructions are probabilistic — observed compliance for skill-style guidance
+runs ~50–80%; a harness hook fires 100% of the time (ECC's measured rationale for
+moving from skill-based to hook-based observation). That yields a hierarchy for any
+rule you want an agent to follow:
+
+1. **Hook / hard block** — if the rule is mechanically checkable, enforce it in the
+   harness: block `--no-verify`, block edits to linter configs (and *point at the
+   right fix*: "fix the code, not the config"), gate dangerous commands. This is the
+   agent-layer twin of brain/04's "constraints in the database, not the app."
+2. **Eval-tested prose** — for rules requiring judgment, use behaviorally tested
+   wording (superpowers' TDD-for-docs), including pre-refuted rationalizations.
+3. **Plain prose** — acceptable only for low-stakes preferences.
+
+Putting a discipline-critical rule one level lower than it could live is a design
+defect: every "MUST" in a doc that a regex could enforce is compliance left to chance.
+
+## Agent memory that learns must be scoped and evidence-weighted
+
+The working design (ECC's instinct system) for "the agent learns my preferences":
+- **Atomic units** — one trigger, one action; never essay-sized "lessons."
+- **Confidence scores** that rise with repeated observation and *fall on user
+  correction or disuse* — memory without decay accumulates stale beliefs.
+- **Observation via deterministic capture** (hooks logging real behavior), analyzed
+  by a cheap background model — not self-reported "what I learned" summaries.
+- **Project-scoped by default.** Global-by-default memory cross-contaminates
+  (React habits leaking into Python repos). Promote to global only on evidence:
+  the same pattern independently observed in multiple projects at high confidence.
+The general principle: learned state is derived data (brain/04) — it needs
+provenance, a recompute path, and an invalidation story, or it becomes corruption.
 
 ## Prompts and process docs are code
 
@@ -28,6 +61,13 @@ process. Rules that follow:
 - Anything you don't want executed as instructions shouldn't look like instructions.
 - The doc the agent actually loads is the API; everything else is dead weight —
   token cost is interface cost, so compress what loads every session.
+- **A skill/prompt catalog is itself an API surface.** The agent selects from it by
+  reading descriptions, so every entry taxes the selection of every other entry.
+  Unbounded, uncurated growth (281 mixed-quality skills — ECC) degrades the whole
+  catalog; curation with a quality gate (14 eval-tested skills, domain content
+  refused — superpowers) is the "when in doubt, leave it out" rule from brain/05
+  applied to prompts. Catalog facts (counts, indexes) must be generated from source:
+  ECC states three different catalog sizes in three hand-maintained docs.
 
 ## Design against the runtime's failure modes
 
