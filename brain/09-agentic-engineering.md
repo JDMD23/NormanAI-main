@@ -42,6 +42,13 @@ rule you want an agent to follow:
 Putting a discipline-critical rule one level lower than it could live is a design
 defect: every "MUST" in a doc that a regex could enforce is compliance left to chance.
 
+The hierarchy also applies *inside* a single agent role (Understand-Anything's
+graph-reviewer): a QA agent reviewing structured artifacts should first **write
+and run a deterministic checker** for everything mechanical (schema, enums, ID
+conventions), then spend judgment only on the residue — with exit codes meaning
+"the script ran," never "the content is valid." Don't ask an LLM to eyeball
+3,000 nodes for conformance.
+
 ## Agent memory that learns must be scoped and evidence-weighted
 
 The working design (ECC's instinct system) for "the agent learns my preferences":
@@ -179,6 +186,10 @@ process. Rules that follow:
   work keeps a **write-ahead ledger** in the filesystem (progress file + git history);
   on recovery, the ledger and `git log` outrank the agent's recollection. The failure
   this prevents — re-executing hours of completed work — is the expensive one.
+  The data-plane corollary (Understand-Anything): in multi-agent pipelines,
+  **context carries coordination; disk carries data** — workers write large
+  intermediates to files (cleaned up after assembly) rather than returning them
+  into the orchestrator's window.
 
 ## Context is a scarce, constructed resource
 
