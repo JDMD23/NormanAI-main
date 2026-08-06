@@ -55,6 +55,15 @@ Quality bar for individual tests:
   entire value of the suite. Quarantine or fix same-day.
 - Coverage is a *floor-finder*, not a target. 100% coverage of assertion-free tests
   is worthless; chasing the number produces exactly that.
+- Scoring/ranking/matching systems get an **eval harness**, not just unit tests
+  (JustHireMe is the reference: studies/justhireme.md): labeled cases run through
+  the *real* engine; `invariant` cases encode product guarantees that fail CI on
+  their own; expectations are **directional and fear-driven** — a `min` bound
+  where the feared regression is a drop, a `max` (+ capped assertion) where it's
+  creep — calibrated with a few points of headroom so benign tuning passes and
+  real regressions trip. Non-deterministic criteria self-disable in CI so the
+  number is stable. Precondition for all of it: a deterministic scoring core —
+  judgment in a rubric is measurable; judgment in a prompt is an opinion.
 
 ## Refactoring is a continuous activity, not a project
 

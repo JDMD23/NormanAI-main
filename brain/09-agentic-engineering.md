@@ -225,6 +225,10 @@ proof). The working structure:
 - **Lifecycle buckets with membership invariants** — promoted / public-beta /
   deprecated, where "shipped set = promoted set" is an enforced rule. This prevents
   both catalog decay (ECC) and frozen catalogs (superpowers' closed policy).
+  When guidance goes stale, **tombstone it** (JustHireMe): replace the body with
+  an explicit "deprecated — do not let this constrain you; read the current
+  code/docs instead." Stale guidance misleads with authority; deletion leaves
+  dangling references; the self-disclaiming stub beats both.
 - **Declarative context assembly** (gstack) — a skill's frontmatter can declare
   *queries* for the context it needs (globs over past artifacts, memory filters,
   sort/limit, rendered under a heading), assembled at invocation. Context
