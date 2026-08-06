@@ -68,6 +68,14 @@ process. Rules that follow:
   refused — superpowers) is the "when in doubt, leave it out" rule from brain/05
   applied to prompts. Catalog facts (counts, indexes) must be generated from source:
   ECC states three different catalog sizes in three hand-maintained docs.
+- **Community catalogs need mechanized governance** (agency-agents). Format lint is
+  not enough: the observed failure mode is the well-formed near-duplicate — a
+  find-replace "re-skin" that merges cleanly and bloats the library. Defenses that
+  work: a *semantic* originality gate (entity-neutralized shingle overlap against
+  the whole corpus) with thresholds **calibrated against the existing corpus and
+  documented in the tool**; and where one source of truth can't feed every consumer,
+  duplicated facts guarded by a CI check that fails when any copy disagrees —
+  drift that can't merge is drift that doesn't happen.
 
 ## Design against the runtime's failure modes
 
