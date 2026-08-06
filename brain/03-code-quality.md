@@ -42,6 +42,14 @@ refactor instead of documenting the confusion.
   queries, real serialization, real framework wiring. A few dozen, not thousands.
 - **End-to-end**: a handful of smoke paths. E2E-heavy suites are slow, flaky, and
   pinpoint nothing — inverted pyramids are a top-3 cause of slow teams.
+- **Property-based testing** is the missing half of example-based tests, not a
+  niche: describe the *space* of valid inputs, let the tool generate cases
+  (including edge cases you didn't imagine), and — the part that makes it
+  debuggable — have it **shrink any failure to the minimal counterexample**
+  (`[0]`, not `[8,-3,41,0,17]`). Highest value on pure logic, parsers,
+  serializers, encoders/decoders, and anything with a round-trip or an invariant
+  (`decode(encode(x)) == x`, `sorted` is idempotent). Weaker for I/O-heavy glue.
+  (Evidence: studies/hypothesis.md.)
 
 Quality bar for individual tests:
 - Test *behavior*, not implementation. A refactor that preserves behavior should not
@@ -74,7 +82,10 @@ AI agents and drive-by contributors should instead default to surgical, request-
 changes — see brain/09, "Diff discipline.") "Big refactor projects" that freeze features are usually a
 symptom that continuous refactoring was skipped for years; they fail more often than
 they succeed. Never mix refactoring and behavior change in one commit: it makes both
-unreviewable.
+unreviewable. The strongest operational form of this (Hypothesis's release rule):
+**one user-visible change per minor/patch release** — if the changelog entry needs
+"additionally" or bullet points to be clear, the change is too big and should be
+split. Atomic changes are atomically reviewable, revertable, and bisectable.
 
 ## Style is settled by tools, not people
 

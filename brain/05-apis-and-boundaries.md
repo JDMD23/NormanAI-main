@@ -70,6 +70,15 @@ removing later is a breaking change. Private-by-default everything.
   paging, error forms, consistency timing — so vendor drift fails your CI as a
   red test instead of failing production. (Evidence: MiroFish's Zep contract
   tests.)
+- When a *spec* has many independent implementations (a format, protocol, or
+  standard), the conformance suite is shared infrastructure owned by the spec and
+  consumed by all implementers — the communal counterpart to shipping your own
+  kit. It keeps "correct" a single agreed meaning across a polyglot ecosystem and
+  lets a new implementation earn credibility by passing it. And model the spec's
+  *versions* as data (a keyword→function map built by a factory), never as a
+  subclass hierarchy — a new version is a new mapping, and each rule stays
+  isolated in one small function. (Evidence: jsonschema's vendored JSON Schema
+  Test Suite + `create`/`extend`.)
 - Deprecation deserves machinery, not comments: decorators that emit warnings, a
   beta marker for the opposite lifecycle end, and suppression for *internal*
   callers so only users see warnings — warning noise is interface cost too.

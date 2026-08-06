@@ -75,6 +75,18 @@ accidental waste (chatty queries, missing indexes, serialization in loops,
 sync-waiting on parallelizable I/O) — not clever code. Set a budget (p99 target)
 so "fast enough" is defined and optimization has a stopping point.
 
+## Reviewing changes: the two-cost question
+
+A whole code-review rubric collapses into two questions (Hypothesis's review
+handbook): **does this change make users' lives worse? does it make the
+maintainers' lives worse?** Review is the collaborative work of getting both
+answers to "no"; *neutral is good enough* — the author is presumed to have a good
+reason, so a change need not make things better, only not-worse on both axes.
+This grounds review in who bears the cost rather than in style checklists (style
+is settled by tools — brain/03), and it correctly separates the two constituencies
+a change can hurt. Pair it with orthogonality (one user-visible change per
+release, brain/03) and most review process falls out.
+
 ## Choosing technologies
 
 Innovation tokens: a team can afford *one or two* exciting choices; everything else
