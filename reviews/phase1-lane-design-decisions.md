@@ -1620,3 +1620,168 @@ source through the outbox) and they buy a bounded, possibly-marginal gain. Q3 is
 ban risk, the throttle, AND the attended constraint in one decision. Scope it now, as
 a calibrated eval against ground truth you already own, before the board scales past
 ~100 and the re-migration cost compounds.
+
+---
+
+# Follow-up rulings (round 11) — the three-agent pipeline design review
+
+Round-10's Q1/Q2 are coded (identity bulkhead mechanized with a single-holder lease +
+locking test, ADR 0009; Apollo eval ran and *failed the metro bar*, so Sales Nav stays
+the ruler — good, honest work). The build agent proposes a 3-lane split for batch 5.
+The rulings below fold into the batch-5 execution plan (`BATCH-5-EXECUTION-PLAN.md`).
+**The governing decision (R9/R1): batch 5 proves the permanent skeleton on the SAFE
+axis and defers the one interim-risky part — two concurrent browsers on one profile —
+by a batch.**
+
+## R1 — Browser identity coupling: per-service serialization is sufficient for *detection*, but stage the two-browser topology — batch 5 runs ONE browser identity + the API lane
+
+**Ruling: don't run two concurrent browser lanes on one Chrome profile in the first
+split batch. Defer it one batch.** The detection risk of two-tab-one-profile is
+genuinely *low* — detection is per-domain, so LinkedIn sees only its serial stream and
+Crunchbase sees only its own; the shared cookie jar/fingerprint is invisible across
+domains. So per-service serialization (the bulkhead) *is* sufficient for detection.
+But two automation drivers on one browser profile carry a real *mechanical* risk (CDP
+contention, shared-state interference, a shared-IP challenge implicating both) and
+muddy the future dedicated-profile split (F2). Since JD's LinkedIn is his real
+professional identity, take the conservative slice:
+- **Batch 5 topology: ONE browser identity active (LinkedIn headcount + jobs-fallback,
+  with Crunchbase *interleaved into the LinkedIn pacing gaps*, G7-style — one browser,
+  one active service at a time) ∥ ONE API lane (careers ATS-APIs, no identity, freely
+  parallel).** This proves the whole permanent skeleton (lane interface, guarded
+  writer, barrier, observability, halt) on the axis with **zero** two-browser risk.
+- **Batch 6 adds the second concurrent browser lane** (Crunchbase in its own browser
+  *context*, isolated cookie jar — not a second tab of one context) once the skeleton
+  is trusted — a deliberate, measured step, not bundled into the first split.
+- **The permanent answer is the F2 dedicated profile**; two-tab is an explicit interim
+  bridge, acceptable only attended and only with the Q4 tripwires. If concurrent
+  browsers ever run, they use separate contexts, and a challenge on a shared-IP lane
+  makes the *other* browser lane finish-current-and-pause (R4).
+
+## R2 — Write discipline: single-writer-now is fine, but make the apply path OUTBOX-SHAPED so the durable table is a backing-store swap, not a rewrite
+
+**Ruling: defer the durable outbox; build its *shape* now.** The proposed model
+(producers return typed results, orchestrator is the sole writer applying between
+LinkedIn page-waits) already satisfies single-write-path (one writer) and is sufficient
+for ~30 attended companies — a crash loses at most the in-flight company, and the
+`check_ledger` already gives idempotent resume at *written* granularity (re-run skips
+written companies). Condition: **the orchestrator applies each company promptly (not
+buffering the whole batch), and the apply path is written as "drain a queue of typed
+evidence records, apply each idempotently through the write-guard with verified
+readback"** — i.e. the outbox *interface*, backed by memory now. Then "build the
+durable outbox" is a memory→SQLite backing swap, honoring Q9 (don't build it twice).
+**Hard trigger to build the durable table: unattended cutover (L2)** — no human to
+restart means resumability is mandatory. Soft triggers: producer/writer time-
+decoupling, or batches large enough that re-running is expensive.
+
+## R3 — Scoring: the middle option is correct — write evidence on arrival, defer score/route/status to the per-company barrier
+
+**Ruling: middle option, unambiguously — it's brain/10 #5 (score only when evidence is
+complete) applied to concurrent arrival.** Write source *values* (evidence fields) to
+the board as they land (live feedback — JD watches data populate), but **compute
+score/route/status only at the per-company barrier** (all three lanes have a *terminal*
+result for that company). This eliminates status flapping: a company never gets a
+*status* on transient partial evidence, so JD never sees Prospect→Low-NYC three minutes
+later (exactly the trust erosion the whole system fights). J1 evidence-hysteresis was
+built for *persistent* gaps, not transient mid-batch ones — don't repurpose it here.
+Two refinements: (a) **the barrier is per-COMPANY, not per-batch** — a company scores
+the moment *its* slowest source lands, the batch doesn't wait for the slowest company;
+(b) **"terminal" includes Unknown/blocked/no-page** (M6's durable "no careers page" is
+a terminal result), so the barrier can't hang forever on a company that genuinely lacks
+a source.
+
+## R4 — Halt semantics: lane-local halt + batch-level report — with a shared-infrastructure caution for concurrent browser lanes
+
+**Ruling: concur — lane-local halt, batch-level report.** A challenge is an *identity*
+event; the breaker halts the challenged identity immediately (no retry, surface to JD),
+and lanes with *unaffected* identities complete their in-flight passes. For **batch 5**
+this is clean: a LinkedIn challenge halts LinkedIn; the careers-API lane (no identity)
+completes freely; the batch ends with explicit per-lane status. **The one refinement
+for when two browser lanes eventually run (batch 6+):** if the challenged lane could
+share infrastructure with another browser lane (same IP/profile), the *other browser
+lane finishes its current company and PAUSES for JD*, rather than blindly continuing —
+a challenge on a shared-IP identity is a caution signal to its neighbors. API/compute
+lanes are never implicated. The batch never ends silently — always a per-lane terminal
+report.
+
+## R5 — Observability: the proposed surface is the right base; add live per-identity risk budget, a COLLAPSED health line, and per-lane liveness
+
+**Ruling: `batch_id` with child per-lane `run_id`s (the tracing parent/child span
+model) is right; the per-lane live line is right. Add three things that make
+*supervised concurrency* actually safe:**
+1. **Live per-identity account-risk budget + tripwire counters** — Sales Nav views/80,
+   challenge count, soft-block count, *per identity*, updating in real time. This is
+   the safety-critical number; it must be visible, not just logged.
+2. **A single collapsed "batch health" line** — because JD cannot watch three lanes at
+   once (R6), the normal state must collapse to *one* glanceable signal ("all lanes
+   nominal") and every exception must *raise itself*. **Supervised concurrency is only
+   safe if JD supervises by exception, not by continuous watching** — otherwise
+   "attended" across three streams is a fiction.
+3. **Per-lane liveness (last-action timestamp)** — to catch a *stuck* lane (silently
+   hung, not halted, not progressing), which success/failure status alone misses.
+
+## R6 — Attended-mode attaches to ACCOUNT RISK, not to the process — the L2 line is per-lane
+
+**Ruling: concur emphatically, and record it as a principle.** Attended-mode exists
+*because of* account-ban risk (the human is the sensor of last resort for a challenge).
+So it is meaningful **only for lanes that carry account risk.** An API/compute lane has
+nothing for a human to protect it from — it is *intrinsically unattended-safe now.*
+Therefore **the L2 line is per-lane, keyed to account risk, not global:** account-bound
+lanes (LinkedIn, Crunchbase) require attended supervision until their L2 caps are
+mechanized; careers-API, scoring, and board-writes are unattended-safe today.
+"Attended under concurrency" = JD watching the collapsed health signal (R5) for the
+*account-risk* lanes. **Roadmap consequence: unattended arrives lane-by-lane** — each
+account-bound lane crosses the L2 line when it's either given mechanized caps OR
+replaced by a non-account instrument. This is *why* the vendor (round-10 Q3) is the
+unattended unlock: it converts the hardest lane (LinkedIn headcount) from account-bound
+to API, moving it across the line.
+
+## R7 — Measure against SERIAL-WITH-INTERLEAVING, not back-to-back; isolate the safe-lane gain from the risky-lane gain
+
+**Ruling: the measurement plan is right; fix the baseline and the threshold.** The
+agent notes they've run passes *back-to-back* (not interleaved), so a gain is likely
+real — but the honest baseline is **serial-WITH-interleaving (G7), not
+serial-back-to-back**, because interleaving is free (no orchestration) and captures the
+"fill the LinkedIn gaps" gain by itself. Measuring the pipeline against back-to-back
+*over-credits* it with gains plain interleaving would also get. So:
+- **Normalize per-COMPANY** (batch 5 is 30–35 vs. batch 4's 20 — compare per-company
+  wall-time).
+- **Use the idle-gap composition data (already planned) to compute the interleaving
+  counterfactual** — if the LinkedIn pacing gaps could absorb the Crunchbase+careers
+  work, interleaving alone gets most of the gain.
+- **Isolate the axes:** batch 5's gain comes from the *safe* careers-API-parallel lane +
+  interleaving. Measure how much the API lane alone buys. **If the safe axis clears a
+  strong margin, you may never need the risky second browser at all.**
+- **Threshold: the pipeline must beat the interleaving counterfactual by ≥~25–30%
+  per-company** to justify the orchestration complexity and multi-lane failure surface
+  — and if hitting the margin *requires* the two-browser lane (the risky part), the
+  risk-adjusted bar is higher. Under the margin → **revert to serial-with-interleaving
+  as the standing pattern** (simpler, safer, no two-browser question).
+
+## R8 — Reconcile during a concurrent batch: sweep at start + a FIELD-LEVEL adopt-check immediately before each board write
+
+**Ruling: concur, sharpened to field-level.** A ~2.5h batch leaves a wide window for JD
+to edit a company while a lane is enriching it — so a batch-start-only sweep is not
+enough. Sweep at batch start (the L5 session-start ritual) **and** run a per-company
+adopt-check immediately before each board write. Make the check **field-level (D3/J4/
+K4):** for each field about to be written, if JD has a newer authored value, adopt it
+if it's a *human-owned* field (never overwrite), and route a *machine-owned* field edit
+through the jd-manual dispute flow (K4 — adopt with provenance, surface the lane's fresh
+measurement as a delta, don't silently overwrite). This is adopt-before-write (L5) at
+the per-company grain — the concurrency doesn't change the discipline, it makes the
+fine grain *necessary*.
+
+## R9 — Scope honesty: the orchestrator/lane split is ~70% the Phase-1 skeleton, not scaffolding — build the permanent seams to Phase-1 quality, mark the interim ones cheap
+
+**Ruling: this is NOT throwaway — draw the seam explicitly and build accordingly.**
+Permanent (build to Phase-1 quality now, you build these once): the **lane abstraction**
+(source producer → typed evidence = the `core/lanes` adapter registry, A5), the
+**guarded-writer + outbox shape** (`core/outbox` + write-guard), the **per-identity
+bulkhead** (already permanent), the **batch_id/run_id observability** (`core/observe`
+correlation), and the **halt/breaker semantics** (resilience stack). Interim (build
+cheap, label clearly, expect to swap): the **orchestrator being a live agent** (→
+replaced by `core/schedule` at autonomy), the **two-tab/interim browser topology** (→
+F2 dedicated profiles), the **in-memory outbox backing** (→ durable table at L2). The
+discipline: **make the permanent/interim seam explicit so the interim parts swap out
+without touching the permanent ones.** Cut as premature for batch 5: the two-concurrent-
+browser topology (R1) — prove the skeleton on the safe axis first. Nothing else is
+premature; nothing permanent should be built to throwaway quality.
