@@ -65,6 +65,11 @@ removing later is a breaking change. Private-by-default everything.
   the contract becomes executable and evolves centrally. Treat new tests as
   breaking changes for implementers (they'll pin; document that). Below a handful
   of implementers, plain integration tests suffice. (Evidence: langchain-tests.)
+- The consumer-side inverse: when *you* depend on a third-party service, pin the
+  behaviors you assume with contract tests in your own suite — response shapes,
+  paging, error forms, consistency timing — so vendor drift fails your CI as a
+  red test instead of failing production. (Evidence: MiroFish's Zep contract
+  tests.)
 - Deprecation deserves machinery, not comments: decorators that emit warnings, a
   beta marker for the opposite lifecycle end, and suppression for *internal*
   callers so only users see warnings — warning noise is interface cost too.
