@@ -99,12 +99,56 @@ without a distributed trace. If you adopt events: events carry facts (what happe
 not commands; consumers must be idempotent; and dead-letter handling is designed on
 day one, not after the first silent data loss.
 
+## Keep projections in sync with a reconcile loop
+
+Any system with a **source of truth and a derived copy** (a datastore and a cache,
+a DB and a search index, a real store and a Notion projection) needs a
+**reconciler**, not just write-through hope (controller-runtime is the canonical
+pattern — studies/controller-runtime.md). A reconciler **compares desired state
+against observed state and acts to converge them** — idempotent, state-based (not
+delta/event-based), correct from *any* starting point. Make it **level-triggered,
+not edge-triggered**: events *trigger* a reconcile, but a *periodic re-converge*
+(requeue-after) heals the events you missed — a dropped write, a crash, a manual
+out-of-band edit. This is the antidote to the entire class of "the copy silently
+drifted from the truth": you stop writing "on event X do Y" and start declaring
+"make the copy match the source," run on a sweep. Requeue-after doubles as tiered
+cadence (hot objects reconcile sooner). Business invariants fit the same mold —
+"a Prospect must be in the outreach list" is a reconcile invariant, not a scripted
+transition: the state machine decides what the state *should* be, the reconciler
+makes the world *match*.
+
+## Durable execution: separate the plan from its side effects
+
+For long-running, multi-step, crash-prone work (a scheduled enrichment session, a
+multi-stage pipeline), the durable-execution model (Temporal —
+studies/temporal.md) is the functional-core/imperative-shell split enforced by a
+runtime: a **workflow** is deterministic orchestration that is *replayed from an
+event history* to survive any crash (no clock/random/I/O inside it); an
+**activity** is each side effect (API call, fetch, LLM call) — recorded in
+history, retried by the runtime under a declared policy, idempotent because
+delivery is at-least-once. Two rules transfer even if you never run the engine:
+put every side effect behind a recorded, retryable boundary so the *whole run*
+resumes from where it died rather than restarting; and let one layer own retries
+(declared policy per step, with non-retryable error types) instead of nesting
+retry loops. Scope honesty (brain/00): adopt the *model* freely; buy the *server*
+only when the operational cost is paid for by real need — a lighter write-ahead
+outbox often gives most of the benefit.
+
 ## Cross-cutting failure design
 
 The architecture-level questions that separate toy systems from production systems:
-- What happens when each dependency is down or slow? (Timeouts on *every* network
-  call, budgeted; retries only on idempotent operations, with backoff and jitter;
-  circuit breaking where fan-out amplifies failure.)
+- What happens when each dependency is down or slow? Wrap every external
+  dependency in the **resilience stack** (resilience4j is the reference taxonomy —
+  studies/resilience4j.md), composed in order: **RateLimiter** (respect the
+  dependency's quota as declared policy, not ad-hoc sleeps) → **TimeLimiter**
+  (a hard deadline on *every* call) → **CircuitBreaker** (closed→open→half-open:
+  fail fast when a dependency's failure rate spikes, stop hammering the dead
+  service, probe to recover) → **Retry** (bounded, backoff+jitter, idempotent ops
+  only, *inside* the breaker's budget) → **Fallback** (return last-known or
+  `Unknown` — never a fabricated value). **Bulkhead** each dependency's concurrency
+  so one slow/dead source can't consume all resources and sink the whole job.
+  Retry handles blips; the circuit breaker handles outages; the bulkhead contains
+  the blast radius — you need all three, not just retry.
 - What is the blast radius of a bad deploy? (Small, rolled-back automatically.)
 - Can every operation be traced end-to-end? (Correlation IDs from edge to store.)
 - What is idempotent and what is not — and is that written down at the boundary?
