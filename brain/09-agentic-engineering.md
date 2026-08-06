@@ -103,6 +103,18 @@ process. Rules that follow:
   BLOCKED to the human). Unbounded fix loops are the agentic version of
   retry-without-backoff (brain/02).
 
+## Diff discipline: agents are guests in the codebase
+
+The agent default for edits is **surgical** (karpathy-skills' formulation): every
+changed line traces directly to the request; match existing style even when you'd
+choose differently; don't "improve" adjacent code, comments, or formatting; mention
+pre-existing dead code, don't delete it; remove only the orphans *your* change
+created. This deliberately inverts brain/03's boy-scout rule, and the resolution is
+ownership: boy-scouting is for owners whose cleanups are cheap to review and trusted;
+an agent's unrequested improvements inflate the diff a human must review and spend
+trust the task didn't earn. An agent granted standing maintenance duties by its
+human is an owner for that scope; otherwise, guest rules apply.
+
 ## Calibrate autonomy by reversibility
 
 Same principle as brain/07 (decide fast when reversible), operationalized:
@@ -110,6 +122,10 @@ Same principle as brain/07 (decide fast when reversible), operationalized:
   before code, merge/ship decisions, anything destructive.
 - **Continuous execution** between gates — "should I continue?" check-ins on planned,
   reversible work waste the human's attention and the agent's momentum.
+- **Autonomy is downstream of verifiability.** Transform imperative tasks into
+  verifiable goals before starting ("add validation" → "write tests for invalid
+  inputs, then make them pass"); with a strong success criterion the agent can loop
+  independently, while "make it work" guarantees clarification round-trips.
 - **Batch questions.** Conflicts and ambiguities found during a scan are presented as
   one consolidated question, not a stream of interrupts.
 

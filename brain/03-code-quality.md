@@ -60,7 +60,9 @@ Quality bar for individual tests:
 
 The sustainable mode is the boy-scout rule plus **preparatory refactoring**: when a
 change is hard, first refactor so the change becomes easy, then make the easy change —
-as two separate commits. "Big refactor projects" that freeze features are usually a
+as two separate commits. (The boy-scout rule presumes ownership and review trust:
+AI agents and drive-by contributors should instead default to surgical, request-scoped
+changes — see brain/09, "Diff discipline.") "Big refactor projects" that freeze features are usually a
 symptom that continuous refactoring was skipped for years; they fail more often than
 they succeed. Never mix refactoring and behavior change in one commit: it makes both
 unreviewable.
