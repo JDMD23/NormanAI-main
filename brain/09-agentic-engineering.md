@@ -88,6 +88,26 @@ The TDD loop transfers directly:
 Behavioral wording that has been tuned this way is load-bearing; don't "clean it up"
 without evidence, the same way you don't reformat a regex you don't understand.
 
+## Two guardrails for LLM output, validated in the field (NormanAI-research)
+
+- **The system decides the label from the evidence — not the model from its own
+  conclusion.** Don't trust an LLM's asserted classification; re-derive it in code
+  from the evidence the model *cited*, and override the model when the evidence
+  doesn't support it. Research does this literally: a claimed NYC angle with no
+  quoted `nycEvidence` is **clamped to "none," whatever the model asserted.** This
+  is stronger than "cite your evidence" (graphify) — it makes the citation
+  *load-bearing*: no evidence, no claim. It's the cheapest, most robust defense
+  against hallucinated facts entering a system of record (the trust boundary,
+  brain/10 #4), and it needs no second model — just a rule that reads the evidence
+  the first one produced.
+- **Don't ask one prompt to serve two opposing objectives.** A single call cannot
+  be both high-recall ("catch everything") and high-precision ("only the certain
+  stuff") — it splits the difference and does neither (Research's stated reason for
+  running *separate* broad and tight prompts with separate thresholds). When a task
+  has two objectives at different points on the precision/recall curve, split it
+  into two prompts, each with its own bar, and merge the results. Generalizes to
+  any multi-objective LLM step: one prompt, one objective.
+
 ## Skills are knowledge deltas, packaged with progressive disclosure
 
 What belongs *in* an agent-facing doc (anthropics/skills, from their production
