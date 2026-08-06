@@ -301,6 +301,26 @@ an agent's unrequested improvements inflate the diff a human must review and spe
 trust the task didn't earn. An agent granted standing maintenance duties by its
 human is an owner for that scope; otherwise, guest rules apply.
 
+## Bounded investigation agents
+
+For an agent that gathers evidence and reasons over it (research, profile/data
+analysis, triage), the disciplined shape (orca is the reference —
+studies/orca.md):
+- **Run a fixed, cheap, deterministic baseline unconditionally** — the pass that
+  covers the common case at a known cost, no LLM in the loop. Do it eagerly and
+  completely.
+- **Treat further tool use as a budgeted, justified exception**, not the default:
+  a hard call-count budget, and an explicit "only fetch what a specific question
+  needs — don't fetch out of curiosity" rule. `budget = 0` must degrade cleanly
+  to reason-over-what-you-have.
+- **Put the price list where the model reasons** — each tool's cost in its
+  description so the agent weighs it; track real spend from provider headers.
+- **Read through a cache of already-collected data** so the budget only spends on
+  genuinely new fetches, never re-buys what the baseline already got.
+- **Enforce grounding by output contract** — mandatory evidence citations with
+  real (never fabricated) identifiers, schema-forced structure — the
+  anti-speculation analogue of the frozen judge.
+
 ## Autonomous experiment loops
 
 The design for agent-driven hill climbing (karpathy/autoresearch is the
