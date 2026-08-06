@@ -7,6 +7,23 @@ your process documentation is an LLM — capable, fast, and prone to specific,
 optimistic self-reports). Elite agentic engineering is ordinary engineering
 discipline re-aimed at that runtime.
 
+## The economics update: write-cost collapsed, carry-cost didn't
+
+AI-assisted coding changed one term in every build-vs-skip tradeoff, and only one
+(gstack's "Boil the Ocean" ethos, honestly resolved). **Write-cost collapsed**:
+decisions that hinged on effort-to-produce — skipping tests, deferring error
+paths, shipping the 90% version of the task at hand — should flip toward
+completeness, because the delta now costs minutes. "That would take too long" is
+a stale reflex when applied to the current task's edge cases. **Carry-cost did
+not collapse**: every line still must be read, reviewed, operated, secured, and
+evolved — by humans and by agents with finite context — so speculative
+abstractions, extra dependencies, and unrequested features cost what they always
+cost. The rule: *be complete on the task at hand; keep the old discipline on
+scope and abstraction.* YAGNI survives because it was never about typing effort
+(brain/00, /01, /07 stand unmodified). Note also which work compresses least —
+architecture and design (~5x vs ~100x for boilerplate) — judgment remains the
+bottleneck, which is this brain's founding premise.
+
 ## Enforce mechanically; persuade only where judgment lives
 
 Prose instructions are probabilistic — observed compliance for skill-style guidance
@@ -160,6 +177,17 @@ proof). The working structure:
 - **Lifecycle buckets with membership invariants** — promoted / public-beta /
   deprecated, where "shipped set = promoted set" is an enforced rule. This prevents
   both catalog decay (ECC) and frozen catalogs (superpowers' closed policy).
+- **Declarative context assembly** (gstack) — a skill's frontmatter can declare
+  *queries* for the context it needs (globs over past artifacts, memory filters,
+  sort/limit, rendered under a heading), assembled at invocation. Context
+  construction as versioned, reviewable data beats imperative "first go read X"
+  prose.
+- **Model overlays** (gstack) — keep skill bodies model-neutral; put per-model
+  quirk correction (verbosity, todo discipline) in separate overlay files with
+  inheritance. Two concerns, two files; no forked skills.
+- **Per-skill tool allowlists** — least privilege applied to skills: a plan
+  review gets read/search tools, not edit. Scope what each skill *can* do, not
+  just what it should.
 
 ## Shared language is context compression
 
