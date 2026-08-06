@@ -117,6 +117,12 @@ context-free, so the division of labor is **prose for judgment, references for
 rare depth, scripts for anything deterministic** — the skill file is a thin
 interface over real software (brain/01, with tokens as interface cost).
 
+Artifacts now have **two readers** — humans and models — with opposite needs
+(hierarchy and highlighting vs one flat, delimited, indexed stream). Design
+outputs for both: render the machine view beside the human view from the same
+pass (rendergit's Human/LLM toggle is the reference). Every export, report,
+and dashboard has this dual-reader question; most answer only half.
+
 When the curated knowledge itself exceeds any context budget (hundreds of styles,
 rules, API entries), retrieval becomes the deterministic part: ship the corpus as
 **structured, schema-validated data plus a boring local search tool** (BM25/regex,

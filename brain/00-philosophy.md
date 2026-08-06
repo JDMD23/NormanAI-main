@@ -55,6 +55,10 @@ microservices for almost every team under ~50 engineers; SQLite or Postgres beat
 distributed database for almost every dataset under a terabyte; a cron job beats a
 queue for almost every workload under thousands of events per minute. Choosing the
 boring, smaller thing is usually the sophisticated move, not the naive one.
+Scope honesty extends to the repo's paperwork: license, governance, and support
+posture should match the artifact's true weight class — and *declaring* that
+posture ("I don't intend to maintain this") serves users better than ceremony
+implying support you won't provide (see studies/rendergit.md).
 
 ## Feedback loops are the real product
 
