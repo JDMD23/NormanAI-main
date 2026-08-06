@@ -20,6 +20,10 @@ For any significant decision:
    choice, consequences. Ten minutes of writing saves the next person a week of
    archaeology and prevents relitigating. A repo with zero ADRs and non-obvious
    architecture is a repo where knowledge lives in one person's head.
+   The trigger gate (all three required, else skip): the decision is **hard to
+   reverse**, would be **surprising without context**, and was a **real trade-off**
+   among genuine alternatives. The best ADRs also record *tested* rejected
+   alternatives with their observed failure, and the invariants the decision creates.
 
 ## Build vs buy vs adopt
 

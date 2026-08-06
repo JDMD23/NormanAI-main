@@ -103,6 +103,40 @@ process. Rules that follow:
   BLOCKED to the human). Unbounded fix loops are the agentic version of
   retry-without-backoff (brain/02).
 
+## Compose skills like modules
+
+A skill library is a codebase; brain/01 applies directly (mattpocock/skills is the
+proof). The working structure:
+- **Primitives** — one well-designed process (an interrogation algorithm) reused by
+  several entry points.
+- **Vocabulary layers** — skills that define a shared language other skills "speak"
+  (domain terms, design terms), each term with an explicit avoid-list of near-synonyms.
+- **Compositions** — entry points that are one-line combinations of primitives and
+  vocabularies. If a skill can't be expressed as a short composition, its primitives
+  are missing.
+- **Explicit invocation policy** — mark each skill user-invoked (a human-chosen entry
+  point) or model-invoked (a helper the agent may pull in). This encodes the autonomy
+  contract per skill instead of leaving triggering to chance.
+- **Lifecycle buckets with membership invariants** — promoted / public-beta /
+  deprecated, where "shipped set = promoted set" is an enforced rule. This prevents
+  both catalog decay (ECC) and frozen catalogs (superpowers' closed policy).
+
+## Shared language is context compression
+
+DDD's ubiquitous language solves an agent problem: a project glossary (CONTEXT.md)
+turns two sentences of circumlocution into one canonical term — paying off in fewer
+thinking tokens, consistent naming, and cheaper navigation, session after session.
+Discipline that keeps it working: the glossary stays *pure* (terms only, no
+implementation details), conflicts with the glossary get challenged the moment they
+appear, and ambiguities are flagged with their resolutions rather than papered over.
+
+For eliciting the language and the design: **frontier interrogation** beats
+one-question-at-a-time. Model the design as a tree of decisions; each round, ask the
+whole frontier (every question whose prerequisites are settled), numbered, each with
+a recommended answer. Split strictly: *facts* are the agent's job (dispatch lookups,
+don't block unrelated questions on them); *decisions* are the human's. Terminate when
+the frontier is empty — nothing left silently assumed.
+
 ## Diff discipline: agents are guests in the codebase
 
 The agent default for edits is **surgical** (karpathy-skills' formulation): every
@@ -116,6 +150,13 @@ trust the task didn't earn. An agent granted standing maintenance duties by its
 human is an owner for that scope; otherwise, guest rules apply.
 
 ## Calibrate autonomy by reversibility
+
+There is also a *system-level* autonomy choice, prior to any single gate: who owns
+the process. Mandatory auto-triggering methodologies (superpowers) buy uniform
+discipline with rigidity; human-invoked composable toolkits (mattpocock/skills) buy
+adaptability with reliance on user judgment. Pick per team: uniform discipline for
+mixed-experience teams, composable control for experts — and either way, build the
+library compositionally (above), which is superior at any point on that spectrum.
 
 Same principle as brain/07 (decide fast when reversible), operationalized:
 - **Hard human gates** at irreversible or direction-setting points: design approval
