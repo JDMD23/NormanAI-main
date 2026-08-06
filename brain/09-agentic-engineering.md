@@ -110,6 +110,18 @@ Corollary for anything that routes on the environment (stack, framework, platfor
 **detect from artifacts, ask when unknown, never default silently** — a hardcoded
 default misroutes every downstream recommendation without ever erroring.
 
+The *generated* sibling of the curated corpus is the project map derived from
+source (graphify): extract **deterministically wherever a parser exists**
+(tree-sitter ASTs are free, local, reproducible — spend LLM only on genuine
+semantics), and label every derived fact by **provenance** — extracted (explicit
+in source) / inferred (deduced) / ambiguous (route to a human). Derived knowledge
+that can't say which of those it is will eventually be trusted wrongly.
+
+When benchmarking an agent system, the fair-comparison standard (graphify's):
+competitors run inside *your* harness under identical model/budget/grader, a
+blind second judge with agreement stats published (kappa), cost as a first-class
+axis beside accuracy, and losses reported as plainly as wins.
+
 ## Interfaces leak harder with LLM consumers
 
 Hyrum's Law (brain/05) applies with more force, not less: an agent will treat any
