@@ -2425,3 +2425,107 @@ they check disjoint failure classes, and neither substitutes for the other.
 ## X6 — Freeze the tree before auditing
 Reviewers read code while the agent edited it; one flagged already-fixed bugs, costing a
 re-verification pass. **Audit a frozen commit, not a moving tree.**
+
+---
+
+# Follow-up rulings (round 18) — independent brain-side audit: the "declared but inert" class
+
+An independent audit (4 lenses disjoint from CRMx's 5: spec conformance, ruling
+conformance, invariant/test integrity, architecture drift) at CRMx tip `b4ee79f`.
+CRMx's own 9 fixes are real and verified. But their audit read the code **against
+itself**; this one read it **against the spec and the rulings** — and found a dominant
+failure mode they structurally could not see.
+
+## Y0 — THE META-FINDING: "declared but inert" is now this codebase's dominant defect class
+Across every lens, the same shape recurred: **a rule that exists in config, code, docs
+and tests — and cannot fire.** Confirmed instances: the eval harness's explanation gate
+(regex can never match the scorer's output, yet gates `make check`); the stall penalty
+(6 pts configured, 0.36 delivered); the no-growth cap (== the demote threshold, so it
+never demotes); three rulings implemented as pure functions with **zero production
+callers** (M2 `check_total`, M3 `classify_row`, L5#5 `changes_tags`); ~720 LOC (13% of
+src) unreachable; dead config keys. **This is more dangerous than an ordinary bug
+because every one of them reports GREEN.** It is X1 (the lock that passed its test)
+generalized from a single incident to a systemic pattern. **Standing rule: a ruling
+implemented as a tested pure function with no production call site is NOT implemented —
+add a CI check that fails when a `src/` symbol's only referents live under `tests/`.**
+
+## Y1 — J1 INVERTED IN PRODUCTION (highest severity in the entire build)
+**Missing evidence demotes a held company by up to two bands** — the exact false
+negative J1 exists to prevent, and the opposite of what the code's own docstring and
+accepted ADR 0004 both assert. Verified by execution: a held Prospect at 40 heads / 2
+jobs scores 62 → Prospect; with heads merely *Unknown* (no new evidence) it scores 41 →
+**Watchlist**. 149 of 540 sampled evidence shapes reproduce it. Cause: the router gates
+band *entry* on evidence completeness, then hands the held company to the same band
+comparison using a score renormalized **without** the missing component — so a company
+whose strength *was* the missing signal collapses. **A failed careers scrape or a
+blocked LinkedIn check silently demotes a real Prospect off JD's board** — and since
+Norman's product is ranked trust, this is the single highest-consequence defect found.
+**Fix:** when `missing >= 1 and in_band`, clamp to no-worse-than-current (a held company
+may rise on partial evidence, never fall). Add the L4 held-position replay (worst/best
+forcing of the missing value) which is also absent.
+
+## Y2 — The eval harness's own safety gate cannot fail (X1, recurring inside the verifier)
+`evals/oracle.py` validates that a score's "why" cites real evidence — via
+`\((\d+) NYC\)` and `\((\d+) NYC roles\)`. The scorer actually emits `(46 NYC metro)`
+and `(10 NYC roles, in-office, 17% of team)`. Both patterns match **nothing**; a "why"
+citing 999 heads passes. It is wired into `make check` and reports a passing gate. **The
+harness built to prove the board is right contains the very defect class it was built
+after.** Fix is two characters — but the durable fix is a test asserting the gate
+*catches* a mutated `why` (a regex coupled to a format string with nothing coupling
+them is X1 again).
+
+## Y3 — A write-authority guard is switched off in the production mutator
+`tools/reconcile_sweep.py:120`: `if CompanyStatus(item.new) in HUMAN_OWNED or True:` —
+the `or True` makes the human-owned test dead code. **Field-level write authority is one
+of the eight invariants**, disabled in the one script that mutates the live board (which
+is itself 261 LOC of untested state-transition logic writing raw SQL around the store,
+with a hand-copied duplicate of the store's identity-key derivation).
+
+## Y4 — Spec conformance: JD's sharpest rules are inert, absent, or inverted
+- **W6 "big but quiet caps at medium" never demotes an incumbent**: `no_growth_signal_cap
+  = 47` is *exactly* `demote_below = 47`; validation only checks the cap against
+  `enter_prospect`. A 200-NYC/0-jobs/stale company scores 47 and **holds Prospect**.
+- **The stall penalty delivers 0.36 of its 6 configured points** (subtracted from a stage
+  sub-score its own gate guarantees is ≤1.07) — a second inert rule of the class CRMx
+  just fixed once. Move it to the post-renormalization adjustments block.
+- **"Big fresh raise = prospect now" (JD's explicit Q6 answer) FAILS**: $50M raised /
+  5 NYC / 0 jobs scores 42 → Tracking.
+- **Industry is not a qualification taxonomy at all.** `reference/target-industries.md` is
+  read by no code; 6 of 10 **core** verticals score 0 — identical to Tobacco, Casinos,
+  Apparel, which are *also not excluded*. Meanwhile **core #8 Biotechnology is hard-routed
+  to NOT_A_FIT** by a hardcoded `EXCLUDED_INDUSTRIES` tuple. **JD must settle this** — an
+  older "JD-confirmed" exclusion contradicts the newer list he supplied; the brain must
+  not resolve it unilaterally.
+- **K2 violated**: a DOM-derived zero is written **Verified** (no corroboration input
+  exists in the schema at all), and that same uncorroborated zero fires the Low-NYC
+  shelf — the Brandlight failure, unmitigated, while ADR 0005 claims the cap is live.
+- **J5's reason enums are declared but never written** by any code path → the machine
+  cannot branch on the distinction the merge was only safe *because of*, and L3's
+  evidence-gated exception is permanently unimplementable.
+- **U2's unrounded rank never leaves the scorer** — not persisted, no column; the board
+  still sorts on the rounded integer with no tiebreak, so the exact ties U2 was written
+  to break survive in the only place JD looks.
+- **A landmine**: `nyc_heads_manhattan` is compared against *metro* `prev_nyc_employees`,
+  so the moment the §3b collector ships, a company growing 200→205 scores 80→58 tagged
+  "SHRINKING". §3b's improvement detonates §8b's near-deal-breaker.
+- Tombstoned companies still draw enrichment checks forever (`due_checks` doesn't filter
+  `removed_at`) — the exact budget waste N2 names.
+
+## Y5 — Architecture: the substrate compounds, the scorer accumulates
+`core/entity`, `core/store`, `core/contracts`, the config loaders and the DB CHECK
+constraints are genuinely strengthening — boring, low-branch, well-tested, reused rather
+than routed around. But `score_company` is a **296-line function, cyclomatic ~80, with
+~22 special cases**, and **15 scoring constants live outside the config its own docstring
+promises they're in**. Every ruling from round 4 onward landed as another `if` in one
+function; none was folded into a reusable mechanism. Plus three dependency inversions
+(`core/` imports `operator/` and `contexts/`). **Verdict: the foundation is sound; the
+scorer is where the debt is compounding, and the verification layer is where it is
+starting to lie.**
+
+## Y6 — The security item is NOT closed (correcting CRMx's report)
+CRMx reported the leaked DB backups "untracked and closed." Untracking removes a file
+from HEAD, **not from history**. Three blobs remain fully retrievable —
+`norman.db.bak-round9` (582 KB), `norman.db.bak-status-migration` (348 KB),
+`norman.db-shm` — containing `companies`, `funding_rounds`, `check_ledger`. JD has made
+the repo private (verified: anonymous reads now fail), which closes ongoing public
+exposure — the important half. The history purge remains outstanding.
