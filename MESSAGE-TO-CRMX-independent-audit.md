@@ -212,19 +212,93 @@ record it as provisional and expect to re-freeze.
 
 ---
 
+## 9. MUTATION TESTING — the strongest evidence, and one rule that supersedes the rest
+
+A fourth lens verified every invariant by **mutation**: delete or weaken the enforcement,
+re-run the suite, see whether anything goes red. Read this section last but act on it
+first, because it changes what "253 tests passing" means.
+
+**Your pure layers are tested exceptionally well** — mutations in the planner, scorer,
+formula loader and projection helpers go red reliably. **Your executors have essentially
+zero coverage.** Root cause: **no test ever runs the sweep in `--apply` mode**, so the
+entire write path — adopt UPDATE, `write_fit`, heal, push, verification, error reporting
+— is executed by nothing. Consequence: **every invariant that ultimately lives in an
+executor reports green while being freely violable.**
+
+Each of the following mutations left the suite **253/253 green**:
+
+- **Reintroducing the original T5 bug passes.** Replacing `store.write_fit(...)` in
+  `reconcile_sweep.py:196` with a raw `UPDATE companies SET fit_score=?` — the exact bug
+  you fixed at the DB-trigger layer — is not caught by any test. The trigger *does* brand
+  it `UNGUARDED-fit-write`, but **`store.unguarded_fit_writes()` has zero production
+  callers**: not in `session_start.py`, not in the Makefile, not in the sweep. The brand
+  is written to a table nobody reads. Detected-but-never-surfaced is not enforcement.
+- **Verified writes are verified by nothing.** Three independent mutations all pass:
+  delete the read-back in `load_notion.py:49`; delete it in `reconcile_sweep.py:239-241`;
+  or make `verify_readback` skip every `Fit:` column. That last one means **X2 is
+  re-openable at will** — `TestVerifiedReadback` builds companies with no fit fields, so
+  a `Fit:` column never appears in any read-back assertion.
+- **The machine can wipe JD's relationship notes and no test notices.** Injecting
+  `props["Relationship Notes"] = {"rich_text": []}` immediately before `api.update_page`
+  is green. Field authority is enforced in the *planner* only; the executor has no check.
+  JD's notes, angles and contacts are the highest-value, least-recoverable data on the
+  board. **One line — `assert not set(props) & HUMAN_PROPERTY_NAMES` before every write —
+  closes it. ~30 minutes, the cheapest high-value fix in the build.**
+
+**Three claims in `docs/invariants.md` are false as written.** A safety doc that lies is
+worse than no safety doc:
+
+| Claim | Reality |
+|---|---|
+| "branded `UNGUARDED-fit-write` and **surfaced by the stability check**" | No stability check exists; `unguarded_fit_writes()` has zero non-test callers |
+| "`make configs` runs **every** loader at the gate" | Runs 4 of 6. `observe.json` — **the tripwire thresholds the budget waiver traded hard quotas for** — and `notion-board.json` are ungated. An incoherent `observe.json` prints "all configs validate" and only crashes at session-start |
+| "a silent fit change is **physically impossible**" | True for `fit_score` only. **The 8 `fit_*` sub-score columns have no trigger at all** — I wrote `fit_employees=99.0` from an external process and nothing was logged. Those are precisely the X2 fields that were being erased |
+
+**Two more X-lesson regressions:**
+- **The bulkhead race test is real but half-blind.** Good news first: against the
+  *original* no-transaction bug it fails 15/15 — it is a genuine race test. But weaken
+  `BEGIN IMMEDIATE` to `BEGIN` and it **passes 15/15 while the losing process dies with
+  an unhandled `database is locked`** — because `results.count("True") == 1` is satisfied
+  by a *dead* process. Assert `sorted(results) == [False, True]` **and** all exit codes
+  zero, over several trials.
+- **X4 was applied to one filename, not to the pattern class.** `norman.sqlite` and
+  `norman-backup-r18.dump` are still merely *untracked*, not ignored, and the
+  tracked-data-artifact CI check has not been added. `make secrets` scans token patterns
+  — which is exactly what X4 said would not catch a `.db` file. Add a `make data-leak`
+  target failing on `git ls-files | grep -iE '\.(db|sqlite\d?|dump|bak)'` plus any
+  `data/` path.
+
+**The rule that follows, and it supersedes several items above:** X1 taught *test the
+race, not the API*. The next layer is **test the WRITER, not the plan.** An invariant
+enforced in a pure function and merely *observed* by the executor is enforced nowhere
+that matters. Any invariant whose violation can only occur in an executor needs a test
+that runs the executor — which for you means **one fake-API sweep test in `--apply`
+mode**. That single test would have caught three of the findings in this section.
+
 ## Recommended order
 
-1. **Fix items 1–3** (J1 inversion, the dead why-gate, the `or True`). These are
-   correctness and safety, and item 1 is actively mis-routing JD's live board.
-2. **Re-run the oracle** — expect the J1 fix to move results; that is the point.
-3. **Answer the tau question**, then **freeze** the baseline as provisional.
-4. **Purge the git history** of the three DB blobs; add the tracked-data CI check.
-5. **Fix the §4 HIGH scoring items** (cap vs demote, stall, fresh-raise, industry
+1. **The 30-minute fix first:** `assert not set(props) & HUMAN_PROPERTY_NAMES` before
+   every `update_page`/`create_page`. It protects JD's least-recoverable data and costs
+   nothing.
+2. **Write ONE fake-API sweep test in `--apply` mode.** It is the single highest-value
+   test in the codebase — it would catch the T5 regression, the read-back gutting, and
+   the human-column clobber all at once. Nothing else in this list has that leverage.
+3. **Fix items 1–3** (J1 inversion, the dead why-gate, the `or True`). Item 1 is actively
+   mis-routing JD's live board right now.
+4. **Correct `docs/invariants.md`** to describe reality: no stability check, 4-of-6
+   config gating, `fit_score`-only trigger coverage. Then close those three gaps —
+   surface `unguarded_fit_writes()` in `session_start` with a non-zero exit, add
+   `load_tripwires()` to `make configs`, add triggers on the 8 `fit_*` columns.
+5. **Re-run the oracle** — expect the J1 fix to move results; that is the point.
+6. **Answer the tau question**, then **freeze** the baseline as provisional.
+7. **Purge the git history** of the three DB blobs; add the `make data-leak` check and
+   fix the ignore patterns for `.sqlite`/`.dump`.
+8. **Fix the §4 HIGH scoring items** (cap vs demote, stall, fresh-raise, industry
    taxonomy + the biotech question to JD, K2 corroboration).
-6. **Add the "no production caller" CI check**, then wire or delete the four orphans.
-7. **Fix the Manhattan/metro comparison BEFORE the careers lane ships** — otherwise the
-   lane's first success detonates a false shrinking penalty across the board.
-8. Then the careers lane.
+9. **Add the "no production caller" CI check**, then wire or delete the four orphans.
+10. **Fix the Manhattan/metro comparison BEFORE the careers lane ships** — otherwise the
+    lane's first success detonates a false shrinking penalty across the board.
+11. Then the careers lane.
 
 Nothing here diminishes the nine you found — those were real and the fixes hold. The
 difference is only the angle: **you validated the code; this validated the code against
