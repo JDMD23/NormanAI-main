@@ -47,9 +47,16 @@ company is **exceeding or failing its stage**:
 - **The early-rocket redemption (W3):** small headcount is **not** penalized — it's a
   strong prospect — when **young (~<1 yr) + seed + funded ($5M+) + hiring hard.** These
   four are JD-tunable config values.
-- **The stall penalty (Q3):** **old + still-early-stage + tiny + not-growing = red
-  flag** (founded 2016, still seed, 6 people, 2 jobs → "real red flag"). Company age
-  relative to stage cuts both ways.
+- **The stall penalty (Q3) — and it is HQ-CONDITIONAL:** small/underwhelming for a
+  mature stage means opposite things depending on HQ, and JD won't read it without HQ.
+  - **NYC-HQ + small at a late stage** (a NYC Series C with only 8 people; or founded
+    2016, still seed, tiny, not growing) = **stall / red flag** — they should be much
+    bigger in NYC by now.
+  - **Non-NYC-HQ + small NYC + actively hiring** (an SF Series C with 8 NYC and 5
+    in-office roles) = **a brand-new NYC satellite being built = exciting, get in
+    early** — not a stall at all.
+  So the stall penalty fires only for **NYC-HQ** companies; for out-of-town HQs, small-
+  but-hiring reads as a fresh NYC office (positive). HQ disambiguates.
 - **Late-stage does NOT cap a grower:** Series D, 300 NYC, 20 in-office jobs → **top
   prospect** (Q4). The discriminator is *growth*, not stage. Mature + quiet → medium.
 
@@ -118,6 +125,14 @@ These are JD-validated *directional truths* — encode as property tests, not co
   NYC people + 0 jobs = **prospect now** ("that cash means imminent hiring"). Funding
   *size* matters **when paired with recency** — big + fresh = about-to-scale-hard; size
   alone on an old round stays mere context (§4).
+- **Current active hiring is the gate to "top"; growth history alone = warm, not top.**
+  A company that grew 10→20 NYC over the year but has **0 open jobs now** is "watch —
+  need current hiring," not a top pick. Trend/history *supports*; live in-office hiring
+  is what earns the top tier.
+- **Missing funding data does NOT penalize** (Unknown≠0 for funding). 25 NYC + 8
+  in-office jobs with *no* funding record on file → "heads and jobs carry it." Absent
+  funding is not a negative when the primaries are present. (Fundraising *pace* — two
+  recent rounds — is only a minor positive tilt; primaries dominate.)
 - **The funding "floor" is conditional — demonstrated traction overrides it.** The
   "can they afford NYC space?" concern applies **only to small/early companies** where
   traction isn't yet visible (the early-rocket $5M gate, §2). A company with **real NYC
