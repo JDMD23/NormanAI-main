@@ -2171,3 +2171,75 @@ the brain's to decide unilaterally.
 - **16 pairs is a small sample.** Treat v1 as directionally strong but not statistically
   deep; the corpus grows from JD's live overrides (T7 capture), and the baseline can be
   re-frozen as it grows.
+
+---
+
+# Follow-up rulings (round 15) — the v2 recalibration verdict + the rescore safeguard
+
+v2 (U0–U6 applied) against the same 23 blind judgments: **tier-match held 7/7, pairs
+15/16 concordant (tau −0.13 → 0.88), sure-inversions 6 → 1, and no previously-correct
+pair broke** (the U6 non-regression test — passed). Eight of nine corrections are now
+the machine's own opinion, achieved by principled root-cause fixes, not corpus-tuning.
+This is the calibration loop working as designed. The agent also **refused to bend the
+formula around the one residual** (Fortuna/Astelia) — exemplary U6 discipline; the
+residual is a diagnosis, not a knob-turn.
+
+## V1 — The Fortuna/Astelia residual: diagnose, don't widen a window for one pair — and it's likely evidence for JD's native-NYC question, not (only) a merge-window bug
+
+**Ruling: do NOT flat-widen the 45-day merge window to fix one pair — that's the
+overfitting U6 forbids, one level up. Diagnose the cause first, because there are two
+candidate fixes and they teach different things.** Astelia edges Fortuna by one point on
+a "measured Fast" from a 54-day seed→A (Jan 2 → Feb 24), nine days past the M1
+corroborated window. Two diagnoses:
+1. **Merge-window (if corroborated):** the M1 wide window is *evidence-gated* — the real
+   signal of "one raise in tranches" is the **corroboration (shared lead investors)**,
+   with the day-count only a secondary sanity bound. **First check: do Astelia's seed and
+   A share lead investors?** If yes, this is an out-of-stealth tranche the 45-day outer
+   bound wrongly excluded, and the principled fix is to **extend the *corroborated*
+   window's bound (~60–90d when leads are shared), not the flat window** — corroboration
+   outweighs exact day-count. That generalizes to every tranche pattern, fixes Astelia as
+   a side effect, and is not a one-pair patch. Re-run the oracle after.
+2. **Native-NYC (if the velocity is genuinely real — different leads):** then Astelia
+   really did raise fast, the formula isn't wrong, and this is a **healthy residual**
+   (U6: don't chase 16/16). But note *why* JD picked Fortuna: **15 native-NYC heads vs
+   Astelia's 2.** Native-NYC is currently a *tiebreak only* (U2) — and a tiebreak cannot
+   overcome a 1-point score edge, so it never fires here. **That makes Fortuna/Astelia a
+   live demonstration that a tiebreak-only native-NYC is too weak to express JD's
+   judgment** — which is direct evidence for U5's open question (should native-NYC be a
+   *scored* component?). A scored native-NYC would let Fortuna's 15-vs-2 advantage
+   outweigh a 1-point velocity edge; a tiebreak can't.
+So: **check the shared-leads first.** Corroborated → M1 corroborated-window refinement.
+Not corroborated → accept the residual and carry it into the U5 decision as evidence.
+Either way, don't widen a flat window around one pair.
+
+## V2 — Rescaling the formula requires rebasing the ENTIRE threshold ladder consistently — not just the Prospect entry line
+
+**Ruling: the rescore is greenlit with one safeguard the report half-addresses.** Because
+v2 rescaled every component (sector 10→5, headcount ladder extended, etc.), all raw
+numbers shifted and the **Prospect entry line rebased 60 → 49** at the validated 49/39
+gap (a clean 10-point moat — good, and *better*-separated than before). But the entry
+line is not the only threshold on the old scale: the **score-hysteresis floor (was 57,
+i.e. 3 below the 60 entry), the Tracking boundary (was 45/42), and any other tier cutoff
+must ALL rebase together and proportionally** — a v2 with a 49 entry but a stale 57 floor
+would put the floor *above* the entry and break demotion protection entirely. Action:
+1. **Rebase every threshold constant consistently** (entry, hysteresis floor, all tier
+   boundaries), preserving each hysteresis gap's intended *width*, not its old number.
+2. **Grep the codebase and configs for any hardcoded old value** (60, 57, 45, 42) and
+   confirm none survives on the new scale — a stale threshold is exactly the silent
+   config drift that mis-routes (config-validated-at-boot, brain/04).
+3. **The replay audit must confirm two things, not one:** tier-match stays 7/7 **and**
+   the hysteresis gaps still protect against flapping at the new scale.
+4. **Show JD every band change before the board updates** (verified-writes / L4) — with
+   the entry line moving 11 points, every company's number changes, so a silent boundary
+   crossing is possible; the pre-update diff is mandatory, not optional.
+Note the moat (49/39) is a *snapshot* of today's 95; new companies (batch 5 s2 onward)
+will land in the 39–49 gap and are precisely the boundary cases to keep feeding the
+corpus (T4).
+
+## The two decisions that are JD's, not the brain's
+- **U5 — native-NYC scored vs tiebreak:** his product-judgment call, now informed by the
+  V1 evidence (a tiebreak-only native-NYC can't overcome even a 1-point edge). The brain
+  states the tradeoff neutrally; JD decides how much "actually a NYC company vs a foreign
+  satellite" is worth to his pursuit.
+- **The go on the rescore:** JD's word triggers it. The process (rescore 95 → replay
+  audit → show every band change → then freeze) is sound and correctly gated.
