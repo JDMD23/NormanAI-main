@@ -145,14 +145,24 @@ Any single failure loses him. This is the acceptance bar for the whole system.
   No throughput ceiling. → the board should be **wide and high-volume** (reinforces
   high-recall); don't artificially cap the "chase" list. More qualified prospects = more
   value; he'll work them all.
-- **Sales cycle is LONG: ~5–6 months (built / move-in-ready space) or ~9–13 months (raw
-  space needing build-out).** The critical implication: **earliness is where the value
-  is.** With a 5–13 month runway to signature, catching a company *when it's obviously
-  in-market is often too late* to build the relationship and win it. So **Norman's
-  highest-value job is catching companies EARLY on leading signals** (hiring ramp, fresh
-  raise, founder-stage) — months before the space need crystallizes. This is why the
-  emerging-stage and early-founder plays matter so much, and why the wide net + catch-
-  early posture is correct, not just a preference.
+- **Three timeline modes — Norman must catch all three:**
+  1. **Emerging / early** — caught on *leading* signals (hiring ramp, fresh raise,
+     founder-stage), often a **9–13 month** runway (raw space, build-out) or ~5–6 months
+     (built / move-in). *This is Norman's core value:* with that long a runway, catching
+     a company *when it's obviously in-market is often too late* to build the
+     relationship and win. Catch them **early**, before the need crystallizes — this is
+     why the emerging-stage and early-founder plays matter, and why wide-net + catch-
+     early is the correct posture, not just a preference.
+  2. **In-market** — actively searching, moving to built space, ~5–6 months.
+  3. **Acute / urgent — young companies that started WAY too late and need space within
+     ~2 months.** High intent, short window, fast close — a **CHASE-NOW** opportunity: if
+     JD is the responsive, market-smart broker during their scramble, he wins. Detect via
+     **acute recent growth** — a sharp hiring/headcount spike in a *young* company with
+     no sign of secured space. Flag these urgent (like the all-signals-maxed tier), keyed
+     on *acceleration*, not just level.
+  Net: Norman catches the **full spectrum** — early-emerging (relationship, long runway)
+  *and* acute-urgent (fast, high-intent). Earliness wins the long deals; responsiveness
+  wins the scrambles.
 
 ## Live threads (update as they resolve)
 - `FIT-SCORING-SPEC.md` — the complete, JD-validated scoring spec (rounds U–W), pending
