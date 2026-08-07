@@ -2645,3 +2645,45 @@ is more sensitive to the circularity in Z1, since the fitted boundary has less s
   labels held-out) and unchanged by the dormant signals (the gate exists precisely to
   catch what the careers lane will shift). Record the baseline as provisional with its
   two caveats: tier-match is fitted, and ~7 collection signals are dormant.
+
+---
+
+# Follow-up rulings (round 20) — the moat correction, and the rounding boundary
+
+**Correction accepted, and theirs is the better instrument.** The brain reported the
+separation moat narrowing to ~1.7 pts; CRMx verified it is **9.83 pts** — the round-18
+fixes (chiefly the no-growth cap moving below the demotion line) widened it back. The
+underlying concern was right but *mislocated*: the fragile number is not the gap between
+classes, it is **how close the nearest company sits to the line** — `nearest_margin =
+0.16 pts` (Brandlight). They now track both and print `<-- FRAGILE` within a point. That
+is a better health metric than the one requested. Note the general lesson: **a class-gap
+statistic and a nearest-to-boundary statistic answer different questions, and only the
+second predicts what will flip.**
+
+## AA1 — Band routing uses the ROUNDED score; ranking uses the raw. The effective Prospect line is therefore 49.5, not 50 — decide and state it.
+Verified in code: `route_status` binds `score = result.score` (the **int**) and every band
+comparison uses it, while `FitResult.raw` is documented "unrounded — RANKING uses this."
+So U2 ("rank on unrounded scores") is honored for *ordering* but **routing rounds** — and
+nobody ever ruled on routing. Consequence: **the effective `enter_prospect` is 49.5**, and
+Brandlight is a live Prospect *only because 49.84 rounds up*. Not a defect — a
+**mechanism that was never decided**, and it is currently what decides a real company's
+band. Two coherent options; pick one and state it in config:
+- **(preferred) Route on `raw`** — then a configured `50` means 50, the integer is purely
+  display, and no company's band is decided by a rounding artifact. Consistent with U2's
+  spirit (the unrounded value is the truth).
+- **Keep rounding**, but record explicitly that each threshold's effective value is
+  `configured - 0.5`, and anchor future thresholds accordingly.
+**Either way this is a gated change**: switching to raw would drop Brandlight out of
+Prospect, so it needs an oracle re-run and JD's review before it lands — not a silent
+fix. It also interacts with the frozen baseline (the threshold was anchored on the
+labeled distribution *under rounding*), so re-anchoring must use the same rule it freezes.
+
+## AA2 — Purge hygiene: the mirror backup is itself a copy of the exposed data
+The pre-purge mirror (`~/Backups/crmx-mirror-pre-purge.git`) **contains the very blobs the
+purge removes** — it is a complete copy of the leaked database. Correct to take it before
+a destructive rewrite; but it must be treated as sensitive, kept local (never pushed, never
+synced to cloud storage), and **deleted once the purge is verified**. A backup taken for
+safety that then becomes the surviving copy of the thing you were removing is a classic
+own-goal. Related standing rule: after a history rewrite, **any stale clone still holding
+the old history can push the purged objects back** — every other clone must be re-cloned
+or hard-reset before it is ever pushed from again.
