@@ -141,6 +141,18 @@ Any single failure loses him. This is the acceptance bar for the whole system.
   cold; honest, fair.** Not a timing exploit or warm-only game — a relationship business.
   So **Norman's job = feed him the right companies + the context/angles/contacts** so a
   credible, well-informed conversation is easy; his selling closes it.
+- **Capacity: effectively unlimited — "as many deals as possible, I have resources."**
+  No throughput ceiling. → the board should be **wide and high-volume** (reinforces
+  high-recall); don't artificially cap the "chase" list. More qualified prospects = more
+  value; he'll work them all.
+- **Sales cycle is LONG: ~5–6 months (built / move-in-ready space) or ~9–13 months (raw
+  space needing build-out).** The critical implication: **earliness is where the value
+  is.** With a 5–13 month runway to signature, catching a company *when it's obviously
+  in-market is often too late* to build the relationship and win it. So **Norman's
+  highest-value job is catching companies EARLY on leading signals** (hiring ramp, fresh
+  raise, founder-stage) — months before the space need crystallizes. This is why the
+  emerging-stage and early-founder plays matter so much, and why the wide net + catch-
+  early posture is correct, not just a preference.
 
 ## Live threads (update as they resolve)
 - `FIT-SCORING-SPEC.md` — the complete, JD-validated scoring spec (rounds U–W), pending
