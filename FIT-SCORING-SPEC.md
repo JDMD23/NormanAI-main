@@ -95,6 +95,12 @@ today.
   §1b). Load-bearing — remote roles barely count.
 - **Job posting dates:** to weight fresh over stale (Q10).
 - **HQ location** and **funding type** (seed/A/B/late) as first-class fields (§2, §3).
+- **Role seniority** per NYC job (exec/senior vs junior) — senior weighs more (§8b).
+- **Valuation direction** — detect down rounds (raised below the prior round) → yellow
+  flag (§8b).
+- **Layoff signals with geography** — was NYC hit or not (§8b); and the news-lane
+  expansion triggers (funding, leadership change, M&A, big account, HC announcement)
+  captured as **outreach angles** (see the operator profile).
 
 ## 7. JD's directional sanity-checks (use as property anchors — T2, kept separate from the corpus)
 
@@ -139,6 +145,24 @@ These are JD-validated *directional truths* — encode as property tests, not co
   headcount + active in-office hiring** (40 people, 12 roles) can obviously afford space
   — "the hiring proves it" — so **funding is moot once traction is demonstrated**, even
   bootstrapped / <$2M.
+- **Role SENIORITY matters — senior/exec NYC hires > junior.** 10 in-office NYC roles
+  that are senior (VP / Director / Head of) beat 10 junior ones (associate/coordinator):
+  senior hires mean a company is **planting a permanent flag — building real leadership
+  and a serious office** in NYC. Weight senior in-office NYC roles higher (requires
+  classifying roles by seniority).
+- **"Everything maxed" is a CHASE-TODAY urgency tier (Priority, not just Fit).** Big NYC
+  team + tons of in-office jobs + a fresh big raise all at once → "drop everything, chase
+  today." Surface these at the very top of the daily action list with an urgency marker,
+  above normal top Prospects. (This is a priority/urgency flag, distinct from the Fit
+  band.)
+- **A DOWN round is a yellow flag.** Valuation *level* is only context, but valuation
+  *direction* is a signal: raising at a **lower** valuation than the prior round →
+  discount / caution until they look stable (requires detecting down rounds). Contrast
+  with a big *fresh* raise (a strong positive) — direction is what separates them.
+- **Layoffs are read RELATIVE TO NYC.** Not a blanket negative: cuts **elsewhere** while
+  **still hiring in-office NYC** = shifting resources *toward* NYC = **positive** (a
+  consolidation-to-NYC signal); cuts that **hit NYC** = avoid. Requires knowing the
+  geography of the layoffs, not just that they happened.
 
 ## 8. Process (U6 / T3 — non-negotiable)
 
