@@ -100,3 +100,59 @@ board is right," not "fill the board faster."** Keep the cheap safe wins (career
 liveness gate); pause the vendor/parallelism/views expansion for one or two rounds and
 spend them on scoring validation + product observability, then start Priority. Finalize
 once the open questions above are answered.
+
+---
+
+## Audit addendum (drift check across git / code / docs)
+
+JD asked for a full audit: is everything pushed and consistent (local, GitHub,
+branches, worktrees), and is there drift to clean up? Ran it against the current tip
+(`b737439`). **Headline: the build is disciplined and tight — there is essentially no
+drift to clean up at the git/code/doc level. The one real drift is build-vs-plan, and
+it is the exact gap the step-back flagged, now confirmed in code.**
+
+**Git hygiene — CLEAN.**
+- NormansBrain: fully pushed, in sync with origin, single worktree, no stray/untracked
+  files, no unpushed commits.
+- NormanAI-CRMx: `main` and `phase-0` point to the **same commit** — phase-0 was merged
+  to main (ADR 0007 honored; the earlier "main lies" drift is resolved). No divergent
+  branches, no stray worktrees, no uncommitted work.
+
+**Code hygiene — TIGHT.**
+- Test count claim **verified: exactly 209.**
+- **No stubs in live paths.** The only `NotImplementedError`s are a deliberate narrow
+  interface (`KnownEntities`, `pragma: no cover - interface`) that the real store
+  implements — dependency inversion done right, not drift. `by_alias` (P2) is already
+  wired with a safe default.
+- **The step-back gaps are CLEAN ABSENCES, not half-built messes** — no partial
+  `priority`/`warm_path`/`evals` scaffolding to rip out (the better kind of gap).
+
+**Doc hygiene — CURRENT & HONEST.**
+- `board-decisions.md` tracks faithfully **through round 11 / batch 5 session 1**.
+- `invariants.md` **names its own two gaps** (all-or-nothing lanes, LLM grounding) as
+  gaps — "a gap is listed as a gap, not papered over." Exemplary.
+- 9 ADRs present and consistent.
+
+**THE ONE REAL DRIFT — build-vs-plan (the important one).**
+The handoff plan (the brain's own instruction) mandated, verbatim: *"build the scoring
+eval harness BEFORE touching the scorer."* Confirmed in code: **there is no `evals/`
+harness, and the scorer is live ranking 95 companies** on invariant tests + two
+directional anchors. The build pulled the scorer forward into production and **dropped
+its mandated validation gate.** This is not an opinion or a "later phase" excuse — an
+explicit *before* was violated. It is the code-level proof of the step-back's central
+finding, and it makes the #1 cleanup item objective: **build `evals/` and validate the
+live scorer.**
+
+**MINOR — ADR lag (not knowledge loss).** ADRs stop at 0009 (round 10). Rounds 10–12's
+architectural decisions — pipeline restraint / skip the two-browser topology (S2),
+vendor-as-unattended-unlock + shadow-mode migration (Q3/S5), careers crossing the L2
+line (S1) — live in `board-decisions.md` but not as ADRs. They're expensive-to-reverse
+decisions and deserve ADRs 0010–0012; the decision log covers them in the interim.
+
+**Cleanup actions.** NormansBrain: none needed (clean) beyond this recorded audit.
+NormanAI-CRMx (build agent, since this session has read-only access): (1) build `evals/`
+and validate the live scorer against JD's judgment — closes the one real drift and the
+step-back's #1 gap in one move; (2) write ADRs 0010–0012 for the rounds 10–12 decisions.
+**Conclusion: the fast cadence did not breed mess — the build is clean and self-honest.
+The only thing that drifted is the one guard rail that was explicitly supposed to come
+first, and it is exactly the thing to fix next.**
