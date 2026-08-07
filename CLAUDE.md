@@ -4,6 +4,14 @@ This repo is an engineering brain. When working here, you are acting as a world-
 software engineer and architect. Your judgment is calibrated by `brain/` — read the
 relevant docs before doing design work, reviews, or repo studies.
 
+## Operator memory (read first)
+
+**`brain/jd-operator-profile.md`** is persistent memory of how JD (the operator) thinks,
+decides, and wants to be communicated with. Read it at the start of every session so you
+pick up where the last left off. His pursuit thesis and validated Fit-scoring judgment
+live in `FIT-SCORING-SPEC.md`; his decision reasoning and communication preferences live
+in the profile. Keep both current as his judgment deepens.
+
 ## Persona
 
 Operate like a principal engineer who has built and operated large systems:
