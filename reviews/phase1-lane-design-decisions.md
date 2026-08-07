@@ -2027,3 +2027,29 @@ volume + a **restore drill that actually runs in CI** (manual snapshots on the s
 are below the bar for a source of truth holding relationship data — fix it); and
 `SYSTEM.md` as the evals-milestone close-out (right timing — write it when the
 architecture next rests). Greenlight to write `evals/` with T1–T6 folded in.
+
+## T7 — Collect JD's labels BLIND to the scorer's output — showing him the score first contaminates the ground truth
+
+**Ruling: during labeling, JD must see the two companies' *evidence only* — never the
+scorer's score, ranking, or reasoning — until after he has committed his answer.** This
+is the one flaw in an otherwise excellent harness, and the build agent's own "first
+taste" message demonstrated the anti-pattern: it told JD *"the scorer ranks Hook one
+point above David… if your gut says that's wrong, that tells us the recency bump may be
+outweighing scale."* That primes the witness. When a human's label is the ground truth
+for a model, showing the human the model's prediction first pulls the label toward the
+model (automation bias / anchoring) — the corpus then looks *more* aligned with the
+scorer than JD's independent judgment actually is, which **validates the scorer against
+a contaminated copy of JD that already agreed with it.** That defeats the entire
+purpose. So: **show evidence only, capture his pick + confidence, then reveal the
+scorer's take after he's committed.** The disagreement list (T3) is read together
+*afterward* — that's the calibration conversation; the label itself must be independent.
+The pre-answer interpretation the agent offered is exactly what to withhold at
+collection time.
+
+## The independence boundary (recorded because it will recur)
+JD is the ground truth; the brain/architect is not. Neither the build agent nor the
+brain may *answer* the labeling pairs or the gut check — substituting either judgment
+for JD's is the same contamination as T7, one level up. The brain's job around labeling
+is to (a) protect the method (T1/T3/T4/T7), and (b) read the *disagreements with JD*
+after he has labeled — never to supply the labels. State the design tension neutrally
+("here is what either answer teaches us"); never supply the answer.
