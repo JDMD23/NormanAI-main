@@ -2366,3 +2366,62 @@ The 10-scenario clickable batch is done. Key resolutions:
   (repo root) — the single source of truth for the recalibration, with directional
   sanity-check anchors (§7) and the U6/T3 apply→re-run→review→freeze process (§8).
   This supersedes the scattered W-notes as the implementable reference.
+
+---
+
+# Follow-up rulings (round 17) — the adversarial audit: five durable lessons
+
+The build agent ran five independent adversarial reviewers and found **nine real
+defects, all fixed with regression tests** — and honestly *declined* to fix two things
+that would have been theater (wiring a breaker to a lane that doesn't exist). That
+restraint is as valuable as the fixes. Five lessons generalize beyond this codebase.
+
+## X1 — A concurrency invariant tested in a single process is NOT tested
+The identity bulkhead (ADR 0009) — the thing protecting JD's real LinkedIn account —
+**had a passing "locking test" and still handed the lease to both agents 5/5 in a real
+two-process race.** The test exercised the API, not the *race*. This is the highest-
+severity class of false assurance: a mechanized invariant (C1) that reports green while
+the property it guards is broken. **Rule: any invariant about mutual exclusion,
+ordering, or atomicity must be tested by actually racing real concurrent processes** —
+single-process tests of a concurrency primitive prove only that the function returns.
+Generalize: *when a test and the failure mode don't share a mechanism, the test is
+decorative.*
+
+## X2 — "Verified write" must round-trip EVERY field, including derived ones
+Two Fit sub-scores were written to the board but never read back, so **every sweep
+silently erased them — up to 14 points of invisible difference** on the leaderboard.
+The verified-write invariant was "in place" but only covered the fields the read-back
+happened to request. **Rule: read-back verification must cover the full projected
+record, or the uncovered fields are unverified by construction.** A partial verification
+is worse than none because it *reports* success.
+
+## X3 — Round-15 V2 vindicated: a rebased scale silently inerts rules that live on the old one
+The "caps at medium" rule **sat above the rebased Prospect line and therefore capped
+nothing** — exactly the threshold-rebasing hazard V2 named (a stale constant on a
+rescaled ladder). Confirms the rule: **when a scale changes, every constant expressed
+in that scale must be rebased together and grepped for**, and rules that reference a
+threshold need a test that the rule *can still fire* (an inert rule is invisible —
+it produces no error, just no effect).
+
+## X4 — Secret-scanning ≠ data-leak scanning; and .gitignore patterns must match real filenames
+The repo was **public with two full database backups committed** — every company, score,
+and JD's Top Pursuit list — because `.gitignore` had `*.db`, which does **not** match
+`norman.db.bak-round9`. Two distinct lessons: (a) **ignore patterns must be tested
+against the actual filenames produced** (a backup naming convention that dodges the
+pattern is the norm, not the exception); (b) **the gitleaks-style secret scan added in
+round 13 would NOT have caught this** — it hunts credential patterns, and this was a
+*data* file. Add a separate CI check: **no data/database/backup artifacts tracked at
+all**, by extension and by directory. The crown jewels leak as data, not as tokens.
+
+## X5 — The eval oracle validates the MODEL, not the PLUMBING — you need both guarantees
+The calibration proved the scoring *rules* match JD's judgment (tau→1.0, tiers 7/7)
+while the *implementation* was concurrently erasing sub-scores, mis-capping, and
+double-leasing. **An eval harness grades the function's judgment; it cannot see that the
+value never reached the board.** Board correctness = (evidence right) × (ranking-given-
+evidence right) × (**implementation actually applies it**) — T6 named the first two;
+this audit adds the third. Adversarial code review is not redundant with a green eval;
+they check disjoint failure classes, and neither substitutes for the other.
+
+## X6 — Freeze the tree before auditing
+Reviewers read code while the agent edited it; one flagged already-fixed bugs, costing a
+re-verification pass. **Audit a frozen commit, not a moving tree.**
