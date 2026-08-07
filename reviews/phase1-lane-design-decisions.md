@@ -2529,3 +2529,56 @@ from HEAD, **not from history**. Three blobs remain fully retrievable —
 `norman.db-shm` — containing `companies`, `funding_rounds`, `check_ledger`. JD has made
 the repo private (verified: anonymous reads now fail), which closes ongoing public
 exposure — the important half. The history purge remains outstanding.
+
+## Y7 — MUTATION TESTING VERDICT: "test the writer, not the plan" (the next layer of X1)
+
+A fourth lens verified every invariant by **mutation** — delete/weaken the enforcement,
+re-run the suite, see if it goes red. This is the strongest evidence in the whole audit
+and it produced a single, generalizable finding:
+
+**This codebase's PURE layers are tested exceptionally well; its EXECUTORS have
+essentially zero coverage — and every invariant that ultimately lives in an executor
+reports green while being freely violable.** Mutations in the planner, scorer, formula
+loader and projection helpers go red reliably. Mutations in the two modules that actually
+touch Notion and the datastore do not. Root cause: **no test ever runs the sweep in
+`--apply` mode**, so the entire write path (adopt UPDATE, `write_fit`, heal, push,
+verification, error reporting) is executed by nothing.
+
+Proven by mutation, all leaving the suite **253/253 green**:
+- **The T5 fix is undefended at the only place it can regress.** Reintroducing the
+  original T5 bug — a raw `UPDATE ... SET fit_score` in place of `store.write_fit` —
+  passes. The DB trigger *does* brand it `UNGUARDED-fit-write`, but
+  `store.unguarded_fit_writes()` has **zero production callers**: the brand is written to
+  a table nobody reads. Detected-but-never-surfaced is not enforcement.
+- **Verified writes are verified by nothing.** Deleting the read-back from `load_notion`,
+  deleting it from the sweep, or making it skip every `Fit:` column — all green. X2 is
+  re-openable at will because the read-back test builds companies with no fit fields.
+- **Field authority is enforced only in the planner.** Injecting
+  `props["Relationship Notes"]` immediately before `api.update_page` — the machine wiping
+  JD's notes every sweep — is green. JD's relationship notes and contacts are the
+  highest-value, least-recoverable data on the board, and the only thing protecting them
+  is planner correctness. One `assert not set(props) & HUMAN_PROPERTY_NAMES` before every
+  write closes it; ~30 minutes, the cheapest high-value fix in the build.
+
+**Three claims in `docs/invariants.md` are false as written** (a safety doc that lies is
+worse than none): "surfaced by the stability check" — no stability check exists;
+"`make configs` runs every loader" — it runs 4 of 6, and the two ungated are
+`observe.json` (the tripwire thresholds the budget waiver traded hard quotas *for*) and
+`notion-board.json`; "a silent fit change is physically impossible" — true only for
+`fit_score`; **the 8 `fit_*` sub-score columns have no trigger at all**, which are
+precisely the X2 fields that were being erased.
+
+**Two further X-lesson regressions:** (a) the bulkhead race test is *real* against the
+original bug (fails 15/15) but **half-blind** — weakening `BEGIN IMMEDIATE` to `BEGIN`
+passes 15/15 while the losing process dies with an unhandled exception, because
+`results.count("True") == 1` is satisfied by a **dead** process; assert
+`sorted(results) == [False, True]` **and** all exit codes zero, over multiple trials.
+(b) **X4 was applied to one filename, not to the pattern class** — `norman.sqlite` and
+`norman-backup-r18.dump` are still merely *untracked*, not ignored, and the
+tracked-data-artifact CI check X4 called for was never added (`make secrets` scans token
+patterns only, which X4 explicitly said would not catch this).
+
+**The durable rule, extending X1:** X1 said *test the race, not the API.* The next layer
+is **test the WRITER, not the plan** — an invariant enforced in a pure function and
+merely *observed* by the executor is enforced nowhere that matters. Any invariant whose
+violation can only occur in an executor must have a test that runs the executor.
