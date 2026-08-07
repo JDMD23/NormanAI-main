@@ -2307,3 +2307,42 @@ signal is built regression-safe and validated as history grows. **All of W0–W3
 provisional pending JD's confirmation of this synthesis** — especially the stage-relative
 framing (W0/W3), which is the brain's *interpretation* of his Q4 and must be his call,
 not an inference imposed on him.
+
+## W5 (2nd interrogation batch) — in-office/hybrid NYC roles >> remote roles: the single most direct office-space signal
+JD, unprompted-strength: in-office vs remote is **"much better,"** a *big* score
+difference. This is the purest office-space signal on the board and likely isn't yet in
+the scorer (a raw NYC-jobs count doesn't distinguish location-type). **Classify every NYC
+job as in-office / hybrid / remote; only in-office & hybrid count strongly toward the
+growth/desk-demand signal; fully-remote roles get minimal credit** (they generate no desk
+need). This sharpens M4 (US-wide/remote postings) from a Low-NYC *exit* question into a
+*positive scoring* dimension: remote hiring ≠ office demand.
+
+## W6 (2nd batch) — Growth is NECESSARY for a top score; size amplifies growth, never substitutes
+"200 NYC employees, no jobs, no recent funding, 8 years old" → JD: **"only medium — I
+need a growth signal."** So a big-but-quiet company **caps below top tier** regardless of
+size. Reconciles cleanly with the prior batch (big-*steady*-with-10-jobs ranks *close* to
+small-exploding) — the dividing line is **any growth vs zero growth**: some in-office
+hiring or fresh funding keeps a big company strong; *none* caps it at medium. Encode a
+soft cap: no growth signal ⇒ cannot reach the top band on headcount alone.
+
+## W7 (2nd batch) — Overall momentum can outweigh NYC-concentration; funding is a SECONDARY/contextual signal, not a ranker
+- **Momentum over concentration:** given "10 NYC + 2 elsewhere" vs "10 NYC + 50 Austin,"
+  JD picked the **bigger overall grower** — a hot company is attractive even when NYC is
+  a minority share, *as long as the NYC piece is real and in-office*. So **do NOT
+  over-penalize "NYC is a small share of their growth"; penalize only THIN/TOKEN NYC
+  presence** (the Astelia case). NYC-concentration is a weak factor; overall momentum is
+  strong.
+- **Funding is contextual, not primary:** asked to rank two companies on funding
+  recency-vs-size, JD refused and asked *"what are the NYC headcounts, HQ, and how many
+  roles?"* — i.e. **he will not rank on funding without the primaries first.** Primaries
+  = **NYC in-office headcount + in-office roles + HQ**; funding *recency* is a minor
+  timing tilt (fresh money = about to spend), funding *size* is context. Funding joins
+  sector/investor in the down-weighted tier (U4). **Process lesson: every scenario must
+  carry the primary stats (heads / HQ / roles) — JD reasons primaries-first.**
+
+## W8 — Open tension for JD to reconcile (being resolved by the next batch)
+Native-NYC preference (Fortuna's 15 native heads > Astelia's 2 — U5) vs momentum-over-
+concentration (W7, picked the SF/Austin grower). Hypothesis to confirm: JD penalizes
+*thin/token* NYC presence, not *minority-share* NYC growth — so HQ/native-NYC should be a
+**modest** signal, not dominant. Being isolated in the next batch by holding NYC heads +
+roles equal and varying only HQ. His call, not the brain's.
