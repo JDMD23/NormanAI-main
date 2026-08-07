@@ -2582,3 +2582,66 @@ patterns only, which X4 explicitly said would not catch this).
 is **test the WRITER, not the plan** — an invariant enforced in a pure function and
 merely *observed* by the executor is enforced nowhere that matters. Any invariant whose
 violation can only occur in an executor must have a test that runs the executor.
+
+---
+
+# Follow-up rulings (round 19) — the circularity disclosure, and what each eval metric actually proves
+
+CRMx fixed all three criticals (J1 fix independently re-verified: absence now holds,
+a *measured* collapse still demotes) and then **volunteered a methodological flaw nobody
+would have found**: the threshold ladder was re-anchored using the labeled distribution,
+so **tier-match 7/7 is partly circular** — JD's tier labels chose the boundary those same
+labels are then measured against. Their own distinction is exactly right and worth
+recording: **pairwise tau is unaffected** (pairs compare *scores*, never bands), only
+tier-match is implicated. Reward this behavior explicitly; a build agent that surfaces its
+own confound is worth more than one that reports clean numbers.
+
+## Z1 — A threshold fitted to labeled data cannot be validated BY that data. Re-label what each metric proves.
+This is train-on-your-test-set, and with 7 tier labels and one free parameter (the
+boundary) a 7/7 result is near-guaranteed whenever the labels are separable at all. So:
+- **Tier-match 7/7 proves SEPARABILITY, not ACCURACY** — "there exists a threshold that
+  cleanly separates JD's reals from his not-reals." That is a real and useful property
+  (the score *ordering* is consistent with his tier judgments) but strictly weaker than
+  "the scorer classifies correctly." State it that way in the eval report; do not carry
+  7/7 as an accuracy claim.
+- **Pairwise tau 1.0 IS a genuine out-of-sample result** on the pairs — nothing about the
+  band boundary enters a pairwise comparison. Keep it as the headline metric.
+- **Freezing is the fix, not a compromise.** Once the threshold is frozen, every *future*
+  tier label — from JD's live overrides, from new batches — is **held-out by
+  construction**, and tier-match becomes a true validation metric from that moment on.
+  **This is now an argument FOR freezing now, not against it.**
+- **Standing rule:** any metric computed against data that informed a fitted parameter is
+  a *fit* statistic, not a *validation* statistic, until fresh data arrives. Label eval
+  outputs accordingly (fitted / held-out) so the distinction can't quietly erode.
+
+## Z2 — The separation moat narrowed from ~10 points to ~1.7 — a robustness signal to watch
+Round 15 reported a "clean ten-point moat" (lowest real 49 vs highest not-real 39). After
+spec v3 + the bug fixes, the boundary sits between **Flint 50.4 (real)** and **Fig 48.7
+(not-real)** — a **1.7-point** gap. The threshold is therefore far more fragile than it
+was: small scoring changes (and the ~7 dormant collection signals *will* be a large one)
+can flip companies across it. Not a defect — but **track the margin as a health metric**,
+and expect the careers lane to disturb it. A narrow moat also means the tier-match result
+is more sensitive to the circularity in Z1, since the fitted boundary has less slack.
+
+## Z3 — The four decisions on JD's desk (rulings where they're the brain's; framing where they're his)
+- **History purge — GO, with precautions.** The blobs are JD's commercial data, not
+  credentials, and the repo is now private, so the marginal risk is real but bounded.
+  Purge anyway (cheap insurance against future collaborators/re-publication): take a full
+  `--mirror` backup clone first, run it when no other work is in flight, and note the
+  force-push is safe here because JD is the only committer.
+- **Biotech — JD's call, but the question is probably mis-framed.** The likely reason for
+  the original exclusion is **lab space, not the industry**: wet-lab biotech is a
+  specialized market. But his own list's core #8 names *AI drug discovery, genomics,
+  diagnostics, research tools, clinical-trial technology* — several of which are ordinary
+  **software** companies that take ordinary office space. So the sharp question is not
+  "biotech in or out?" but **"is the exclusion about the industry, or about wet-lab
+  space requirements?"** If the latter, the correct rule is *exclude wet-lab, keep
+  biotech-software* — a different and better rule than either current option.
+- **Pro Padel League → Removed / mis-sourced** (confirming the earlier ruling): it was
+  never a qualified candidate (off-taxonomy), so it is a data-quality exit, and the
+  mis-sourced tombstone makes rediscovery skip it permanently. Do-Not-Pursue is reserved
+  for *real* targets rejected on business grounds.
+- **Freeze now, as provisional** — strengthened by Z1 (freezing is what makes future tier
+  labels held-out) and unchanged by the dormant signals (the gate exists precisely to
+  catch what the careers lane will shift). Record the baseline as provisional with its
+  two caveats: tier-match is fitted, and ~7 collection signals are dormant.
