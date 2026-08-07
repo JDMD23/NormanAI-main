@@ -2243,3 +2243,67 @@ corpus (T4).
   satellite" is worth to his pursuit.
 - **The go on the rescore:** JD's word triggers it. The process (rescore 95 → replay
   audit → show every band change → then freeze) is sound and correctly gated.
+
+---
+
+# Follow-up rulings (round 16) — JD's pursuit thesis, refined via interrogation (PROVISIONAL, pending JD's confirmation + oracle re-validation)
+
+Four scenario questions to JD nailed down what "high-growth NYC hiring" means to him.
+His answers (verbatim intent): Q1 size-vs-growth → *rank them close, for different
+reasons*; Q2 what-excites → *both ratio and absolute, strongest together*; Q3 trend →
+*track the numbers going up over time*; Q4 too-small → *"5–10 person is ok if they're
+seed, founded within ~a year, funding over $5M, and solid job hiring — a 6-person
+company with 4 jobs posted."* These convert to scoring direction below. **Provisional:
+reflected back to JD for confirm; changes the formula so they re-run the oracle (tiers
+must hold 7/7, concordance hold-or-improve) before anything freezes.**
+
+## W0 — The refined thesis: TWO comparably-weighted primary signals, and headcount judged RELATIVE TO STAGE
+Norman rewards **bodies-needing-desks-now (NYC headcount)** *and* **about-to-need-more-
+desks-soon (growth/hiring)** — Q1 says rank these *close*, so neither dominates such that
+a big-steady company sits far from a small-exploding one. And the deep insight from Q4:
+**size is read relative to stage.** A 6-person *seed* company hiring 4 is *exceeding*
+expectations for its stage; a 6-person *Series-A* company hiring 0 is *failing* them —
+same 6 heads, opposite signals. This is the positive mirror of the existing stage-
+relative *small-NYC exit* (Series A + ≤5 heads + 0 jobs → Low NYC): the scorer already
+demotes small-for-stage; it must now *reward* small-but-exceeding-stage.
+
+## W1 (Q1+Q2) — Add a real growth/hiring signal, comparably weighted, = absolute jobs + jobs/heads RATIO, strongest when both are high
+Open NYC jobs must score on **two dimensions, not one raw band**: the **absolute count**
+(desks coming) *and* the **jobs-to-headcount ratio** (10 jobs on 15 people = ~67% =
+exploding; 10 on 300 = routine). Score both; the strongest signal is high-ratio +
+high-absolute together (Q2). Weight the whole growth signal **comparably to the headcount
+signal** (Q1) — calibrate so the archetypes "15 heads + 10 jobs (exploding)" and
+"200 heads + 10 jobs (steady)" land *near each other*, not one far above. The **ratio is
+computable from today's snapshot** (jobs/heads), so it is buildable *and corpus-
+validatable now*.
+
+## W2 (Q3) — Hiring TREND over time is a signal — build it now, validate it later
+JD wants **acceleration**: jobs and headcount *rising* over time (3 → 6 → 10) beats
+high-but-flat. Build a trend component off the change-log/history substrate (heads-over-
+time, jobs-over-time). **Precision the corpus forces:** JD labeled *evidence snapshots*,
+which carry little/no trend history — so the trend component **cannot be validated
+against corpus v1** (it's a dimension the labels don't contain). Therefore: build trend
+so it **doesn't break the 23 pairs** (regression-safe), but its *positive* value is
+validated **later**, as history accumulates and JD labels trend-aware pairs. Distinguish
+the **ratio (now, validatable)** from the **trend (accumulates, validate later)** — don't
+let an unvalidatable trend term swing current rankings hard until it has data.
+
+## W3 (Q4) — The "early rocket" profile: small headcount is NOT penalized (and can be a strong Prospect) when young + seed + funded + hiring-hard
+Encode JD's exact profile as a stage-relative *redemption* of small size: a company with
+low NYC headcount still scores as a strong prospect when it clears a corroborating gate —
+**recently founded (~<1 yr) AND seed stage AND funding > $5M AND a high hiring ratio**
+(his example: 6 people + 4 jobs). This catches the first-office moment before anyone
+else. All four thresholds are **JD-tunable config** (J6): `young_months`, `seed stage`,
+`min_funding_$M = 5`, `min_hiring_ratio`. Conversely the existing stage-relative *exit*
+stays — small + late-stage + not-hiring still shelves. **Net: expectation of headcount
+scales with stage; beating your stage is a positive, failing it is a negative.**
+
+## W4 — Process: re-validate against the corpus; ratio-now vs trend-later; provisional until JD confirms
+These are formula changes → the U6/T3 loop applies: apply → re-run the oracle → confirm
+**tiers hold 7/7** and pairwise concordance **holds or improves** (the ratio component
+should *improve* it — it captures what JD labeled toward) → review the delta with JD →
+only then freeze. The ratio + early-rocket signals are corpus-validatable now; the trend
+signal is built regression-safe and validated as history grows. **All of W0–W3 are
+provisional pending JD's confirmation of this synthesis** — especially the stage-relative
+framing (W0/W3), which is the brain's *interpretation* of his Q4 and must be his call,
+not an inference imposed on him.
