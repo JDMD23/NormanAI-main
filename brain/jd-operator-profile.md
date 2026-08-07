@@ -83,6 +83,28 @@ this captures the *person and the reasoning*.
 - **Genuine uncertainty → ASK him.** When data is thin or conflicting, surface it as a
   **question for him to weigh in on** (human-in-the-loop review) — never hide it, never
   silently guess. He wants to be the tiebreaker on real uncertainty.
+- **Expansion events are OUTREACH ANGLES, not ranked signals.** He doesn't rank funding
+  vs. HC surge vs. big-account vs. acquisition vs. new-exec — "all of them give me an
+  angle." The news lane should capture *all* of them, each tagged as a usable outreach
+  hook that feeds the **Current Angle** field — not just as a fit signal.
+- **Tight recency for "act now."** A signal has to be **last-few-weeks fresh** to count
+  as live momentum worth a ping. Older events are weaker context, not strike-triggers.
+- **Re-engagement trigger = a rise in NYC hiring on the careers page.** A passed/shelved
+  company comes back the moment its NYC roles increase. So **keep monitoring shelved
+  companies' careers pages** (lower cadence) and re-surface on a hiring uptick — shelved
+  is never dead.
+
+## What his trust requires (the product rests on all four — fail one, lose him)
+Asked what would make him stop trusting the board, he said **all of them.** So "ranked
+trust" stands on four pillars, each mapping to a build investment:
+1. **Correct data** — no wrong numbers (verified writes + instrument cross-checks).
+2. **Complete discovery** — no obvious prospect he finds elsewhere is missing (coverage
+   + the high-recall wide net).
+3. **Freshness** — the board keeps up with changes he knows happened (reconcile loop +
+   news lane + re-checks).
+4. **Ranking that matches his gut** — no weak company above a strong one (the scoring
+   eval/calibration).
+Any single failure loses him. This is the acceptance bar for the whole system.
 
 ## Live threads (update as they resolve)
 - `FIT-SCORING-SPEC.md` — the complete, JD-validated scoring spec (rounds U–W), pending
