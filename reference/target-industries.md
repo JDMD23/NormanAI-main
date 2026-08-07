@@ -29,9 +29,14 @@ The overlay tags are cross-cutting attributes, not industries.
 7. **Healthcare Technology** — clinical workflows, revenue-cycle management, ambient
    documentation, diagnostics, patient engagement, care delivery, mental health,
    pharmacy, healthcare infrastructure.
-8. **Biotechnology & Life Sciences** — AI drug discovery, therapeutics, genomics,
-   diagnostics, research tools, lab automation, synthetic biology, clinical-trial
-   technology, biomanufacturing.
+8. ~~**Biotechnology & Life Sciences**~~ — **EXCLUDED (JD ruling, 2026-08-07).** Listed
+   here originally in error. JD confirmed the existing hard exclusion is correct: biotech
+   and therapeutics are **not** targets and route to Not a Fit, regardless of NYC
+   headcount or hiring. This ruling settles the contradiction between this list and
+   `EXCLUDED_INDUSTRIES` in the scorer — **the code was right, the list was wrong.**
+   (Asked explicitly whether the exclusion was really about *wet-lab space* rather than
+   the industry — i.e. whether biotech *software* should be kept — JD chose to exclude
+   the whole vertical.)
 9. **Robotics & Advanced Manufacturing** — industrial robots, humanoids, warehouse
    automation, computer vision, autonomous inspection, factory software, additive
    manufacturing, predictive maintenance.
@@ -73,6 +78,11 @@ Cybersecurity & privacy · Climate & decarbonization · Deep technology · Hardw
 Blockchain & tokenization · Spatial computing · Quantum technology · Synthetic biology ·
 Data network effects · Marketplace · Regulated-industry technology · Government customer ·
 Physical infrastructure · Critical-infrastructure technology
+
+## Hard exclusions (never targets, regardless of NYC signals)
+- **Biotechnology, life sciences & therapeutics** (JD ruling 2026-08-07 — see core #8).
+- Plus the standing exclusions already in the router: repped / CBRE conflict, too-big /
+  enterprise, and any off-list vertical.
 
 ## How Norman should use this
 - **Discovery:** source candidates from these verticals (core first).
