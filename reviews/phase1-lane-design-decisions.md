@@ -2346,3 +2346,23 @@ concentration (W7, picked the SF/Austin grower). Hypothesis to confirm: JD penal
 *thin/token* NYC presence, not *minority-share* NYC growth — so HQ/native-NYC should be a
 **modest** signal, not dominant. Being isolated in the next batch by holding NYC heads +
 roles equal and varying only HQ. His call, not the brain's.
+
+## W9 — Second scenario batch complete; U5 RESOLVED; consolidated spec written
+The 10-scenario clickable batch is done. Key resolutions:
+- **U5 (native-NYC) RESOLVED:** NYC-HQ is a **meaningful scored component** (JD:
+  "clearly better" at equal hiring, Q9), **but modest** — a large growth/momentum gap
+  overcomes it (Q3), and real NYC hiring carries a satellite (JD's SF example). Not a
+  tiebreak-only; not dominant.
+- **Scale leads, growth amplifies:** the archetype ranking (B-40 > A-15 > seed-6)
+  shows absolute NYC headcount is the primary driver even against higher growth ratios;
+  growth compresses the gap (small-rocket redeemed) but doesn't overturn scale.
+- **Growth is REQUIRED for top tier** and can be satisfied by in-office hiring **or** a
+  fresh substantial raise (Q6); big-but-quiet caps at medium (Q8).
+- **Stage-relative confirmed hard** (seed-25 > B-25, Q7); **stall penalty** added
+  (old + still-early + tiny → red flag, Q3).
+- **Job freshness matters a lot** (fresh posts ≫ 5-month-stale, Q10); **in-office ≫
+  remote** (W5) reconfirmed.
+- **The complete, JD-validated Fit-scoring spec is written to `FIT-SCORING-SPEC.md`**
+  (repo root) — the single source of truth for the recalibration, with directional
+  sanity-check anchors (§7) and the U6/T3 apply→re-run→review→freeze process (§8).
+  This supersedes the scattered W-notes as the implementable reference.
