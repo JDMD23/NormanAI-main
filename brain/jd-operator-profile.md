@@ -67,6 +67,23 @@ this captures the *person and the reasoning*.
 - **Recently signed a lease is NOT a deal-breaker** — it's a *deprioritize + track*:
   keep them, rank them low, watch for the next expansion (they re-enter the market).
 
+## What Norman should do for him (surface, alerting, uncertainty)
+- **Lean high-recall.** He wants a **wide net with some noise** — "I'd rather filter
+  than miss a good one." Err toward *surfacing*; don't over-shelve. The cost of missing a
+  real prospect outweighs the cost of some weak ones on the board. (Tune thresholds
+  permissive; keep the Low-NYC exit conservative.)
+- **Layered surface.** A **short daily "chase these" action list on top, the full ranked
+  universe underneath** to explore. (Validates the working-views design: a tight ranked
+  Prospects view + the full board.)
+- **Ping triggers = business-EXPANSION events** (the "strike now" moments, and the
+  effective news-lane signal set): **new funding, leadership change, an acquisition they
+  made, a big account/customer win, an announced headcount increase.** These are worth
+  interrupting him for on companies he tracks. (Lease-signing is a secondary "adjust
+  down" signal, not one of his named strike-triggers.)
+- **Genuine uncertainty → ASK him.** When data is thin or conflicting, surface it as a
+  **question for him to weigh in on** (human-in-the-loop review) — never hide it, never
+  silently guess. He wants to be the tiebreaker on real uncertainty.
+
 ## Live threads (update as they resolve)
 - `FIT-SCORING-SPEC.md` — the complete, JD-validated scoring spec (rounds U–W), pending
   application + oracle re-run + his rescore review + freeze.
