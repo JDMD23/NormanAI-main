@@ -121,6 +121,27 @@ Any single failure loses him. This is the acceptance bar for the whole system.
   company signals set fit/rank, warm-path availability sets timing. (Plus all-signals-
   maxed = a chase-today tier.)
 
+## Business model & how he wins (his economics — the layer under the scoring)
+- **Dual pursuit strategy, both valued:** (1) **larger deals** for near-term value, AND
+  (2) **getting into a young company early and working directly with the founder**, who
+  then trusts him — the long game. This resolves "scale leads vs. seed-rocket is
+  exciting": they serve *different* goals. The seed rocket is a **relationship play**
+  (be the trusted broker before anyone else, win their space now and as they grow), not
+  just excitement. Norman should surface **both** modes.
+- **Deal-size proxy (captured, NOT yet scored — his call):** project NYC space need as
+  **NYC headcount × 170 RSF/employee**. This is *why* scale leads (more heads → more RSF
+  → bigger deal). He explicitly said **do not estimate deal size in the scoring yet** —
+  hold the formula for later; don't build it in now.
+- **Target contacts (for warm_path + outreach):** CEO, founder, co-founder, COO, CFO,
+  Chief People Officer, Head of Ops, Head of Finance, Head of People, VP of Ops, VP of
+  People, VP of Finance, Chief of Staff, **Head of Workplace, Head of Real Estate.**
+  (Note: a company *hiring* for Head of Workplace / Head of Real Estate is both a strong
+  space signal *and* names the exact person to reach.)
+- **His edge:** case-by-case; **strong people skills + real market knowledge; operates
+  cold; honest, fair.** Not a timing exploit or warm-only game — a relationship business.
+  So **Norman's job = feed him the right companies + the context/angles/contacts** so a
+  credible, well-informed conversation is easy; his selling closes it.
+
 ## Live threads (update as they resolve)
 - `FIT-SCORING-SPEC.md` — the complete, JD-validated scoring spec (rounds U–W), pending
   application + oracle re-run + his rescore review + freeze.
