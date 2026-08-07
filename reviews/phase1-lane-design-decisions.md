@@ -2053,3 +2053,121 @@ for JD's is the same contamination as T7, one level up. The brain's job around l
 is to (a) protect the method (T1/T3/T4/T7), and (b) read the *disagreements with JD*
 after he has labeled — never to supply the labels. State the design tension neutrally
 ("here is what either answer teaches us"); never supply the answer.
+
+---
+
+# Follow-up rulings (round 14) — first calibration verdict: the scorer had drifted from Norman's thesis; JD's blind labels re-centered it
+
+The oracle ran on corpus v1 (16 pairs + 7 verdicts, labeled blind per T7, frozen
+evidence, nothing frozen per T3). The result is unusually clean and it is *good news*:
+**tier-match 7/7** (every real→Prospect, every not-real→shelved — the board's structure,
+thresholds, and twelve rounds of evidence rules are validated) and **all 9 pairwise
+disagreements sit at margins of exactly 0 or 1 point** — the scorer is never wrong at a
+distance, only in photo-finishes, and it stumbles in one consistent direction.
+
+## U0 — The unifying diagnosis: the scorer diluted its own purpose with proxies
+
+Every one of JD's nine corrections points the same way: **credit concrete NYC
+space-demand (headcount + hiring) more, and let proxy signals (sector, investor tier,
+estimated velocity) matter less — never enough to override concrete demand.** Norman
+exists to find companies that need NYC office space; the purest signal of that is NYC
+headcount and NYC hiring. The scorer had quietly let proxies (industry 2/10 sank David's
+92 heads + 29 jobs; est-velocity outvoted measurement; investor tier broke ties) dilute
+the direct signal, and it stopped crediting headcount too early. **JD's blind judgment is
+not idiosyncratic — it is the product thesis correcting the model.** That is the frame
+for all four remedies. Two guardrails on the whole exercise (U6) matter as much as the
+fixes: fix *principled root causes*, never tune weights to pass 16 pairs; and 100%
+concordance is NOT the goal (a scorer that perfectly fits 16 human calls is overfit).
+
+## U1 (remedy a) — Regrade headcount as a monotonic ladder that keeps earning past ~50 — finer bands alone still plateau
+
+**Ruling: adopt, but the fix is finer bands *plus an extended ceiling*, not just finer
+bands.** The bands collapse exactly where the board lives (15–50 ties 20 vs 45; the top
+band ties 84 vs 8). Finer bands reduce the plateau but any band still collapses values
+inside it, and the deeper problem the diagnosis names is that **the component saturates
+too early while JD keeps scaling with heads.** So: replace the head (and jobs) step-
+function with a **monotonic ladder that keeps rewarding headcount well past 50** (e.g.
+50–75 / 75–100 / 100+), gently diminishing but never flat — or a continuous curve with
+the same shape. This fixes disagreements 1, 3, and the 84-vs-8 saturation ties, and it
+directly encodes JD's "more NYC heads keeps mattering." Keep it legible and JD-tunable
+(the ladder stays config, J6).
+
+## U2 (remedy b) — Rank on unrounded scores + a deterministic tiebreak in JD's revealed order — but know it fixes *rounding* ties, not *saturation* ties
+
+**Ruling: adopt — rank on the unrounded score (display stays integer), with a
+deterministic tiebreak for genuine ties.** Encode the tiebreak in **JD's revealed order:
+NYC heads → NYC jobs → native-NYC-over-foreign** (see U5). Important precision the
+diagnosis blurs: unrounded ranking fixes **rounding** ties (two companies at 57 differing
+below the decimal — Fin vs Complyance), but it does **not** fix **saturation** ties (84
+vs 8 both maxing the band — Marble vs AegisAI); those are U1's job. Both are needed and
+they fix different ties. Low-risk, clearly correct.
+
+## U3 (remedy c) — The tension dissolves: an ESTIMATE and a NOT-APPLICABLE metric are different things. Treat velocity in three states.
+
+**Ruling: adopt both halves — they only conflict if you conflate "estimated" with
+"not-applicable," and the system already has the right tool for each.** Distinguish three
+velocity states and treat each by an existing principle:
+1. **Measured** (2+ dated rounds, real interval) — full value. The gold standard.
+2. **Not-applicable** (single-round company — velocity is *structurally undefined*, not
+   missing): **EXCLUDE the component and renormalize the others** (the existing Unknown≠0
+   / renormalize-on-missing path). Do **not** apply the ×0.75 est-discount — you are not
+   penalizing missing data, the metric simply does not exist at this stage. This is
+   Manifest OS: its rank vs Amperos should be decided on heads/jobs, not on a velocity
+   penalty for a velocity it cannot have.
+3. **Estimated** (founded-anchor proxy when a real measurement isn't available):
+   contribute a **capped, low-confidence value that can NEVER outrank a measured value**
+   of the same signal — and not a large multiplicative penalty either. This is Brandlight:
+   an est-Fast must not beat Novella's measured-Normal.
+The invariant that ties it together, both halves satisfied at once: **measured > estimated
+> nothing, and a structurally-undefined metric is excluded, not penalized** (measured>
+estimated is the est-discount philosophy; exclude-and-renormalize is Unknown≠0 / J1
+absent-vs-contradicting). The agent classifies each company by its real round data; the
+principle removes the contradiction.
+
+## U4 (remedy d) — Rebalance weights so concrete demand dominates — not a conditional floor — and keep the industry EXCLUSION gate at full strength
+
+**Ruling: adopt the intent, but as a *weight rebalance*, not a "floor when both top-band"
+special case.** David (92 heads, 29 NYC jobs — the purest space-demand signal on the
+board) losing to sector 2/10 + investor 1/5 is not a top-band edge case; it's that sector
+and investor are **over-weighted relative to concrete demand in general.** Fix the general
+weighting: **NYC heads + jobs should dominate the Fit score, and industry + investor
+should be minor tilts that can break ties among similar-demand companies but can never
+override a large demand gap.** A conditional floor is a patch; rebalancing is the
+principle (and it fixes David without a special case). **Critical carve-out: this applies
+only to industry as a *Fit-score component*. Industry as an *exclusion gate* (excluded
+sectors → evidence exit) stays at full strength** — a crypto/excluded company still exits
+regardless of headcount. Two different roles for industry; soften the score-component,
+keep the gate.
+
+## U5 — The native-NYC signal JD kept revealing — surface it as a tiebreak now, and put the weight question to JD
+
+Across the ties JD repeatedly broke toward **native-NYC over foreign-thin** (11 native-NYC
+heads > 9 Israel-centered; Fortuna's 15 native heads > Astelia's 2). This is real product
+logic — a NYC-HQ'd company's NYC headcount is a stronger office-space bet than a
+foreign-HQ'd company's NYC satellite (more likely to lease/expand locally). It is **not
+fully captured** by the head/jobs count alone (the Sales Nav ruler counts NYC-metro
+members regardless of HQ). Ruling: **encode native-NYC as the third tiebreak now** (U2),
+and **put to JD the product question** of whether NYC-HQ deserves its own small scored
+component or should remain only a tiebreak — that's his call about what Norman values, not
+the brain's to decide unilaterally.
+
+## U6 — Apply-verify-review-freeze, and the anti-overfitting discipline (this governs U1–U5)
+
+**Ruling on process, non-negotiable:**
+- **Fix principled root causes; never tune weights to pass the corpus.** Each remedy above
+  corresponds to a real principle (headcount keeps mattering; measured>estimated;
+  concrete demand>proxy; break ties by evidence). Changing numbers until the 16 pairs go
+  green is overfitting — the exact failure the frozen-judge discipline (autoresearch) and
+  the scope fence ("no auto-tuning against the corpus") exist to prevent.
+- **100% concordance is not the target.** A scorer that perfectly matches 16 human calls
+  is overfit; a few residual close-call disagreements after the fix are *healthy*. The
+  goal is eliminating the **systematic directional lean**, not chasing 16/16.
+- **Sequence (T3):** apply the principled changes → **re-run the oracle** → **confirm
+  tier-match stays 7/7** (a fix that improves ordering but breaks a tier boundary is a
+  regression — the replay audit, L4, guards this) → confirm no *new* disagreements were
+  introduced on currently-correct pairs → **review the delta with JD** → only then freeze
+  the baseline. Do not freeze a formula that was tuned to the corpus; freeze one whose
+  principled fixes happen to also satisfy it.
+- **16 pairs is a small sample.** Treat v1 as directionally strong but not statistically
+  deep; the corpus grows from JD's live overrides (T7 capture), and the baseline can be
+  re-frozen as it grows.
