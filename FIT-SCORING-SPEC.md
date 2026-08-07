@@ -72,12 +72,37 @@ company is **exceeding or failing its stage**:
   What's penalized is **thin/token** presence — 6 NYC people with **0** jobs → "low, but
   keep it" (Q2): scored low, kept on the board, **not** shelved.
 
+## 3b. NYC geography — JD's "NYC" is TIGHTER than the instrument's (important)
+
+**JD's NYC = Manhattan + a little Brooklyn — NOT the full commuter metro.** The pinned
+Sales Nav ruler measures **NYC-*metro*** (K3), which includes NJ / Westchester / LI — so
+the metro count **over-represents his true target.** Consequences:
+- **A company whose "NYC-metro" presence is heavily NJ/suburban is less interesting than
+  its metro count suggests** vs. a Manhattan-concentrated one. Where granular location is
+  available (job posting locations especially — "New York, NY"/Manhattan/Brooklyn vs
+  "Jersey City"), **skew Manhattan-centric** and discount outer-metro.
+- The metro ruler stays the scalable measurement, but treat it as an **upper bound** on
+  his real interest; tighten toward Manhattan/Brooklyn wherever the data allows.
+
 ## 4. Secondary / context (down-weighted — U4, W7)
 
 - **Funding size, sector, investor tier are context, not primary rankers.** JD refused
   to rank two companies on funding without first knowing "NYC headcount, HQ, and roles."
-  Sector stays at reduced weight (U4); the **industry *exclusion gate* stays full
-  strength** (excluded sectors still exit regardless of headcount).
+  Sector stays at reduced weight (U4) as a *fine* score tilt; the **industry *exclusion
+  gate* stays full strength** (excluded sectors still exit regardless of headcount).
+- **Industry as a QUALIFICATION taxonomy (not a fine tilt):** JD's target universe is the
+  structured 20-industry list in `reference/target-industries.md` (10 core + 10 expansion
+  + overlay tags). Use it as: **qualification** (in-list = target; **off-list = not a
+  target**, exclude/deprioritize) and a **coarse tier** (core > expansion). Among
+  *qualified* targets industry does not finely re-rank — concrete NYC demand does. This
+  upgrades the current industry taxonomy and defines what Discovery sources.
+- **Facilities/workplace roles are an elevated in-office signal.** A "Head of Workplace /
+  Office Manager / Facilities" NYC role scores between "normal role" and "huge" — it's a
+  direct tell they're standing up or expanding an office. Give role-*type* a bonus.
+- **Urgency (chase-today) is driven by a live WARM INTRO, not the company's signals.**
+  Company signals set Fit/rank; a warm path being available *now* is what makes JD act
+  today. Keep Fit (signals) and urgency (warm-path availability) as separate axes — the
+  "chase today" flag fires on warm-intro availability (and on all-signals-maxed, §8b).
 - **Exception — funding *recency*:** a fresh substantial raise is elevated to a growth
   signal (§1b), even though funding *size* is only context.
 

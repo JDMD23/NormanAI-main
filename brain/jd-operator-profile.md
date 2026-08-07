@@ -106,6 +106,21 @@ trust" stands on four pillars, each mapping to a build investment:
    eval/calibration).
 Any single failure loses him. This is the acceptance bar for the whole system.
 
+## Target universe & geography (his definitions)
+- **"NYC" means Manhattan + a little Brooklyn — NOT the full commuter metro.** The Sales
+  Nav metro ruler over-counts (NJ/Westchester/LI); his real target is Manhattan-centric.
+  Skew Manhattan where granular location exists; treat the metro count as an upper bound.
+- **Target industries = a structured 20-industry taxonomy** he supplied (10 core + 10
+  expansion + overlay tags), heavily AI / deep-tech / enterprise-infrastructure oriented —
+  captured in `reference/target-industries.md`. Industry is a **qualification + coarse
+  tier** (core > expansion; off-list = not a target), **not** a fine ranking tilt; a
+  great-fit AI company and a great-fit fintech excite him equally.
+- **Facilities/workplace hires** (Head of Workplace, Office Manager, Facilities) are an
+  elevated office-space tell — a real bonus, between "normal role" and "huge."
+- **Urgency is relationship-driven:** a live warm intro is what makes him chase *today*;
+  company signals set fit/rank, warm-path availability sets timing. (Plus all-signals-
+  maxed = a chase-today tier.)
+
 ## Live threads (update as they resolve)
 - `FIT-SCORING-SPEC.md` — the complete, JD-validated scoring spec (rounds U–W), pending
   application + oracle re-run + his rescore review + freeze.
