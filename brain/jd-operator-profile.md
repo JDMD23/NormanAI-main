@@ -49,6 +49,24 @@ this captures the *person and the reasoning*.
 - **Independence boundary:** his judgment is the ground truth. The brain protects the
   method and reads disagreements *with* him; it never supplies his answers for him.
 
+## Decision & priority model (how he chooses what to chase)
+- **Timing is a soft tilt, not a hard rank.** Imminent-need (cramped, hiring burst) and
+  emerging-need (just raised, scaling) both get chased — "rank close, chase both." Don't
+  over-weight "needs space this quarter" in priority.
+- **Confidence gates *effort*, not *inclusion*.** He pursues both a sure-medium fit and
+  a thin-data maybe-great — "both." Uncertain-but-high-upside companies get **dug into,
+  not discarded**; the board should surface them for investigation (bounded second-pass),
+  never bury them for missing data. (Consistent with Unknown≠0.)
+- **Warm path is a PRIORITY/sequencing tilt, separate from Fit.** A company where he
+  knows a decision-maker gets his attention *first* (easier meeting), with the strong-fit
+  one "right after." Warmth affects pursuit *order*, not the Fit score — it feeds the
+  `warm_path` → priority layer, kept as its own axis (don't blend into Fit).
+- **Hard deal-breakers (instant pass):** **too big / enterprise** (already have space),
+  **wrong industry** (his exclusion list), and **already repped / CBRE conflict.** These
+  are exclusion gates, full strength.
+- **Recently signed a lease is NOT a deal-breaker** — it's a *deprioritize + track*:
+  keep them, rank them low, watch for the next expansion (they re-enter the market).
+
 ## Live threads (update as they resolve)
 - `FIT-SCORING-SPEC.md` — the complete, JD-validated scoring spec (rounds U–W), pending
   application + oracle re-run + his rescore review + freeze.
