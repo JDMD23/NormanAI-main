@@ -99,6 +99,31 @@ These are JD-validated *directional truths* — encode as property tests, not co
 - NYC-HQ **>** SF-HQ when NYC hiring is identical (meaningful, not dominant, gap).
 - In-office 10 jobs **≫** remote 10 jobs; fresh 10 posts **≫** 5-month-stale 10 posts.
 - Token satellite (6 NYC, 0 jobs) = **low but on-board**, not shelved.
+- Shrinking (30→25 NYC, 0 jobs) = **red flag / pass**; high ratio (8 NYC, 20 in-office
+  jobs) = **top**; big fresh raise (just-raised $50M, 5 NYC, 0 jobs) = **prospect now**;
+  traction-without-funding (40 NYC, 12 jobs, <$2M) = **strong prospect** (hiring proves it).
+
+## 8b. Signal conflicts & edge cases (the "when the three signals disagree" batch)
+
+- **Headcount TREND direction is first-class.** Growing = good; flat = capped at medium
+  (§1b); **shrinking = a strong negative / near-pass.** A company at 30 NYC last year,
+  25 now, 0 jobs is a **red flag** — a contracting company sheds space, it doesn't need
+  more. Declining NYC headcount is close to a deal-breaker, not merely "less bonus."
+- **A very high jobs-to-headcount ratio is LOVED, not doubted.** 8 NYC people with 20
+  in-office roles (about to 3×) is "exactly what I want" — the dream prospect. **Reward
+  high ratio strongly in the score; do not cap or discount it as implausible.** Skepticism
+  about whether such a spike is *real* lives in the **data-quality layer** (verify the
+  roles are in-office and fresh — W5/Q10), never in the scoring.
+- **A big fresh raise is a strong standalone leading signal.** $50M just raised + only 5
+  NYC people + 0 jobs = **prospect now** ("that cash means imminent hiring"). Funding
+  *size* matters **when paired with recency** — big + fresh = about-to-scale-hard; size
+  alone on an old round stays mere context (§4).
+- **The funding "floor" is conditional — demonstrated traction overrides it.** The
+  "can they afford NYC space?" concern applies **only to small/early companies** where
+  traction isn't yet visible (the early-rocket $5M gate, §2). A company with **real NYC
+  headcount + active in-office hiring** (40 people, 12 roles) can obviously afford space
+  — "the hiring proves it" — so **funding is moot once traction is demonstrated**, even
+  bootstrapped / <$2M.
 
 ## 8. Process (U6 / T3 — non-negotiable)
 
