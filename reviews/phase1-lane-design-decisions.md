@@ -1911,3 +1911,119 @@ This is a *small* board-schema round that mostly **consumes substrate already bu
   + narrated + not scaling concurrency (S2). But R5 said supervised-concurrency is only
   safe with the collapsed signal — so **land the health-line CLI before any concurrency
   increase**, and before the vendor shadow batches add a lane. Important, not yet urgent.
+
+---
+
+# Follow-up rulings (round 13) — pressure-testing the evals/ harness design
+
+The build agent returned strong §4 answers and a well-designed `evals/` shape
+(`docs/evals-design.md`): pairwise-primary corpus, **snapshot discipline** (grade a
+judgment against the evidence *as of labeling*), three metrics + explanation
+validation, a frozen regression oracle, self-growing from overrides, and a clean scope
+fence (no LLM-judge, no auto-tuning, re-label-don't-loosen). This is greenlit. The two
+open questions are answered below, plus six pressure-test sharpenings — one of which
+(T5) is a real invariant leak the §4 answers surfaced.
+
+## T1 — Gate tolerance: neither flat hard-zero nor a flat band — STRATIFY by JD's confidence
+
+**Ruling: a flat hard-zero thrashes on near-ties; a flat one-pair band masks real
+regressions. Stratify.** Not all pairs carry equal information: "DualEntry ≫ Ilant" is
+a wide-margin, high-confidence judgment; "Raspberry 71 vs Method 69" is a near-tie JD
+labels with low confidence. A gate that treats them equally *will* cry wolf on the
+near-ties — and a gate that cries wolf gets ignored (ECC catalog decay / enforcement
+hierarchy: a check people learn to bypass is worse than none). So:
+- **Capture JD's per-pair confidence during labeling** (sure / lean — one keystroke).
+- **Hard-fail the gate on:** (a) any **tier-match regression** (a company leaving the
+  tier JD placed it in — a categorical error the router acts on), and (b) inversion of
+  any **high-confidence ("sure")** pair.
+- **Soft-report (surface, don't fail):** inversion of a **low-confidence ("lean")** /
+  near-tie pair — track it (many lean-inversions at once *is* a signal), but a single
+  near-tie flip is within labeling noise and must not fail the gate.
+This is hypothesis's two-cost-review idea (weight a failure by its severity) and
+graphify's confident-vs-ambiguous distinction. If per-pair confidence isn't captured,
+the fallback proxy is score-margin — but *stated* confidence beats inferring from the
+score gap (the gap is the thing under test; using it to weight the test is circular).
+
+## T2 — The synthetic anchors: keep them SEPARATE — they're formula-invariant property tests, not calibration cases
+
+**Ruling: do not fold the anchors into the corpus. They test a different thing and fail
+for a different reason.** The Artemis>Bold anchors assert a **structural invariant of
+the formula** ("an NYC-scaler outranks a Tel-Aviv-flag") that must hold for *any* valid
+formula, independent of JD's specific judgment — that's a **property test** (B2),
+sibling to Unknown≠0 and monotonicity, and it belongs where those live. The corpus is a
+**calibration oracle** against JD's judgment on *real* companies. Blending them muddies
+the corpus with a synthetic shape that isn't a JD judgment, and confuses two failure
+modes: an anchor failure = the formula violated a design invariant (a code bug); a
+corpus regression = the formula drifted from JD's judgment (a calibration trade-off).
+Keep the two layers distinct. (Optional polish: re-base the anchor shapes on a real
+company's evidence instead of a synthetic "Artemis-shape" — but that's cosmetic; the
+ruling is they stay a separate property-test layer.)
+
+## T3 — The FIRST eval run is a CALIBRATION exercise, not a regression baseline — don't freeze a miscalibrated baseline as "correct"
+
+**Ruling: sequence it as label → run → read the disagreement list *with JD* → adjust the
+formula if warranted → THEN freeze the baseline.** The single most valuable output of the
+first run is **not** the tau number — it's the **disagreement list** (where the scorer
+and JD differ, with both sides' evidence and the scorer's "why"). On a first run that
+list is a *calibration finding*, not a regression: it's how you discover the formula is
+(say) over-weighting funding vs. NYC hiring. If you freeze the baseline on the first run,
+you lock in whatever the scorer currently does as ground truth — which is exactly the
+unvalidated state we're trying to exit. **The regression oracle comes into being *after*
+the first calibration pass converges**, not on run one. Make the disagreement list the
+headline output; the tau/tier-match numbers size the gap, the disagreements are what you
+act on.
+
+## T4 — Spend the labeling budget on the INFORMATIVE pairs (adjacencies + tier boundaries), and check the labels for intransitivity before freezing
+
+Two sharpenings on the corpus:
+- **Sample toward the hard pairs, not a uniform spread.** A pairwise set full of obvious
+  pairs (88-beats-43) reports a falsely high tau and wastes JD's irreplaceable 30
+  minutes — the scorer never gets those wrong, so they're uninformative. Keep a few
+  wide anchors to catch gross regressions, but **concentrate the budget on adjacent
+  pairs (close scores) and tier-boundary straddlers** (the 57–62 Prospect-entry band,
+  the Low-NYC shelf edge). Those are where the band thresholds — a config choice — meet
+  JD's judgment, and where a ranking error actually changes a decision. This is
+  informative-sampling; spend labels where the model is uncertain.
+- **Detect intransitivity before freezing.** Human pairwise judgments can cycle
+  (A>B, B>C, C>A). An intransitive corpus is satisfiable by **no** scorer — the gate
+  would fail forever. Run cycle-detection on the labeled pairwise graph and resolve any
+  cycles with JD *before* the corpus is frozen. Cheap to check, essential to do.
+
+## T5 — The incomplete fit-change log (Q2) is an INVARIANT LEAK, not just a missing feature — fix the bypass, don't only "log going forward"
+
+**Ruling: this is the one §4 answer that's bigger than framed, and it's a real finding.**
+Q2 reports only 6 `fit_score` rows in the change log while fit actually moved dozens of
+times — because **batch apply scripts wrote fit directly, bypassing the logged write
+path.** That is not merely an incomplete audit trail; it's the **single-write-path /
+verified-write invariant not actually holding** for the batch scripts — the same
+"bypass the guard" class the whole architecture exists to prevent, and `invariants.md`
+currently claims that invariant. The fix is therefore not "log deltas from now on" — it's
+**route every fit write (batch scripts included) through the one guarded, logged path,
+and add a test that a fit write with no corresponding change-log entry is impossible**
+(fit-write ⇒ log-entry, enforced, not hoped). Otherwise the same bypass recurs the next
+time a script writes directly. Treat this as a correctness fix that lands *with* the 3.2
+score-stability work, and note it against `invariants.md` so the claim matches reality.
+
+## T6 — Two guarantees, both needed; and protect the one irreplaceable input
+
+- **State the scope of what the eval proves.** Because it re-scores *frozen evidence*,
+  the harness validates the **ranking function given the evidence** — not that the
+  evidence is right. Measurement correctness is a *separate* guarantee, held by the
+  instrument cross-checks (Sales Nav ruler, zero-state, M2/M3). Board correctness =
+  (evidence is right) × (ranking-given-evidence is right). Say so, so nobody reads a
+  green eval as "the board is correct" — it's half the guarantee, the other half being
+  the instrument layer.
+- **Protect the 30-minute labeling session — it's the only unbuildable part.** Its
+  output quality depends on the labeling *presentation*: show JD the two companies'
+  evidence side by side, in an informative order (T4), and capture pair + confidence
+  (T1) in one motion. A raw-JSON, random-order labeling flow wastes the one input that
+  can't be regenerated. A small investment in the labeling surface is protecting the
+  critical path, not gold-plating.
+
+**§4 remediations — all endorsed:** the `gitleaks` pass in `make check` (the credential
+surface is genuinely small — one revocable Notion token, no scraping creds stored — so
+this is cheap insurance against future accidents, good); the `make backup` to a second
+volume + a **restore drill that actually runs in CI** (manual snapshots on the same disk
+are below the bar for a source of truth holding relationship data — fix it); and
+`SYSTEM.md` as the evals-milestone close-out (right timing — write it when the
+architecture next rests). Greenlight to write `evals/` with T1–T6 folded in.
