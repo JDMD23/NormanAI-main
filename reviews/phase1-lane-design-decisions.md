@@ -2828,3 +2828,83 @@ one re-validation. Name them separately from here.
 FIXED → re-freeze metrics. Then Phase B (seniority + facilities-role) → validate the
 classifier against real titles with JD → wire in → oracle → re-freeze. Two cheap
 re-freezes, zero re-anchors, and every change attributable.**
+
+---
+
+# Follow-up rulings (round 23) — the oracle is structurally blind to Phase A
+
+Batch 5 session 2 closed clean (14 measured, 15 views, zero challenges, 95/95 converged,
+replay clean). Two things to affirm before the ruling:
+
+**The held-out confirmation is real.** tau 1.0 and tier-match 7/7 held with **thresholds
+untouched while fourteen new companies entered the scored population**. Nothing
+re-anchored, ladder unmoved, corpus unchanged. That is a genuine — if small —
+out-of-sample confirmation, and exactly the property AC1 exists to preserve.
+
+**And the build agent applied a brain principle proactively, unprompted.** They spotted
+that `nyc_open_jobs` (pre-lane) and `desk_jobs` (post-lane) are **different instruments**
+and are cohort-tagging them on G5/K3 reasoning — the same shape as the Manhattan/metro
+landmine, caught *before* it detonated, without a ruling. That is the goal state: the
+principles are now being applied rather than consulted.
+
+## AD1 — Cohort-tagging protects TRENDS; it does not protect THRESHOLDS
+Their fix is correct and incomplete. Tagging pre/post as separate cohorts stops the lane's
+first success from reading as a job-count collapse in the **trend** comparison (was-vs-is).
+But the jobs **ladder, ratio, and growth gate** are *level* comparisons (is-vs-threshold),
+and **every one of those thresholds was calibrated on a unit that is about to change
+meaning** — raw NYC job count including remote, versus desk-jobs with remote discounted.
+Cohort tags do nothing for a level comparison against a fixed number.
+
+**Ruling: accept the movement — it is the intended effect, not a bug.** The entire point of
+location-type is that remote roles shouldn't earn desk-demand credit, so a remote-heavy
+company *should* score lower. Do **not** compensate the thresholds here (contrast round 21,
+where the mechanism was wrong but its effect was acceptable; here the effect *is* the
+improvement). But know what follows: **after the lane, the jobs thresholds are calibrated
+against a different quantity than the one they now receive.** Look at the new distribution,
+and treat any threshold adjustment as a **separate, deliberate, JD-reviewed decision**
+(AC1) — never bundled into the lane.
+
+## AD2 — The post-lane oracle CANNOT validate Phase A. It is a regression test, not a validation test. Expect UNCHANGED, not improved.
+This is the finding they have not reasoned through, and it changes what the Phase A oracle
+run means.
+
+**The frozen corpus stores each company's evidence as of labeling — which has no
+location-type or posting-date fields at all.** So when the oracle re-scores that frozen
+evidence, the new signals are **absent → excluded → renormalized**, exactly as the scorer
+is designed to handle missing data. The oracle therefore **cannot see Phase A's improvement
+on the corpus.** Running it and reading a flat result as "the lane didn't help" would be a
+misreading; running it and reading an improvement as validation would be impossible.
+
+So, precisely:
+- **What the post-lane oracle DOES answer:** *did this change break anything that was
+  working?* Expect **tau unchanged at 1.0**. If it **moves at all**, something unintended
+  reached the scoring path — investigate. That is a real and worthwhile regression test.
+- **What it CANNOT answer:** *is the new signal good?* Nothing in the frozen corpus can
+  speak to a field it does not contain.
+
+**Do not "fix" this by backfilling the new fields into the corpus.** That would grade JD's
+judgment against evidence he never saw — the exact violation the snapshot discipline was
+built to prevent (a judgment made on April's facts graded against August's).
+
+**Validate the signal directly instead, and cheaply:** after the lane runs, list the
+companies whose **desk-jobs count diverges most from their raw jobs count**, and have JD
+sanity-check a handful — *"Company X showed 10 NYC roles; 8 are remote, so it now counts as
+2. Does that match your read?"* That is a five-minute, direct test of the thing the oracle
+structurally cannot test, and it needs no re-labeling. If the divergences look right to
+him, the signal is working.
+
+**The general rule worth carrying:** *an eval corpus can only validate signals that exist
+in its frozen evidence.* Every genuinely NEW signal needs its own validation path outside
+the oracle — the oracle guards against regression, not for improvement. This is the same
+shape as AC3 (a classifier must be validated as a classifier), one level up: **a new input
+must be validated as an input.**
+
+## AD3 — Minor: 51 of 95 are now Prospects; the working views (S6) just became load-bearing
+The Prospect tier is now the majority of the board. That is consistent with JD's stated
+high-recall preference and unlimited capacity, so it is not a scoring problem. But it does
+mean the flat board no longer supports "what do I chase today" — a 51-row Prospect list is
+a database, not a decision. **S6's three task-shaped views (ranked Prospects / Action
+Needed: Joe / Changed Recently) move from nice-to-have to the thing that makes the board
+usable**, and the ranked view needs the raw score as its sort key (U2 — still not
+persisted). Not urgent, not a blocker for the lane; flag it as the next operator-surface
+work after Phase B.
