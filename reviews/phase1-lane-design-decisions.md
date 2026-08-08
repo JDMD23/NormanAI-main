@@ -2687,3 +2687,68 @@ safety that then becomes the surviving copy of the thing you were removing is a 
 own-goal. Related standing rule: after a history rewrite, **any stale clone still holding
 the old history can push the purged objects back** — every other clone must be re-cloned
 or hard-reset before it is ever pushed from again.
+
+---
+
+# Follow-up rulings (round 21) — the sequencing question: the dilemma is false
+
+**Purge independently verified by the brain** from a *fresh clone of the remote*: HEAD
+`776badb`, 59 commits, zero db/sqlite/bak objects across all refs, all three paths at 0
+commits, and the two original blob SHAs the brain identified in round 18 both **GONE**.
+Confirmed clean. ADR 0013 (the purge runbook) is the right artifact — the root cause
+stated plainly ("a .gitignore extension glob is not a control") is the part that
+generalizes.
+
+## AB1 — Do the rounding switch NOW, as a BEHAVIOR-PRESERVING refactor. The tradeoff they weighed does not exist.
+CRMx framed this as: switch now (and re-anchor + re-freeze twice, doubling the label-
+fitting circularity) versus bundle with the careers lane (and let a known-imperfect
+mechanism keep deciding live bands — "which is how inert rules are born"). Both horns are
+real *if* the switch requires re-anchoring. **It doesn't.**
+
+**A MECHANISM change and a VALUE change are separable.** Switch routing to `raw` **and
+simultaneously set each threshold to its current effective value** (`enter_prospect
+49.5`, `demote_below` etc. likewise). The comparison `round(raw) >= 50` and `raw >= 49.5`
+select the same companies, so:
+- **Zero companies move** — Haast stays, Brandlight stays.
+- **No re-anchoring** — the ladder is not re-fitted, so the circularity is not re-incurred.
+- **No re-freeze** — the frozen baseline still holds.
+- **The gate PASSES.** And this is the elegant part: **the armed gate becomes the proof
+  that the refactor was behavior-preserving.** If it fails, the change wasn't neutral and
+  you learn immediately. A gate that just failed a real change (correctly) is exactly the
+  instrument to lean on here.
+Afterwards the mechanism is explicit and correct forever, and **any future threshold
+decision is a clean, separate, deliberate choice** made on the raw scale — not entangled
+with a rounding artifact.
+
+**The general rule, worth carrying:** when a mechanism is wrong but its *current effect*
+is acceptable, change the mechanism at zero behavioral cost by compensating the values,
+then decide the values separately. Never bundle "fix how it works" with "change what it
+does" — you lose the ability to attribute either outcome.
+
+## AB2 — And do NOT bundle it with the careers lane, for a second independent reason: attribution
+The rounding switch is a **small, known, fully-simulated** change (one company under the
+naive version). The careers lane is a **large, unknown** change — seven dormant signals
+switching on across ~95 companies. **Bundling a small known change with a large unknown
+one destroys attribution:** when the post-lane oracle result looks odd, you cannot tell
+which caused it. This project has been disciplined about exactly this (the calibrated
+instrument migration, the proving-run pattern); the same discipline applies. Land the
+known-neutral refactor first, confirm green, then let the lane be measured against a
+clean, unchanged baseline.
+
+## AB3 — The interim `thresholds_note` is subtly WRONG, which removes the "just document it" option
+Verified: `score = round(raw_pct)` and Python's `round()` is **banker's rounding** (ties
+to even). So the effective offset is **not a constant −0.5 — it alternates with the
+parity of the configured threshold**:
+- Even thresholds (`enter_prospect 50`, `enter_tracking 42`): the `.5` boundary rounds
+  **up** and is **included** → effective `T − 0.5`, inclusive.
+- Odd thresholds (`demote_below 47`, `tracking_floor 39`): the `.5` boundary rounds
+  **down** and is **excluded** → effective just *above* `T − 0.5`.
+So the documented note ("each threshold's EFFECTIVE value is configured − 0.5") is
+approximately right and precisely wrong, and the direction of the error depends on whether
+the number is even or odd. That is a genuinely surprising mechanism to leave live. It
+makes the "document and defer" interim insufficient: you cannot accurately document a rule
+whose behavior alternates with parity — **you can only fix it.** (Also note the note is
+now pinned by a test, so a *wrong* description is locked in until changed.)
+
+**Ruling: switch to raw routing now, compensating the thresholds to preserve behavior;
+confirm the gate passes; then proceed to the careers lane against an unchanged baseline.**
