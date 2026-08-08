@@ -71,6 +71,60 @@ those roles actually *are* before anyone relies on that number.
 
 ---
 
+## 2b. How to build it — a tiered cascade, declared-first, Unknown-honest
+
+JD asked directly how the function should work. Build it as a **cascade that stops at the
+first confident answer**, using the same `declared > inferred > unknown` hierarchy already
+in the system — so it reuses machinery rather than introducing a new concept.
+
+**Tier 1 — the DECLARED department field.** Free, deterministic, highest confidence.
+Greenhouse, Ashby and Lever all publish a department/team on the posting. Map it through a
+small **JD-tunable config list**:
+- → **desk**: Engineering · Product · Design · Finance · Marketing · Sales (inside) ·
+  Legal · People · Data
+- → **non-desk**: Clinical · Care Delivery · Nursing · Field Operations · Field Sales ·
+  Warehouse · Fulfilment · Retail · Lab · Manufacturing · Facilities (maintenance)
+
+This is data you already have and it should resolve the majority at zero inference cost.
+Unmapped → Tier 2.
+
+**Tier 2 — title role-family rules.** A tested rules table, both directions — not a vibe.
+Non-desk: `therapist, clinician, nurse, RN, LPN, caregiver, phlebotomist, driver, field
+service, field technician, installer, warehouse, fulfilment, retail associate, security
+guard, custodial`. Desk: `engineer, developer, designer, product manager, analyst,
+accountant, controller, recruiter, counsel, marketer, chief of staff, operations manager`.
+Ambiguous → Tier 3.
+
+**Tier 3 — read the posting body.** Only for what Tiers 1–2 can't resolve. Decide on the
+text: *"on-site at our clinic," "travel to customer sites," "on the warehouse floor"* vs
+*"from our NYC office," "hybrid from our Manhattan office."* **If an LLM does this, it must
+quote the sentence it decided on** — evidence-grounded output; no citation, no
+classification.
+
+**Scope honesty: do not build Tier 3 speculatively.** Ship Tiers 1–2, measure the
+unresolved fraction, build Tier 3 only if that number is material.
+
+**Tier 4 — UNKNOWN, and it stays Unknown.** A role no tier resolves is
+`desk_status = unknown`. **Never default it to desk (that's today's bug) and never to
+non-desk.**
+
+**What unknowns do to the count — reuse the FLOOR pattern, don't invent a rule.** A desk
+count computed with unresolved roles present is a **lower bound** — the unknowns might be
+desks. Tag it exactly as the city-vs-metro headcount is tagged (G5):
+
+```
+desk_jobs = 8.4 · is-floor: true · unresolved: 3
+```
+
+Note this is a **different shape from the freshness rule.** Freshness is a *proportion*, so
+one gap corrupts the whole reading — hence "one undated role withholds the count." The desk
+count is a *sum*, so a gap **bounds** it rather than invalidating it. Withhold entirely only
+when the unresolved fraction crosses a configured threshold; the number stops being useful
+before it stops being computable.
+
+**Store the classification per role, not just the aggregate** — that satisfies AE2 (JD
+wants to *see* the split) and makes his spot-checks self-serve.
+
 ## 3. How to verify — JD told you the method
 
 *"Can't you click a job post on the careers page to vet all this out… if you are
