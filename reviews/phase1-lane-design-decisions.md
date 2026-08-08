@@ -2752,3 +2752,79 @@ now pinned by a test, so a *wrong* description is locked in until changed.)
 
 **Ruling: switch to raw routing now, compensating the thresholds to preserve behavior;
 confirm the gate passes; then proceed to the careers lane against an unchanged baseline.**
+
+---
+
+# Follow-up rulings (round 22) — staging the careers-lane signals
+
+Round 21 landed exactly as ruled: raw routing with compensated thresholds, **zero
+companies moved**, no re-anchor, no re-freeze, gate passed. The strongest artifact of the
+whole build so far: **the same gate failed the naive version of the change and passed the
+compensated one, an hour apart.** Same instrument, opposite verdicts, both correct — that
+is an eval harness proving itself on its first live test. The banker's-rounding correction
+is fully absorbed (`TestRoutingComparesRaw` now pins the *true* mechanism, replacing a test
+that had locked in a false description).
+
+CRMx asks whether the lane should ship all its signals at once or stage them, noting the
+round-21 attribution argument seems to apply at finer grain. It does apply — but the
+**split line is different from the one they proposed**, and there is a prior confusion to
+clear first.
+
+## AC1 — Re-freeze ≠ re-anchor. Validate the lane WITHOUT re-anchoring, and the cost of staging collapses.
+The reluctance to stage rests on "two re-freezes instead of one." But round 19 established
+that what is *expensive* is **re-anchoring** (re-fitting thresholds to JD's labels =
+circularity). **Re-freezing the baseline metrics is cheap and carries no circularity at
+all.** They have been treated as one act; they are not.
+
+**Ruling: run the careers lane with the thresholds FIXED.** Do not re-anchor. If the new
+signals are genuinely better, agreement with JD should **hold or improve on its own,
+without moving the goalposts** — which makes the post-lane oracle result a **genuine
+held-out test** rather than a fitted one. That is the strongest validation available and
+it is only available if you *don't* re-anchor.
+- tau holds/improves → the signals are real; re-freeze the *metrics*, leave thresholds alone.
+- tau degrades → something is wrong with the signals; investigate before accepting.
+- Only if the score distribution genuinely shifts far enough that the thresholds sit in a
+  bad place does re-anchoring become a question — and then it is a **separate, deliberate,
+  JD-reviewed decision**, not a reflex bundled into the lane.
+With that, staging costs two cheap re-freezes, not two circular re-anchors. The objection
+dissolves.
+
+## AC2 — Split, but on EXTRACTED FACT vs CLASSIFIER — not "mechanical vs interpretive"
+The proposed line (location-type + dates first, title-derived second) is *nearly* right,
+but the principle underneath it is sharper and generalizes:
+- **Phase A — extracted facts:** posting dates, location-type. These are **read from the
+  source and spot-checkable against it**. Open the posting; the date is the date; the
+  workplace field says Remote or it doesn't. If the value is wrong, it is a *parsing bug*
+  with an unambiguous right answer.
+- **Phase B — classifiers:** seniority, facilities-role. These are **judgments encoded in
+  a heuristic** — "is *Staff Engineer* senior? is *Lead* senior?" There is no field to
+  check against; there is only a rule someone wrote.
+The distinction matters because of what can go wrong: **a classifier can be systematically
+wrong across the whole board in a way that is invisible in the score.** Ship seniority with
+everything else and, if scores move oddly, you cannot tell whether the signal is real or
+your title heuristic is mislabelling half the postings.
+
+## AC3 — A classifier must be validated AS A CLASSIFIER before it is validated as a scoring input
+Two different questions, and conflating them is the trap:
+1. **Does it label correctly?** — check the classifier against real job titles.
+2. **Does the resulting signal improve the ranking?** — check via the oracle.
+If (1) is unverified, a failure in (1) is indistinguishable from a failure in (2). So for
+Phase B: build the classifier, **have JD eyeball a sample of ~30 real titles with their
+assigned labels** (a five-minute task, and he is the authority on what reads as senior in
+his market), fix what's wrong, *then* wire it into the score and let the oracle judge the
+signal. This is the T7/labeling discipline applied one layer down — and note it also
+generates a small reusable labeled set for the classifier, exactly as the corpus does for
+the scorer.
+
+## AC4 — Only FOUR of the seven dormant signals belong to this lane; don't carry them as one bundle
+Careers lane: **location-type, posting dates, seniority, facilities-role.** The other
+three come from entirely different sources and should not ride this schedule:
+**Manhattan-tight headcount** (a different instrument — Sales Nav geo granularity),
+**layoff geography** (the news lane), **down-round** (needs a valuation source). Treating
+"the seven dormant signals" as a single unit invites bundling three unrelated changes into
+one re-validation. Name them separately from here.
+
+**Ruling, plainly: Phase A (dates + location-type) → run the lane → oracle with thresholds
+FIXED → re-freeze metrics. Then Phase B (seniority + facilities-role) → validate the
+classifier against real titles with JD → wire in → oracle → re-freeze. Two cheap
+re-freezes, zero re-anchors, and every change attributable.**
