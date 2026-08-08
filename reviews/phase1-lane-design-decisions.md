@@ -3169,3 +3169,53 @@ labelling titles in the abstract, and it is exactly how JD wants to work.
 **Immediate action:** Knit and GovWell were inferred; verify them by reading the actual
 listings before the Phase A numbers are relied on. **Prefer a provider's declared field
 over any heuristic wherever one exists** (AE-round guidance, reinforced).
+
+## AF4 — How to build the desk-generating classifier: a TIERED cascade, declared-first, Unknown-honest
+JD asked how the function should actually work. Design it as a **tiered cascade that stops
+at the first confident answer** — the same declared > inferred > unknown hierarchy already
+used for location-type and instruments, which means it reuses machinery rather than adding
+a new concept.
+
+**Tier 1 — the DECLARED department field (free, deterministic, highest confidence).**
+Greenhouse, Ashby and Lever all publish a department/team on the posting. Map it through a
+small **JD-tunable config list**: `Engineering · Product · Design · Finance · Marketing ·
+Sales (inside) · Legal · People · Data` → **desk**; `Clinical · Care Delivery · Nursing ·
+Field Operations · Field Sales · Warehouse · Fulfilment · Retail · Lab · Manufacturing ·
+Facilities (maintenance)` → **non-desk**. This is *declared data JD already has* and will
+resolve the majority at zero inference cost. Unmapped department → Tier 2.
+
+**Tier 2 — title role-family rules (deterministic, tested, both directions).** A rules
+table, not a vibe: non-desk families (`therapist, clinician, nurse, RN, LPN, caregiver,
+phlebotomist, driver, field service, field technician, installer, warehouse, fulfilment,
+retail associate, barista, security guard, custodial`) and desk families (`engineer,
+developer, designer, product manager, analyst, accountant, controller, recruiter, counsel,
+marketer, chief of staff, operations manager`). Ambiguous → Tier 3.
+
+**Tier 3 — read the posting body (only for what Tiers 1–2 can't resolve).** Decide on the
+text — *"on-site at our clinic," "travel to customer sites," "on the warehouse floor"* vs
+*"from our NYC office," "hybrid from our Manhattan office."* **If an LLM does this it must
+quote the sentence it decided on** (evidence-grounded output, brain/10 #2; no citation → no
+classification). **Scope honesty: do NOT build Tier 3 speculatively.** Ship Tiers 1–2,
+measure the unresolved fraction, and build Tier 3 only if that fraction is material.
+
+**Tier 4 — UNKNOWN, and it must stay Unknown.** A role no tier resolves is
+`desk_status = unknown`. **Never default it to desk (today's bug) and never to non-desk.**
+
+**How unknowns affect the count — reuse the FLOOR pattern, don't invent a rule.** A desk
+count computed with unresolved roles present is a **lower bound**: the unknowns *might* be
+desks. So tag it exactly as the city-vs-metro headcount is tagged (G5): **`desk_jobs = N,
+is-floor: true, unresolved: k`**. Note this is a *different shape* from the freshness rule
+— freshness is a proportion, so one gap corrupts the whole reading; the desk count is a
+**sum**, so a gap bounds it rather than invalidating it. Withhold the number entirely only
+when the unresolved fraction crosses a configured threshold (the count stops being useful
+before it stops being computable).
+
+**Store the classification PER ROLE, not just the aggregate** — AE2 (JD wants to *see* the
+split), and it makes the spot-check self-serve.
+
+**Validation, per AC3 + AF3 — as a classifier first, and against real postings:** run it,
+show JD ~20–30 **actual postings with their assigned labels** (not titles in the abstract),
+starting with the health-tech companies where the risk is concentrated, fix what's wrong,
+**then** wire it into the score. The test set must include the trap pair — **"Head of
+Workplace" (desk + positive signal) vs "Facilities Technician" (not a desk role)** — and
+Conduit Health's 14 roles.
