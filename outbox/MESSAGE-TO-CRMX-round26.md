@@ -106,27 +106,65 @@ doesn't exist (§1), so there's nothing else to watch.
 
 ---
 
-## 6. The Office Manager call is genuinely JD's — both readings are defensible
+## 6. JD's answer on the Office Manager — and a flag that outranks the question
 
-"Office Manager & EA to the CEO" is certainly a desk. Whether it's the same
-**office-standing-up tell** as "Head of Real Estate" splits two ways:
+**The ruling:** *"Not the same as head of real estate but def a good signal, don't over
+index too much on the role and how it fits into growth plan, just keep it as a good
+indicator."*
 
-- At a 20-person startup the office manager is frequently the person who *does* handle the
-  lease → real signal.
-- But it's bundled with "EA to the CEO", which reads as an **admin** hire keeping an
-  existing office running → not the tell.
+So the workplace signal is **two-tier and deliberately un-clever**:
+- **Head of Real Estate / Head of Workplace** → the strong office-standing-up tell.
+- **Office Manager (including EA-bundled)** → **a good indicator at lower weight.** Keep
+  it; don't promote it.
+- And an explicit scope instruction: **do not build interpretive logic about how a
+  workplace hire fits a company's growth stage.** Modest indicator, modest weight, full
+  stop.
 
-Going to JD. It's a question about what the signal means **in his market**, which is
-exactly the class of judgment the brain shouldn't make for him.
+### ⚠️ But the more important part of his answer
+
+> *"Manifest is bigger than 20 ppl. **I fear you miscalculated a lot of NYC
+> metropolitan.**"*
+
+Treat this as a **K4 operator-dispute event on the instrument itself.** JD's direct
+knowledge of a company contradicting the recorded figure is exactly the signal K4 says to
+capture rather than dismiss — it is how the geo-chart's unreliability was learned in the
+first place. And note the scope of what he said: *"a lot of"*, not "this one."
+
+**Two investigations, in order:**
+
+**1. Specific.** What does the store actually record for Manifest OS's NYC headcount — the
+value, the instrument, and the date? And **is the "~20 people" figure even from the system,
+or a colloquial description in your report?** Establish the real number before anything
+else.
+
+**Also check for a duplicate.** "Manifest OS" (Prospect, batch 5 session 1) and "Manifest"
+(Watchlist 31, batch 5 session 2) appear as separate entries. If they are one company, that
+is an **identity-resolution failure** — and it would independently explain a "too small"
+reading, since the headcount would be split across two records.
+
+**2. Systematic.** F1 named this metric's *upward* bias (stale current-company entries) but
+**never its downward bias** — the count only sees LinkedIn members whose profile currently
+lists the company, which can under-count badly. **Spot-check a handful of companies JD
+knows personally against their recorded NYC figure.** If his instinct holds across several,
+the instrument has a systematic under-count that should be quantified and annotated on the
+field, exactly as the geo-chart's ~20% loss was.
+
+**Do not adjust any number on his impression alone** — establish the truth first. But do
+not park it either: an operator saying *"I fear you miscalculated a lot"* about the board's
+**primary signal** is the highest-value bug report available, and the entire
+Sales-Nav-as-ruler decision (K3) rests on this measurement being sound.
 
 ---
 
 ## Order from here
 
-1. Land remote → 0.
-2. Check the unknowns' distribution; source-read any concentration.
-3. **The last-projected baseline (AE4)** — still before Phase B wiring. Your ordering is
+1. **The Manifest OS check and the duplicate check** — small, fast, and it either clears
+   the primary signal or opens something big.
+2. Land remote → 0.
+3. Check the unknowns' distribution; source-read any concentration.
+4. **The last-projected baseline (AE4)** — still before Phase B wiring. Your ordering is
    intact and deliberately unwired; keep it that way.
-4. Phase B wiring, with the head-noun rule and the subject-vs-role test pairs.
-5. Still open: the tracked-data-artifact CI assertion, the K1 render pass for the 31
+5. Phase B wiring, with the head-noun rule and the subject-vs-role test pairs, and the
+   two-tier workplace weighting above.
+6. Still open: the tracked-data-artifact CI assertion, the K1 render pass for the 31
    unrecognised boards + Ilant's Kula board, and JD deleting the mirror backup.
