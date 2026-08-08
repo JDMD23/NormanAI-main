@@ -3015,3 +3015,87 @@ Needed: Joe / Changed Recently) move from nice-to-have to the thing that makes t
 usable**, and the ranked view needs the raw score as its sort key (U2 — still not
 persisted). Not urgent, not a blocker for the lane; flag it as the next operator-surface
 work after Phase B.
+
+---
+
+# Follow-up rulings (round 24) — Phase A shipped; the coverage list was lying; reconcile needs a common ancestor
+
+Phase A landed (6 adapters, 53/85 boards read, 365 tests, gate green, two status moves
+that are both the design working). Three landmines caught in live data and pinned — each
+is a **field-level restatement of Unknown≠0** worth keeping as phrasing: *"a junk city
+value is no evidence, not evidence of absence"* (Arca's eleven NY roles filed under
+"United States" would have read as zero NYC jobs) and *"a secondary location is a
+different place, not a modifier on this one"* (Fin's seven NYC desk roles read as
+remote). The provider-gap discipline — one undated role withholds the whole freshness
+count, a partial count is not a smaller count but a wrong one — is exactly right.
+
+## AE1 — JD's hybrid concern: already satisfied at 0.8; confirm the weight, don't change it unasked
+JD: *"weeding out the remote jobs — hybrid still should be valued though."* Verified in
+the live config: **in-office 1.0 · hybrid 0.8 · remote 0.15.** A hybrid role already
+carries 80% of an in-office role, which matches the physical reality (a hybrid worker
+still needs a desk, just shared). Evertune's 8 all-hybrid roles → 6.4 desks confirms it
+end-to-end. **No change needed; put the number to JD for confirmation rather than
+assuming 0.8 is his number** — it is a live knob and he is the authority on it.
+
+## AE2 — JD wants to SEE the type/role split, not just have it scored — that is an operator-surface requirement
+JD: *"it's a great idea to see the TYPE of job and ROLE for NYC that really paints a good
+picture."* Read this precisely: the in-office/hybrid/remote split and the role mix are
+**evidence he wants to look at**, not merely inputs to a number. Currently they exist only
+inside the score. **Surface the breakdown on the company card** (e.g. `14 NYC roles ·
+1 in-office / 12 hybrid / 1 remote → 10.8 desks`) so the desk number is *legible* rather
+than asserted — this is the same "show the evidence behind the number" discipline as the
+scorer's self-explaining `why`. It also makes his spot-checks self-serve. Fold into S6's
+operator-surface work; it raises that work's value further.
+
+## AE3 — THE FINDING: never hand-maintain a description of your own coverage. Derive it.
+`dormant_signals` in the baseline was a **hand-typed list of seven**. Derived from the
+corpus, it returns **sixteen** — the 23 graded records were frozen before round 17 and
+carry 16 of 32 evidence fields, so the gate has never seen `hq_city`, `funding_stage`,
+`founded_months_ago`, or the trend fields either. **tau 1.0 is computed over roughly 86 of
+the formula's 100 points.** The gate remains a real regression test *on what it covers* —
+but "gate passed" has been covering materially less than the baseline claimed.
+
+This is round-23's AD2 finding, larger than either of us sized it, and the root cause is
+the generalizable part: **the list of what was missing was itself maintained by hand, so
+it drifted — and a self-description that drifts is invisible precisely because it reports
+something.** Same family as `docs/invariants.md` overstating enforcement (Y7) and the
+"declared but inert" class (Y0).
+
+**Standing rule: anything that describes the system's own state or coverage — dormant
+signals, invariant coverage, which configs are gated, which rulings are implemented —
+must be DERIVED from the system, never typed by a human.** A typed self-description is a
+claim; a derived one is a measurement. Where derivation is genuinely impossible, the
+artifact must say *"hand-maintained, may drift"* in its own text. Their fix is right and
+needs no backfill (freeze_evidence now captures all 32 fields; post-round-17 overrides
+carry the full set), so the corpus **self-heals as it grows** — which is the correct
+resolution rather than the AD2-violating alternative.
+
+## AE4 — Reconcile does a TWO-way diff and infers intent; it needs a THREE-way diff. Synchronous projection is a discipline, not a mechanism.
+The sharpest architectural finding in the report, and they under-rate it. Reconcile
+compares **board vs store** and infers *"they differ, therefore JD edited the board."*
+When a lane writes and the board hasn't been projected yet, the store has moved ahead —
+and reconcile adopted the **stale board values back over the fresh measurements**, planning
+to revert both status moves. Caught only in dry-run.
+
+**This is a missing common ancestor.** You cannot tell *who* changed from a two-way diff;
+you need the base state — the classic three-way merge. **Ruling: build the last-projected
+baseline** (record, per company, the values as of the last successful projection). Then:
+- board ≠ last-projected → **JD edited** → adopt.
+- store ≠ last-projected → **a lane advanced** → project, do not adopt.
+- both differ → **a genuine conflict** → surface to JD (never silently pick a side).
+
+Their interim — synchronous projection — is correct *as an interim* but is a **discipline
+someone must remember, not a mechanism** (Y7: an invariant that lives in a convention is
+enforced nowhere). And it is on a collision course: **the outbox exists precisely to
+decouple producers from the writer, so the first genuinely async lane re-opens this bug.**
+Therefore: **the last-projected baseline is a prerequisite for the outbox becoming
+durable/async**, and until it exists, synchronous projection must be asserted by a test,
+not left as a note. Every prior lane happened to project synchronously — that is luck
+being mistaken for design, and the report says so honestly.
+
+## AE5 — Coverage honesty: 62% of boards read is the number to publish, and the remaining 38% is named work
+53 of 85 boards, floor 35% — reported plainly, with the 31 unrecognized boards and the
+client-side Kula board identified as a separate K1 render pass rather than folded in as a
+gap. That is the right way to report partial coverage: **a named remainder with an owner,
+not a rounded-up headline.** Keep the static-discovery hit-rate as the observe metric (M5)
+so the 62% is tracked over time rather than re-derived ad hoc.
