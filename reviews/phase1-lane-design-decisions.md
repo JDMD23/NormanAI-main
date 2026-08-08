@@ -3455,3 +3455,78 @@ real prospects being discarded — the expensive direction to be wrong in** (JD'
 posture is wide-net, filter-don't-miss). The `ruler_audit` tool is the right instrument and
 nothing should be adjusted on a hunch; JD naming three or four companies he knows
 **by NYC headcount specifically, not company-wide** settles it.
+
+---
+
+# Follow-up rulings (round 28) — "LinkedIn" is not one instrument; and the Sales Nav URL is the binding
+
+Round 27 built well: two fields rather than one **on purpose** (so a mixed-instrument ratio
+cannot be computed by accident) is exactly the right defensive shape, and
+`formula_version` sitting at v3 through *two* changes — 93 stale scores — is the drift
+illustrating itself. The simulate/apply unification with a test asserting identical movers
+company-for-company is the mechanism AH1 asked for.
+
+JD asks two questions. Both are right, and the first needs a correction that the round-27
+implementation would otherwise get subtly wrong.
+
+## AI1 — "LinkedIn" is NOT one instrument. The denominator must be the SAME Sales Nav search with the geography facet removed.
+Round 27 says `total_employees` "reads from LinkedIn." That is not precise enough, and the
+imprecision defeats the entire point of the correction. **The LinkedIn company-page
+employee count and the Sales Navigator filtered-search count are two different
+measurements on the same platform** — different populations, different definitions,
+different staleness. Pairing a Sales Nav numerator with a company-page denominator is
+*still* mixing instruments; it just hides the mixing behind a shared brand name.
+
+**Ruling: the denominator is the identical Sales Navigator search with the geography facet
+dropped — same query shape, same filters, one facet removed.** Only then does the bias
+genuinely cancel in the ratio, which was the whole reason for preferring LinkedIn over
+Crunchbase in AH3. **Generalisable: "same platform" is not "same instrument." Sameness is
+defined by the QUERY, not the source.** Two counts are comparable only when they differ in
+exactly the dimension you intend to measure.
+
+**And the elegant part — Sales Nav already hands this over.** O1 documented the empty-state
+banner *"No matches found — 21 leads available if you remove the Region filter"* as a
+**false-positive trap**, because a naive reader takes the 21 as the NYC count. That number
+is **precisely the denominator we now want**, correctly labelled: same search, region
+removed. The trap and the fix are the same number read with the right name. Capture it
+deliberately rather than merely guarding against it.
+
+## AI2 — Yes, store the Sales Navigator search URL. It is the BINDING and the instrument definition at once.
+JD: *"should we add the company sales navigator link?"* **Yes — and it does three jobs, all
+of them already-established patterns:**
+1. **It is the instrument definition (F1).** F1 required storing the filter definition
+   alongside the value as provenance. A faceted Sales Nav URL *is* that definition, in its
+   most compact possible form.
+2. **It is the binding (G2).** Same bind-once / re-run-forever shape as the careers lane:
+   the expensive step is *finding* the right company entity; the recurring step is
+   *re-running* a stored query. Storing the URL converts every future measurement from a
+   discovery into a fetch.
+3. **It is auditability in one click**, which is exactly how JD works ("just click and read
+   it") — and it makes the denominator/numerator pair self-verifying for him.
+It sits naturally alongside `careers_url`, `linkedin_url`, `crunchbase_url` — the board
+already stores a per-source handle for every other lane.
+
+**One guard: the URL *is* the instrument, so a change to it is an INSTRUMENT CHANGE, not a
+field edit.** If the facets change, values measured before and after are different cohorts
+(G5) and must not be trended against each other. Pin that with a test rather than a note.
+
+## AI3 — The honest cost: the denominator roughly halves this lane's daily throughput
+Capturing the denominator means a second read per company (same search, facet dropped), so
+the 80/day Sales Nav budget covers **~35–40 companies instead of ~80**. CRMx has already
+reckoned with this ("room for roughly 35 companies today"). **That is an acceptable trade
+— making the board's primary number auditable is worth halving the rate at which it is
+collected** — but JD should own it knowingly rather than discover it. Capture both numbers
+**in the same visit**; never let numerator and denominator be measured on different days,
+or they become different cohorts by time as well as by query.
+
+## AI4 — The pending global rescore (43 movers, 1 status change): approve, after showing the one status change
+93 stale scores exist because the version stamp sat at v3 through the round-21 routing
+switch and the round-25 weight change. **These scores are not "a change" — they are
+currently WRONG relative to the formula JD already approved.** Correcting them **restores
+intent rather than altering it**, which is a different act from every other mover-producing
+change in this log and should be described that way to him.
+
+**Ruling: approve the global rescore — but show JD the ONE status change first, by name,
+with its before/after and why.** 43 numeric movers need no individual review; a single
+company changing what it *is* does. Then re-freeze metrics. After this, the
+`formula_version` stamp makes a recurrence visible immediately, which is the actual fix.
