@@ -3099,3 +3099,73 @@ client-side Kula board identified as a separate K1 render pass rather than folde
 gap. That is the right way to report partial coverage: **a named remainder with an owner,
 not a rounded-up headline.** Keep the static-discovery hit-rate as the observe metric (M5)
 so the 62% is tracked over time rather than re-derived ad hoc.
+
+---
+
+# Follow-up rulings (round 25) — JD: remote is a true zero, and NOT EVERY IN-OFFICE ROLE IS A DESK ROLE
+
+Two JD directives from the Phase A spot-check. The second is a **new signal the model does
+not have**, and it is arguably more important to his economics than seniority.
+
+## AF1 — JD ruling: remote job credit goes 0.15 → **0**
+JD, asked directly: *"Remote should be a true zero."* A fully-remote role generates **no
+NYC desk demand**, so it earns nothing. Confirmed weights: **in-office 1.0 · hybrid 0.8 ·
+remote 0.0**. (Hybrid at 0.8 confirmed as correct — he explicitly wants hybrid valued.)
+
+Consequences to expect and accept — all of them are the intended effect:
+- A company hiring **only** remotely now has **0 desk-jobs**, so it has no hiring growth
+  signal and caps at medium (W6). Correct: a company adding ten remote people needs no
+  NYC office.
+- Haast (4 roles, all remote) drops 0.6 → 0.0. Raspberry AI 2.4 → 1.6.
+- **Watch the interaction with the Low-NYC shelf:** desk-jobs of 0 combined with ≤4 heads
+  at Series A+ now shelves a company that *is* hiring, just remotely. That is coherent
+  with JD's thesis, but it is a *new* path to the shelf — verify it fires only where
+  intended and show JD any company it moves.
+Process: this is a weight change with an intended effect, so **do not compensate** (AB1
+contrast). Apply → run the oracle (expect **no change**: the corpus is blind to
+location-type, AD2) → **show JD every board mover before it lands** → re-freeze metrics.
+
+## AF2 — NEW SIGNAL: the desk question has TWO independent gates, and we only built one
+JD: *"sometimes medical companies have like 'therapists, or medical' which isn't really an
+in-office user."* This is a real gap in the model and he is right. A role generates NYC
+office demand only if **both** are true:
+
+1. **Is the person physically in NYC most days?** → location-type (in-office / hybrid /
+   remote). **Built.**
+2. **Does this role occupy a desk in a commercial office?** → **role-type: desk-generating
+   vs not. NOT BUILT.**
+
+A licensed therapist at a healthcare company is "in-office" in the sense of not-remote —
+but she is in a clinic seeing patients, not at a desk in an office tower. Same for field
+sales, field service technicians, drivers, warehouse and fulfillment staff, retail floor,
+lab bench, manufacturing, and on-site security. **Counting them as desk demand
+systematically overstates the space need of exactly the sectors JD targets** —
+Healthcare Technology is core #7, so this is not an edge case.
+
+**Ruling: desk-generating role classification joins Phase B, and it outranks seniority in
+priority** — it changes *whether a role counts at all*, where seniority only changes *how
+much*. One sharp distinction to encode carefully: **"Head of Workplace / Head of Real
+Estate" is a desk role AND a strong positive signal (§4 facilities bonus); a facilities
+technician or janitorial role is not a desk role at all.** The words overlap; the meanings
+are opposite. Both go through the same classifier, so it must be tested on that pair.
+
+**Live test case:** Conduit Health — 14 NYC roles, 12 hybrid, a health company — is
+precisely JD's concern in the current data. Check what those roles actually *are* before
+trusting 10.8 desks.
+
+## AF3 — When a classification is INFERRED, verify it against the source posting — don't trust the metadata
+JD: *"can't you click a job post on the careers page to vet all this out… if you are
+questioning a job posting maybe just click and read it."* Ruling: adopt as the validation
+method for any **inferred** reading, and make the distinction structural:
+- **Declared** by the provider (an explicit workplace-type field, Comeet's
+  `experience_level`) → trust; tag `declared`.
+- **Inferred** from a location string or title heuristic → **tag `inferred`, and verify a
+  sample by opening the actual posting and reading it** before the signal is trusted at
+  scale.
+This is the same discipline as K1/O1 one level up: *structure over display, source over
+summary.* It also gives Phase B its validation method for free — the ~30-title check
+becomes "open these postings and confirm the classification," which is stronger than
+labelling titles in the abstract, and it is exactly how JD wants to work.
+**Immediate action:** Knit and GovWell were inferred; verify them by reading the actual
+listings before the Phase A numbers are relied on. **Prefer a provider's declared field
+over any heuristic wherever one exists** (AE-round guidance, reinforced).
