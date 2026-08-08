@@ -3219,3 +3219,98 @@ starting with the health-tech companies where the risk is concentrated, fix what
 **then** wire it into the score. The test set must include the trap pair — **"Head of
 Workplace" (desk + positive signal) vs "Facilities Technician" (not a desk role)** — and
 Conduit Health's 14 roles.
+
+---
+
+# Follow-up rulings (round 26) — the classifier found nothing; the VERIFICATION found everything
+
+Phase A's desk cascade is built (Tiers 1–2, Tier 3 correctly not built at 4.0%
+unresolved, floors reused, per-role storage). The headline is the honest kind: **361 desk
+/ 1 not-desk / 15 unknown across 377 live roles.** JD's concern is a real gap in the model
+that **does not currently materialise in his portfolio** — NYC health-tech posts the
+*administrative layer around* clinicians (Clinical Ops Manager, Clinician Recruiter,
+billing, credentialing, intake), all of which need desks; the clinicians are hired
+elsewhere. Reporting that plainly, after building the thing, is exactly right.
+
+## AG1 — Correction accepted; and it exposes a REAL coherence gap: the shelf and the score now measure different things
+The brain predicted remote→0 would open a new path to the Low-NYC shelf. **Wrong, and the
+correction is right:** routing compares raw `nyc_open_jobs`, not `desk_jobs`, so a
+remote-only company keeps its jobs count and never reaches the shelf test.
+
+But the underlying concern lands somewhere better. **The score and the shelf now use
+different job measures**: a company with 10 remote NYC roles has `desk_jobs = 0` → no
+growth signal → capped at medium (correct), while the shelf sees `nyc_open_jobs = 10` →
+escapes (questionable). By JD's own thesis — remote roles generate no NYC office demand —
+the *escape* condition should arguably read desk-jobs too.
+
+**Ruling: flag, do not silently fix.** Switching the shelf to desk-jobs **moves companies**,
+so it is a behaviour change requiring the full process (simulate → show JD the movers →
+his call). Record it as an open coherence question. Generalisable: **when a measure is
+refined, every rule that consumes it must be re-examined — a refinement that reaches the
+score but not the router leaves the two disagreeing about the same word.**
+
+## AG2 — The recurring shape, now on its third instance: A KEYWORD NAMES THE SUBJECT, NOT THE ROLE
+"Clinician Recruiter" matched `\bclinician\b` → non-desk, when a recruiter *of* clinicians
+sits at a desk all day. That is the same failure as the Head-of-Workplace / Facilities-
+Technician trap, and the same failure as **M3** (financial-row attribution by name instead
+of by direction). Three instances, one shape:
+
+> **The presence of a word tells you nothing about its structural role.** In a job title
+> the matched term is often the role's *subject*, not the role itself — and **a job that
+> serves a non-desk population is almost always itself a desk job.**
+
+**Standing rule for every classifier here:** match on the title's **head noun** (the role),
+not on any token; treat a non-desk term appearing as a *modifier* as evidence of a desk
+job, not against it. Test every classifier on at least one subject-vs-role pair. Note this
+error is **systematically invisible in the score** — it would have shipped silently
+without the trap-pair instruction, which is the whole argument for AC3.
+
+## AG3 — The durable lesson: the classifier found ~nothing; READING THE SOURCE found three live bugs
+Verifying Knit and GovWell surfaced: **multi-place strings** ("New York City | United
+States" is an offer of a choice, not a claim about one place → Unknown), **board
+consensus** (a board's own declared value beats a generic convention — GovWell 14.0 → 12.0
+desks, requiring a new `DEFAULTED` provenance rung below `INFERRED`), and **evergreen
+postings** ("Pitch Yourself", "Expressions of Interest" — nine pipeline collectors sitting
+inside NYC counts on nine companies; not jobs).
+
+**Those three are worth more than the classifier, and none of them came from the
+classifier — they came from opening the actual postings.** The durable rule:
+
+> **Going to the source finds errors that no amount of reasoning about the data will.**
+> Every inferred layer deserves a periodic sample read against the primary artifact — not
+> as validation of a specific claim, but as a *bug-discovery* method in its own right.
+
+Elevate JD's "just click and read it" from a validation step to a **standing practice**:
+each new lane ships with a sample source-read, and its findings are expected to be about
+things nobody was looking for. (This is the same reason the calibrated proving run beat a
+blind overwrite in N1/O1.)
+
+## AG4 — Scope: stop investing in the classifier; convert it into a MONITORED gate
+1 not-desk in 377 says the bias exists in theory and not in JD's current portfolio.
+**Ruling: keep the gate (it is cheap and it is insurance against portfolio drift into
+logistics, retail, care-delivery), but invest nothing further in it.** No Tier 3 — the
+4.0% measurement already settled that. Instead **track the non-desk rate as an observe
+metric**: if it climbs materially, the portfolio has drifted into desk-ambiguous sectors
+and the classifier earns attention again. That is evidently's drift-as-eval applied to a
+classifier's own relevance — a rule that monitors whether it still matters.
+
+**One check before closing it out: are the 15 unknowns CONCENTRATED?** A 4% global rate is
+fine; 15 unknowns on one company is a materially understated floor for that company. The
+distribution matters more than the rate — check it, and if any single company carries a
+heavy share, resolve those by source-read rather than accepting the floor.
+
+## AG5 — remote→0: land it
+Eight companies move, **no status changes**, largest 2.2 pts (Raspberry AI 55.9 → 53.7).
+Simulated, bounded, and consistent with JD's explicit ruling. **Go.** Standard process:
+apply → oracle (expect flat, corpus is blind per AD2) → show JD the movers → re-freeze
+metrics. The predicted shelf interaction does not exist (AG1), so there is nothing else
+to watch.
+
+## AG6 — The Office Manager question is genuinely JD's, and both readings are defensible
+Manifest OS's *"Office Manager & EA to the CEO"* flagged as a workplace-lead buy signal.
+Certainly a desk. Whether it is the same **office-standing-up tell** as "Head of Real
+Estate" splits two ways: at a 20-person startup the office manager is frequently the person
+who *does* deal with the lease (→ real signal); but the title is bundled with "EA to the
+CEO", which reads as an **admin** hire keeping an existing office running (→ not the tell).
+JD's call — it is a question about what the signal *means in his market*, which is exactly
+the class of judgment the brain must not make for him.
