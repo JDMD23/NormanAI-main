@@ -1,3 +1,110 @@
+# Phase 1 lane design decisions — INDEX
+
+> **How to use this file.** It is an append-only ruling log, ~2,900 lines across 23
+> rounds, ordered by *when* a decision was made. This index is ordered by *what* the
+> decision is about. **Find your topic here, then jump to the ruling ID.** Do not read
+> the whole file linearly unless you are onboarding.
+
+### ⚠️ Two collisions and supersessions you must know before citing anything
+
+**ID COLLISION — `Q1`–`Q4` are each used TWICE.** Always qualify by round:
+- **`R2·Q1–Q7`** (top of file, ~line 8) — the original dress-rehearsal hurdles:
+  browser identity, careers ATS, LinkedIn count, identity auto-bind, multi-location
+  jobs, rebrands, pacing budgets.
+- **`R10·Q1–Q4`** (~line 1502) — parallelism: identity-bounded concurrency, pipeline
+  by source, the data vendor, batch size.
+
+**SUPERSEDED — do not apply these without reading their replacement:**
+| Original | Superseded by | What changed |
+|---|---|---|
+| F2 tiered budget ramp · G7 deferred-checks | **L1 / L2** | Daily caps suspended for attended build phase; reinstated at unattended cutover |
+| G5 geo-chart as headcount instrument | **K3** | Sales Navigator is now the pinned ruler; geo-chart demoted to fallback |
+| R1's batch-6 two-browser plan | **S2** | Ruled against — serial-with-interleaving + a concurrent API lane is the standing pattern |
+| Round-20 interim "effective = configured − 0.5" | **AB1 / AB3** | Routing now compares raw; the old note was subtly wrong (banker's rounding) |
+| `reference/target-industries.md` core #8 (Biotech) | **JD ruling 2026-08-07** | Biotech excluded entirely; the code was right, the list was wrong |
+
+---
+
+## By topic
+
+**Evidence, Unknown & confidence** — when may missing data act?
+`J1` (evidence-hysteresis: entry needs full evidence, holding tolerates one absence,
+missing NEVER demotes) · `K2` (a DOM zero caps at Partial until independently
+corroborated) · `M4` (a verified NYC office turns US-wide/remote into Unknown, not 0) ·
+`U3` (three velocity states: measured / not-applicable-excluded / estimated-capped) ·
+`AD1` (cohort tags protect trends, not thresholds)
+
+**Instruments & measurement** — what is being measured, and with what?
+`F1` (name the proxy; it is not "true headcount") · `G5` (the geo-chart is ~20% lossy;
+tag instrument + granularity) · `K3` (Sales Nav is THE ruler for every company) ·
+`O1` (read the zero-state structurally first — the "21 available" false-positive trap) ·
+`N1` (migrate onto a new instrument as a calibrated proving run, never a blind
+overwrite) · `P3` (foreign-currency rounds) · `M2` (headline total is authoritative)
+
+**Identity & entities**
+`R2·Q4` (auto-bind bar) · `R2·Q6` + `G6` + `P2` (aliases: capture opportunistically,
+same-entity only, first-class table) · `K5` (resolve-then-echo for manual entry) ·
+`P1` (funded + live team + dead site → typed rebrand review) · `N2` (tombstone, never
+hard-delete; rediscovery skips tombstones)
+
+**Scoring & routing** — the Fit model itself
+`U0`–`U6` (the demand-dominant recalibration) · `V1`–`V2` (residual diagnosis; rebase
+the whole threshold ladder) · `W0`–`W9` + **`FIT-SCORING-SPEC.md`** (JD's validated
+thesis — *the spec is authoritative, these are its derivation*) · `G3`/`M1` (velocity
+merge windows) · `G4` (provisional velocity must be visually AND sortably distinct) ·
+`J3` (hysteresis damps flapping; cadence does not) · `J5` (structured reason enums) ·
+`M3` (financial rows by DIRECTION, not name) · `AA1`/`AB1` (routing compares raw)
+
+**Reconcile & the operator board**
+`J2`/`K6` (reconcile before more batches) · `J4` (JD placements win; the guard is in
+reconcile) · `L5` (the six laws + seven safety pieces; adopt-before-heal) · `R8`
+(field-level adopt-check before each write) · `J8` (dual-reader surface; keep the triage
+reason on the board) · `S4` (judgment calls go on the company AND in a digest) ·
+`S6`/`AD3` (task-shaped working views — now load-bearing)
+
+**Accounts, safety & concurrency**
+`R2·Q7` (LinkedIn is riskiest; breaker on first challenge) · `F2` (age the profile by
+behaviour, not clock) · `F3` (breaker taxonomy: classify on structure, never text) ·
+`L1` (the waiver's real risk is inhuman regularity; tripwires must be live) · `L2`
+(unattended inverts the safety model — make caps-less unattended a config-invalid
+state) · `R10·Q1` (concurrency is bounded by the IDENTITY, not the agent) · `R4`
+(lane-local halt) · `R6` (attended-mode attaches to account risk — the L2 line is
+per-lane)
+
+**Lanes — careers, jobs, news**
+`R2·Q2` + `G1`/`G2` (ATS registry; browser binds once, API counts forever) · `K1` (the
+render protocol) · `M5` (embedded boards are the majority path) · `P4`/`S1` (build the
+careers lane; it crosses careers to the unattended-safe side) · `F4` (news lane =
+citation-by-construction) · `AC1`–`AC4` (staging: extracted-fact phase, then classifier
+phase)
+
+**Evals & validation methodology** — *the most transferable material in the file*
+`J7`/`L4` (the replay audit → standing regression harness) · `T1`–`T7` (gate tolerance
+stratified by confidence; anchors stay separate; first run is CALIBRATION not a
+baseline; sample the informative pairs; check intransitivity; **T7 label BLIND**) ·
+`Z1` (a threshold fitted to labels cannot be validated BY those labels — fitted vs
+held-out) · `Z2` (nearest-to-boundary predicts flips; class gap does not) · `AC3` (a
+classifier must be validated AS a classifier first) · `AD2` (an eval corpus can only
+validate signals present in its frozen evidence)
+
+**Process, sequencing & scope honesty**
+`N3`/`O2` (watcher verifications and go/no-go) · `R10·Q3` (the vendor is the
+*unattended* unlock, not a speed play) · `R10·Q4` (batch size is throttle-bound) ·
+`R7` (measure against the right baseline) · `R9` (permanent vs interim seams) ·
+`S2` (the elite move is what you don't build) · `S5` (vendor shadow mode) ·
+`AB1` (fix a mechanism at zero behavioural cost, then decide values separately) ·
+`AB2` (never bundle a small known change with a large unknown one)
+
+**Audit lessons — the meta rules that govern how we build**
+`X1` (test the RACE, not the API) · `X2` (verified-write must round-trip every field) ·
+`X3` (a rebased scale silently inerts rules on the old scale) · `X4` (secret-scanning ≠
+data-leak scanning) · `X5` (the eval validates the MODEL, not the PLUMBING) · `X6`
+(audit a frozen commit) · `Y0` (**"declared but inert" is the dominant defect class** —
+a rule that reports green but cannot fire) · `Y7` (**test the WRITER, not the plan**;
+a ruling with no production caller is NOT implemented)
+
+---
+
 # Phase 1 lane design decisions (enrichment lanes)
 
 Engineering rulings on the 7 dress-rehearsal hurdles, grounded in the studied

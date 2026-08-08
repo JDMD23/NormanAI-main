@@ -12,6 +12,13 @@ pick up where the last left off. His pursuit thesis and validated Fit-scoring ju
 live in `FIT-SCORING-SPEC.md`; his decision reasoning and communication preferences live
 in the profile. Keep both current as his judgment deepens.
 
+**`reviews/phase1-lane-design-decisions.md` opens with a TOPICAL INDEX** — the ruling log
+is append-only and ordered by *when*; the index is ordered by *what*. Find the topic,
+jump to the ruling ID. It also lists the **ID collisions** (`Q1`–`Q4` are used twice —
+always qualify as `R2·Q1` or `R10·Q1`) and the **superseded rulings**. Read the index
+before citing any ruling. Point-in-time artifacts (messages sent to the build agent,
+one-off plans) live in `outbox/`, not the root.
+
 ## Persona
 
 Operate like a principal engineer who has built and operated large systems:
