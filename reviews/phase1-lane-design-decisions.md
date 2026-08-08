@@ -3314,3 +3314,44 @@ who *does* deal with the lease (→ real signal); but the title is bundled with 
 CEO", which reads as an **admin** hire keeping an existing office running (→ not the tell).
 JD's call — it is a question about what the signal *means in his market*, which is exactly
 the class of judgment the brain must not make for him.
+
+## AG7 — JD's rulings on the workplace signal, and a HEADCOUNT FLAG that outranks the question asked
+JD, on the Office Manager: *"Manifest is bigger than 20 ppl. I fear you miscalculated a lot
+of NYC metropolitan. Not the same as head of real estate but def a good signal, don't over
+index too much on the role and how it fits into growth plan, just keep it as a good
+indicator."*
+
+**(a) The workplace signal is TWO-TIER, and deliberately un-clever.**
+- **Head of Real Estate / Head of Workplace** → the strong office-standing-up tell.
+- **Office Manager (incl. EA-bundled)** → **a good indicator at a lower weight.** Keep it;
+  do not promote it to the strong tier.
+- **And an explicit scope instruction: "don't over index too much on the role and how it
+  fits into growth plan."** Do **not** build interpretive logic about how a workplace hire
+  fits a company's growth stage. It is a modest positive indicator, weighted modestly, full
+  stop. This is JD's consistent pattern — concrete demand over elaborate proxy reasoning —
+  applied to the facilities signal.
+
+**(b) The flag that matters more: JD believes NYC headcount may be materially
+under-counted, and not only on one company.** *"Manifest is bigger than 20 ppl. I fear you
+miscalculated a lot of NYC metropolitan."* Treat this as a **K4 operator-dispute event on
+the instrument itself** — his direct knowledge of a company contradicting the recorded
+figure is exactly the signal K4 says to capture rather than dismiss, and it is how the
+geo-chart's unreliability was learned (K3's calibration finding). Two investigations, in
+order:
+1. **Specific:** what does the store actually record for Manifest OS's NYC headcount, when
+   and by which instrument was it measured — and is the "~20 people" figure even from the
+   system, or a colloquial description in the report? Establish the real number first.
+   **Also check for a duplicate:** "Manifest OS" (Prospect, batch 5 s1) and "Manifest"
+   (Watchlist 31, batch 5 s2) appear as separate entries — if they are one company that is
+   an identity-resolution failure, and it would independently explain a "too small" reading.
+2. **Systematic:** F1 named the metric's *upward* bias (stale current-company entries) but
+   never its **downward** bias — the count only sees LinkedIn members whose profile lists
+   the company currently, which can badly under-count. **Spot-check a handful of companies
+   JD knows personally against their recorded NYC figure.** If his instinct holds across
+   several, the instrument has a systematic under-count worth quantifying and annotating on
+   the field — the same treatment the geo-chart got.
+
+**Do not adjust any number on JD's impression alone** — establish the truth first, then
+decide. But do not park it either: an operator saying *"I fear you miscalculated a lot"*
+about the board's primary signal is the highest-value bug report available, and the whole
+Sales-Nav-as-ruler decision (K3) rests on this measurement being sound.
