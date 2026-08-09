@@ -5096,3 +5096,60 @@ described as strong is worse than none, because decisions get built on it — as
 2 page loads where `salesnav_url` is stored, 3 where the company must first be found.
 **Refusing to blend two populations into a single average is the same discipline as carrying
 the denominator (AH2)** — an average over a mixture describes no member of it.
+
+---
+
+# Round 49 — pre-registering a test's limits, and a correction to BB1
+
+## BC1 — BB1's remedy was wrong; the calibration cannot test abbreviation at all
+BB1 ruled *"add the largest known total to the calibration set"*, implying that would probe the
+abbreviation boundary. **CRMx checked: David (329) already IS the largest.** Board totals run
+329, 141, 120, 94, 87, 85, 83, 80.
+
+**So the set does not change — and the useful half is that nothing on the board is anywhere near
+2000.** If 329 renders exactly, the boundary narrows only to (329, 2000] and stays unfound.
+
+> **The calibration cannot test the abbreviation risk. It can only fail to trigger it.**
+
+Their statement of the consequence is exact and is the ruling: *"A clean run must not be
+reported as 'clean including abbreviation', because that would be reading a null as evidence,
+and the null here means 'we never got close.'"*
+
+**Same null-reading discipline as their Concourse observation** — a zero consistent with the
+misbind rather than evidence against it. **An untriggered risk and a tested-and-absent risk
+produce identical reports and are not the same finding.**
+
+## BC2 — Pre-register a test's limits BEFORE you have its result
+They wrote the limitation into ADR 0003 **in advance**, reasoning: *"so the limit is on the
+record before the result exists and cannot be quietly forgotten once a clean run makes it
+convenient."*
+
+**This is the most transferable thing in the round.**
+
+> **State what a test cannot show before you run it. After a clean result, the incentive to
+> omit the caveat is at its maximum — the limitation stops being a fact to record and becomes
+> an inconvenience to rationalise.**
+
+**It has already proved itself once in this project, in the same shape.** AZ5: round 45's
+condition 3 — *"the gauge is only just repaired, and a control fixed yesterday deserves one
+skeptical look"* — was written before the sessions ran, and it is what surfaced the throttle
+having no callers. **The same message carried an error and the pre-registered doubt that caught
+it.** BC2 is the general form of AZ5.
+
+## BC3 — The abbreviation risk is LATENT, not present — which makes it a Band C item
+Max board total is 329; the threshold is above it. **So the floor rule is correct and currently
+unreachable.** It becomes reachable when the next CSV batch brings in larger companies — i.e.
+exactly at Band C.
+
+**Question, and it is the AO1 one:** the parser yields `exact=None, floor=2000` correctly — but
+**does anything WATCH for a floor-valued measurement, or does it settle silently into the
+store?** A floor entering the denominator unnoticed is the failure this rule exists to prevent,
+and a correct parser with no observer is half a control.
+
+**One line to check before the batch, not now.**
+
+## BC4 — Adding Ocean (4/141) fixed a sample-bias I noticed and did not raise
+The original five spanned 28–79% concentration; **Ocean at 2.8% extends the low end**, so the
+set now covers 2.8–79% concentration and 63–329 total. **A transport calibration should span the
+range of the thing it measures**, not cluster in the region where the instrument was already
+trusted. They caught that unprompted.
