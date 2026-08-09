@@ -3530,3 +3530,79 @@ change in this log and should be described that way to him.
 with its before/after and why.** 43 numeric movers need no individual review; a single
 company changing what it *is* does. Then re-freeze metrics. After this, the
 `formula_version` stamp makes a recurrence visible immediately, which is the actual fix.
+
+---
+
+# Follow-up rulings (round 29) — a bundle the brain approved, and a hard gate firing on unverified metadata
+
+Two guards landed as **mechanism, not notes** — an `Evidence` record carrying
+`total_employees` without `nyc_employees` refuses to construct (same-visit enforcement),
+and `set_salesnav_url()` clears `prev_nyc_employees` when the URL actually changes
+(re-binding = new cohort), while re-running the same search is left alone as a trend. Both
+are exactly the shape AI2 asked for.
+
+## AJ1 — The brain approved a bundle. CRMx decomposed it and was right.
+Round 28 ruled "approve the global rescore (43 movers, 1 status change)." CRMx came back:
+it is **two operations and only one is a correction** — 3 genuine drift fixes (Casap,
+Daytona, Ilant Health; no status changes) and **40 companies that were never scored at
+all**, going `None → 68` (the data-blind cap). The 40 are a **first scoring, not a
+restoration of intent**, and bundling them is the round-26 failure shape.
+
+**They are right and the brain was wrong.** The lesson lands on the brain this time: AB2
+("never bundle a small known change with a large unknown one") is not only a rule for the
+builder — **the reviewer must decompose before approving, or the approval itself creates
+the bundle.** A ruling that says "approve N movers" without asking *what kinds of movers*
+has done the bundling on the builder's behalf. Third payout of decompose-before-acting;
+first time it caught the brain.
+
+**Ruling: run the 3-company drift correction alone. Do not score the 40.**
+
+## AJ2 — Don't blind-score the 40: a score computed from no evidence is a placeholder wearing a number
+Scoring the 40 produces `68` for every one of them — the data-blind cap, which means
+*"we know nothing except the money."* It changes no status (they stay Research either way)
+and adds no information. But it does something worse than nothing: **it makes 40 unscored
+companies look scored.** A reader — human or machine — cannot distinguish "68, evaluated"
+from "68, we haven't looked."
+
+**Ruling: leave them `None`.** This is Unknown≠0 applied one level up, to the score itself:
+**an honest absence beats a fabricated-looking value.** Score them when they have evidence,
+which is what the enrichment lanes are for.
+
+## AJ3 — Silna Health: the rule is certain; the CLASSIFICATION is not. Match a gate's strength to its input's confidence.
+The single status change was a **false positive**: Silna Health → Not a Fit, firing on a
+**Therapeutics** tag in its Crunchbase industries — while Silna builds prior-authorisation,
+benefit-check and insurance-monitoring software. Healthcare SaaS, not therapeutics.
+
+**The condition set in AI4 is what surfaced it.** "Show the one status change by name" —
+a 43-row summary would have buried a legitimate prospect being silently exiled. Record that
+as vindication of the practice, not luck.
+
+**The generalisable defect: a hard, irreversible exclusion is being fired by unverified
+third-party metadata.** JD's rule is not the problem — he ruled biotech out entirely and the
+gate beating strong signals was verified as a *good* property (round-19). The problem is
+that **the strength of a gate is not matched by the confidence required of its input.** A
+Crunchbase industry tag is `INFERRED`-tier metadata of unknown quality; an irreversible
+exile deserves better evidence than that.
+
+**Ruling — separate the rule from the classification:**
+- **The rule stays absolute.** Do not loosen the exclusion; JD's call stands.
+- **Apply the provenance ladder to the gate's INPUT (AF3).** An exclusion triggered by a
+  **declared/self-described** signal (the company describes itself as therapeutics) fires
+  immediately. An exclusion triggered only by an **inferred/third-party tag** **routes to
+  review** instead of auto-exiling — the gate *proposes*, the human *disposes*.
+- **The cost is nil and the asymmetry is severe.** Silna is the only company on the board
+  carrying an excluded tag, so this buys one review. JD's whole posture is
+  filter-don't-miss; **a false-positive exile is the expensive error** and it is silent by
+  construction.
+
+Note this is the **second instance of the same family** as AG2's "Clinician Recruiter": a
+matched token is not a verified fact. AG2 governed title head-nouns; this governs
+third-party tags. **Common rule: a keyword match is a hypothesis, not a finding — and the
+more irreversible the action it triggers, the more verification it owes.**
+
+## AJ4 — The measurement session: go, and start where the answer turns
+Session is clean (0 challenges, 0 soft blocks, 15/80 views). **Recommend go** — ~35
+companies at two reads each — and **starting with the `ruler_audit` list is correct**: those
+are the companies whose numbers the dispute actually turns on, so the first session answers
+the question rather than merely making progress. JD's call to trigger, since it is his
+account and his throttle.
