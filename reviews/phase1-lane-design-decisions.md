@@ -5153,3 +5153,83 @@ The original five spanned 28–79% concentration; **Ocean at 2.8% extends the lo
 set now covers 2.8–79% concentration and 63–329 total. **A transport calibration should span the
 range of the thing it measures**, not cluster in the region where the instrument was already
 trusted. They caught that unprompted.
+
+---
+
+# Round 50 — built-but-unreachable, three times, all with green tests
+
+## BD1 — The answer is worse than the question: there is no field that CAN hold a floor
+Asked whether anything watches for a floor-valued measurement. One grep:
+
+```
+read_headcount            NO CALLERS
+HeadcountReading.floor    never read
+Company.total_employees   int | None
+```
+
+**Not merely unobserved — unstorable.** The parser produces a value the schema cannot hold, so
+a floor reading has nowhere to go but dropped or coerced into the integer the rule exists to
+prevent. **The failure the rule was written against, arriving through the storage layer instead
+of the parser.**
+
+**This is the third instance in this project of the same shape:**
+
+| mechanism | state |
+|---|---|
+| `Budget` / `salesnav_budget` | defined, exported, **no callers** (AZ1) |
+| `workplace_contact` / `_email` | plumbed through store, reconcile, projection — **never written** |
+| `read_headcount` / `.floor` | parser built, **no callers, and no field to store into** |
+
+**All three had passing tests.**
+
+> **A unit test proves a function WORKS. It says nothing about whether anything CALLS it.**
+> Green tests over unreachable code is the most reliable way this project has found to build
+> something that does not exist.
+
+**Ruling: the next loop's checklist gets a reachability check** — for every public function in
+`src/`, is there a caller outside its own test file? Mechanical, cheap, and the generalised form
+of the manual "grep for callers" that has now caught two live defects. `brain/09`: enforce
+mechanically, persuade only where judgment lives.
+
+**Recorded, not built.** Frozen scope holds in both directions, including when the parked thing
+is interesting.
+
+## BD2 — A computation over a bound yields a bound, and division flips its direction
+Their extension, and it is the best technical point of the round:
+
+> *"`nyc_concentration` must REFUSE to compute against a floor denominator, because dividing by
+> a lower bound yields an UPPER BOUND on concentration — a different quantity that would
+> otherwise be presented as the same one."*
+
+Exactly right. If `total ≥ 2000`, then `nyc/total ≤ nyc/2000`. **The output is a number, it
+looks like a concentration, it enters the score — and it is systematically too high.** A
+directional bias, not noise: large companies with abbreviated headcounts would score *better*
+on NYC concentration than they deserve.
+
+> **Presenting a bound as a point estimate is a CATEGORY error, not a rounding error.**
+> Uncertainty propagates through arithmetic, and division inverts the direction of a bound.
+
+**Extends F1/K3.** Every value already carries its instrument and granularity; **it must also
+carry whether it is a point or a bound**, because the operations downstream are only valid for
+one of those.
+
+## BD3 — "Check the one that looked odd" is not the weaker reason
+They declined credit for Ocean: *"I added it because it was the company whose number I found
+most surprising — 4 of 141 — not because I was reasoning about spanning the range."*
+
+**The honesty is right; the self-assessment isn't.** Range-spanning covers what you can
+anticipate. **Surprise covers what you can't** — a surprising value is a signal that your model
+of the instrument and its output disagree, and that is precisely where a designed sample would
+not have thought to look.
+
+> **Both are legitimate sampling heuristics and they are complementary: span the range for what
+> you can foresee, follow the surprise for what you cannot.** Arriving at the same company by
+> both routes is mild evidence the choice was right.
+
+## BD4 — Their sharpening of BC2, kept
+> *"A caveat written in advance survives its own author being wrong about everything around
+> it."*
+
+Better than BC2's phrasing. **That is the whole value of pre-registration in one line** — the
+caveat's protection does not depend on the person who wrote it being correct, which is exactly
+when protection is needed.
