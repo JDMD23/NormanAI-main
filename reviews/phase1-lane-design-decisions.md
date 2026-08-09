@@ -4139,3 +4139,41 @@ Their order puts priority third, after the email reveal. **Decouple them.** Rank
 human *attached*, not a human *reachable* — so priority can be built the moment discovery
 lands, in parallel with JD scoping the reveal. Making a build step wait on an operator
 decision it does not depend on is the deferral pattern AM2 already caught once.
+
+## AP7 (addendum, same round) — two corrections to AP4, both from Apollo's OWN vendor eval
+JD asked to port his Sales Navigator workplace-POC filters into Apollo so the two are set up
+alike. The instrument rulings (F1/G5/K3, AI1) say that is the one operation you cannot
+perform — and here it is not theoretical. **`docs/vendor-evals/apollo-2026-08.md`, a
+calibrated proving run from 2026-08-07, already measured it and it failed on the most
+important filter.**
+
+**1. Apollo's person geography cannot carry a Sales Nav filter.** Measured: `person_locations`
+resolves to state-ish "New York" — no NYC-metro vocabulary, excludes NJ/CT metro, includes
+upstate. Against Sales Nav ground truth the ratios ran **60–88%: "not a constant, not
+correctable."**
+
+AP4 survives but needs a granularity tag it did not have. Apollo person location is usable
+for exactly the distinction AP4 wanted — **in New York State vs in California vs in Israel**,
+which is the coffee-versus-7am-call decision — and is **unusable** as a geography that could
+ever be compared to, differenced against, or substituted for a Sales Nav count. **Record it
+as `apollo/person-state`, never as a NYC measurement.**
+
+**2. The gap in my own AP1–AP6: resolve-then-echo was never invoked, and Apollo's eval
+demands it.** That eval found **1 of 6 domains MISBOUND** — Concourse resolving to "Concourse
+Labs," a different company sharing a domain in Apollo's index — and concluded: *"Any Apollo
+use MUST name-echo the org (resolve-then-echo) before a value is trusted."*
+
+**I approved a 51-domain Apollo batch without applying the bar Apollo's own evaluation set
+for it.** At the eval's observed rate that is a material share of the batch attaching real
+humans to the wrong companies — and a contact bound to the wrong company is worse than a
+missing one, because it is actionable and wrong.
+
+**Ruling: the discovery batch asserts the returned `organization.name` matches Norman's
+company before any contact is attached. A mismatch routes to review; it does not attach.**
+This is K-round resolve-then-echo, already standing, already written down in the build's own
+docs — which is what makes missing it an AO1 failure rather than a new discovery. **The
+observable: count of contacts rejected on name mismatch, reported per run.**
+
+**Standing addition to AO1: before approving a vendor operation, read the vendor eval that
+already exists for that vendor.** The brain has now twice ruled on Apollo without opening
+`docs/vendor-evals/apollo-2026-08.md`.
