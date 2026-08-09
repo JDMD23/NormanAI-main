@@ -4702,3 +4702,67 @@ removes the second check just as surely as a reviewer who takes the builder's."*
 **Correct, and it completes AV5.** The rule is not "the reviewer keeps their misses"; it is
 **neither party may absorb the other's, in either direction, because the value of two checks
 is that they fail independently.**
+
+---
+
+# Round 43 — the batch-readiness loop, and why the review loop had no exit
+
+JD: *"I feel like you're looping a little bit... a lot of stuff back and forth without true
+improvements."* Correct, and the diagnosis is structural rather than a matter of effort.
+
+## AX1 — A loop whose exit condition is "no more defects found" cannot terminate
+Rounds 34–42 ran find → fix → verify → find, eight times. **Every defect was real** — a
+baseline recording nothing, a config stating the opposite of the run, every contact stored
+twice, a migration that could not run against the state it diagnosed. None of it was wasted.
+
+**But the search always succeeds eventually, so what ended each round was attention, not
+completion.** The loop had no exit criterion at all; it had a participant who stopped.
+
+> **A review loop needs a definition of done that is external to the reviewer. Otherwise the
+> reviewer IS the exit condition, and the loop runs exactly as long as they keep looking.**
+
+`brain/09` (autoresearch) already had this: **freeze the judge** — the evaluation lives
+outside the agent's editable surface, or the loop optimises the metric instead of the target.
+It was applied to the *build's* evals and never to the *review process itself*.
+
+## AX2 — The loop spec (`outbox/GOAL-batch-readiness-loop.md`)
+Structure, and what each part is defending against:
+
+| element | defends against |
+|---|---|
+| **Frozen exit checklist**, observables with numbers | the reviewer being the exit condition (AX1) |
+| **Band A / B / C** — autonomous, human-gated, batch | `brain/09` calibrate autonomy by reversibility |
+| **3-pass budget, escalate rather than pass 4** | grinding without convergence |
+| **Re-run ALL of Band A after every fix** | round 42 — a fix that broke its own precondition |
+| **Frozen-scope rule: record, don't fix** | rounds 34–42 individually justified, collectively endless |
+| **One report at the end, not per finding** | the relay ping-pong itself |
+| **Explicit out-of-scope list** | round 38 — an insight found while researching is not the request |
+
+**The frozen-scope rule is the load-bearing one**, with exactly two exceptions: data loss, and
+risk to JD's LinkedIn account. Everything else found mid-loop goes to `docs/found-not-fixed.md`
+and becomes the *next* loop's checklist input.
+
+## AX3 — The bar is not "no bugs"
+Stated in the goal and worth holding generally:
+
+> **No defect that changes what the operator does.** A system whose remaining imperfections
+> cannot alter the next action is finished for that action's purposes.
+
+This is `brain/00`'s scope honesty made testable. It also gives the loop a natural end that
+does not depend on anyone's judgment about whether more looking would find more.
+
+## AX4 — State of the build at the loop's start, verified at `b805e90`
+- **Pipeline complete end to end** for the first time: CSV → ingest → enrich → score → route →
+  project → contacts → chase list.
+- **No architectural decision reversed in four days.** SQLite as truth, Notion as a rebuildable
+  view, one reconcile loop — the expensive-to-reverse calls (`brain/02`) all held.
+- **Scoring validated and frozen**, oracle tau 1.0 held-out, frozen 2026-08-08, formula version
+  stamped on every stored score.
+- **One known-wrong component, managed rather than lurking:** `hq_source = hq_city` awards 6/100
+  to every company while measured concentration runs 0–79%. The replacement is built, measured,
+  and correctly held inert until coverage completes — with the reasoning written into the
+  config at the point of use (AU7).
+- **One live defect:** the `people` uniqueness constraint with no repair step (AW1).
+- **One sequencing hazard:** 49 companies without denominators. **Ingesting 50 more before
+  clearing them takes the unmeasured population to ~99 and makes every subsequent mover list
+  measurement timing rather than signal** — round 31's coverage artifact at double scale.
