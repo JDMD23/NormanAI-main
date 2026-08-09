@@ -4971,3 +4971,62 @@ risk profile he approved is intact and the accounting was wrong.** Say both.
 
 **Before session 1: grep the NEW budget tool for call sites and show the result.** The defect
 that killed the old control is the first thing to rule out in its replacement.
+
+---
+
+# Round 47 — JD rules UI-only: computer use, his login, human pace
+
+## BA1 — Drop the voyager call; it is the loudest signal and pacing does not touch it
+Round 28 made one voyager org-lookup plus two searches per company. **Voyager is LinkedIn's
+internal API** — the endpoint their own web app calls. Reaching it directly is categorically
+different from clicking the interface, and **no amount of pacing disguises it: a slow voyager
+call is still a voyager call.**
+
+**Ruling: UI navigation only. No internal endpoints, no XHR interception.** A value obtainable
+only through an internal endpoint is **not obtainable** — record it unavailable rather than
+reaching for the API. This is the largest available risk reduction and it is orthogonal to
+speed.
+
+## BA2 — When the instrument changes, measurements reset and RISK BUDGETS DO NOT
+The unit moves from API-call to page-load, which under K3 would normally break comparability
+with the 82 already spent.
+
+**K3 does not apply, and the distinction is the ruling.** The Sales Nav budget is **an
+account-risk control, not a measurement.** LinkedIn observed 82 interactions today whatever
+transport carried them.
+
+> **A safety counter that resets whenever you change technique is a safety counter you can
+> always reset.** Measurement comparability and risk accounting are different questions about
+> the same event, and only one of them cares how the event was produced.
+
+**Count conservatively: a page load counts as one view.** If UI navigation needs fewer
+interactions per company than the API path did, that is headroom — **not licence to cover more
+companies.**
+
+## BA3 — Verify the ruler survives the transport change BEFORE spending the other 49
+ADR 0003 pins Sales Nav's geography filter as **the** NYC headcount ruler, and 41 companies are
+already measured on it. Same query and same filter through a different transport *should*
+return the same number — **and "should" is an assumption that is cheap to test and expensive to
+have wrong.**
+
+**Ruling: session 1 opens by re-measuring 3–5 of the known 41 through the UI path, and that
+result gates everything after it.** Reproduce → the existing 41 stay valid and the remaining 49
+proceed on one instrument. Diverge → **stop**, having found an instrument break before spending
+49 companies of budget on numbers that cannot be compared to the board.
+
+Round 28's calibration pattern (39 of 41 exact) applied to a **transport** change rather than a
+ruler change. **Report the pairs, not a verdict.**
+
+## BA4 — "Human pace" means irregular, not uniformly slow
+A uniform 8-second gap is as mechanical as a uniform 1-second gap — it is a slower robot.
+Irregular intervals, dwell time, session shape (not N identical cycles), varied ordering.
+
+**And the control that actually protects the account is unchanged and independent of pace:
+halt on the first challenge, no retry.** Pacing addresses behavioural detection only; the halt
+addresses the consequence.
+
+## BA5 — The human gate is the enforcement, restated for the record
+Nothing in code can block a browser request (AZ3). JD is present and supervising, and approves
+each session individually. **In an attended browser lane the operator is not a redundant check
+on the control — the operator IS the control**, and everything in code is instrumentation for
+his judgment.
