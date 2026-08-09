@@ -3775,3 +3775,88 @@ Both were answered in the round-29/30 messages and should not block:
   leave the exclusion rule untouched, implement the AJ3 declared-vs-inferred routing.
 - **The 3-company drift correction (Casap 55→54, Daytona 51→47, Ilant 41→39): GO**, run
   alone; the 40 first-scorings stay unscored.
+
+---
+
+# Round 32 — SELF-AUDIT, at JD's challenge. He is right on both counts.
+
+JD: *"I feel you've been too quick on your analysis… re-read the last 15 messages to make
+sure it's in line with the elite architecture we are building."* Checked against evidence
+rather than reasoned about. **Both concerns are correct and measurable.**
+
+## AM1 — I have been ruling from principle without checking the data. Four wrong calls in six rounds.
+| round | my ruling | outcome | was it checkable? |
+|---|---|---|---|
+| 26 | remote→0 opens a new path to the Low-NYC shelf | **Wrong** — the router reads raw `nyc_open_jobs` | Yes — read `route_status` |
+| 27 | "Manifest OS" vs "Manifest" is likely a duplicate | **Wrong** — distinct on every identity key | Yes — compare identity keys |
+| 28 | approve the global rescore (43 movers) | **Bundled** — 3 corrections + 40 first-scorings | Yes — ask what kinds of movers |
+| 30 | "expect the longest mover list you've seen" | **Wrong** — the list can't be produced; 48/83 would be coverage artifacts | Yes — count denominator coverage |
+
+Every one was catchable **by looking**, and I hold a clone of the repo. **I ruled AG3 for
+the build agent — *"going to the source finds errors that no amount of reasoning about the
+data will"* — and then did not apply it to myself.** That is the "declared but inert"
+pattern (Y0) in my own practice: a rule I stated and did not enforce on the one party I
+control.
+
+**Correction, adopted as standing practice: before ruling on any change, verify the data
+state the ruling depends on.** Coverage, distributions, what the code actually compares. A
+ruling that rests on an unchecked fact is a hypothesis wearing a verdict — which is AJ3's
+own rule, turned inward.
+
+**One thing this does NOT mean:** the rigor itself is not the problem. It caught the J1
+inversion (a live bug demoting real prospects), the eval gate that could never fire, and a
+throttle that could not stop anything. The standard is right. **The failure is verification
+discipline and allocation — not depth.**
+
+## AM2 — The effort portfolio has drifted, and it is measurable
+```
+scoring / instrument / threshold commits : 19
+priority / warm_path / operator-view     :  2
+
+src/norman/contexts/priority   ABSENT
+src/norman/contexts/warm_path  ABSENT
+src/norman/operator/views      ABSENT
+```
+Of my last **12 rounds, ~9 concern the Fit scoring layer or its measurement inputs.**
+Meanwhile **51 of 95 companies are Prospects and there is still no ranked "chase these"
+surface** — the thing that turns a board into a decision. We are applying maximum rigor to
+a component worth **6 of 100 points** whose measured re-ranking effect is "modest"
+(9 rise / 14 fall / 18 hold), while the layer that makes the board *usable* does not exist.
+
+**That is a weight-class mismatch — brain/00, the first principle in the knowledge base.**
+And it is the *same* finding as `reviews/step-back-architecture-review-2026-08.md`, which
+recommended (A) validate the scorer → (B) product observability → (C) **start Priority**.
+**(A) and (B) landed. (C) never started, and twelve rounds later we are still inside (A).**
+
+## AM3 — AE4 is the concrete casualty, and I am the one who kept deferring it
+Round 24 found a genuine architectural defect: **reconcile cannot distinguish "JD edited the
+board" from "a lane advanced the store," so it planned to adopt stale board values over
+fresh measurements and revert real work.** Caught in dry-run. Its mitigation —
+synchronous projection — is a **discipline, not a mechanism**, and **the outbox exists
+precisely to decouple producers, so the first async lane re-opens it.**
+
+It has now been deferred in **rounds 25, 26, 27, 28, 29, 30, and 31 — seven consecutive
+rounds — by me**, each time behind a scoring refinement. Every message ends "AE4 — still
+before Phase B" and then the next round rules on something else. **I have been treating my
+own order list as a ritual rather than an instruction.** A data-loss defect with a
+discipline-only mitigation outranks every scoring item currently open.
+
+## AM4 — Structural fix: stop using JD as the message bus
+CRMx: *"Rounds 29 and 30 never reached me — I have 22–28 and 31."* Two rulings were lost in
+transit, and they correctly **refused to reconstruct AJ3 from its name** rather than guess.
+
+The rulings are **already committed to NormansBrain**. Relaying them as pasted messages
+makes a human the transport for a channel that has a durable, versioned source of record.
+**Ruling: CRMx should read rulings directly from `reviews/phase1-lane-design-decisions.md`
+(now indexed by topic); the messages become a convenience summary, not the channel.** A
+process whose reliability depends on a human copying text will drop messages — it just did.
+
+## AM5 — The corrected order, and what gets parked
+1. **Finish coverage** (2 sessions) — in flight and half-done; stopping now wastes it.
+2. **AE4, the last-projected baseline** — before anything else. Seven deferrals is enough.
+3. **The product layer**: `fit_raw` persisted → S6's three views → **`contexts/priority`.**
+   This is what 51 Prospects actually need.
+4. **Park and batch the scoring refinements** — the HQ weight question, shelf-vs-score
+   `nyc_open_jobs`, the non-discriminating-component detector, the HQ→concentration swap
+   itself. All real, all small, none urgent. One "scoring hygiene" round later, together.
+**The rule to hold: depth of rigor stays; breadth of attention rebalances.**
