@@ -5030,3 +5030,69 @@ Nothing in code can block a browser request (AZ3). JD is present and supervising
 each session individually. **In an attended browser lane the operator is not a redundant check
 on the control — the operator IS the control**, and everything in code is instrumentation for
 his judgment.
+
+---
+
+# Round 48 — an API returns a value; a UI returns a rendering of one
+
+## BB1 — The UI abbreviates counts, and the proposed calibration set is structurally blind to it
+Evidence already in hand, from this morning's Sales Nav capture
+(`reference/captures/salesnav-workplace-poc-2026-08-09.json`):
+
+```
+    7 · 93 · 121 · 130 · 185   exact integers
+              "2K+"            a STRING
+```
+
+**The abbreviation threshold is above 185 and at or below 2000.** CRMx's five calibration
+companies carry totals of 63, 67, 94, 120, 329 — **all render exactly, so the calibration
+returns clean while saying nothing about the boundary.**
+
+> **An API returns a value. A UI returns a RENDERING of a value.** An API→UI transport change
+> does not merely change how a number arrives — **it changes its TYPE, from integer to display
+> string, and display strings are lossy by design.** The failure mode is not a wrong number; it
+> is a thing that was never a number.
+
+**Three rulings:**
+1. **Add the largest known total from the 41 to the calibration set.** Keep David (329) — the
+   only one of the five near the unknown boundary.
+2. **An abbreviated count is a LOWER BOUND, not a measurement.** Record Unknown-with-a-floor;
+   never parse `"2K+"` into 2000. AF4 — *unknowns make the count a floor* — arriving through a
+   new door.
+3. **Where abbreviation begins is a property of the instrument** and belongs in ADR 0003 beside
+   the geography filter.
+
+**The exposure concentrates on the DENOMINATOR**, which is the larger number and therefore hits
+the threshold first — and the denominator is what the whole concentration measure rests on.
+
+## BB2 — Validity of a measurement and acceptability of its method are independent axes
+CRMx, unprompted: *"If calibration reproduces them, that validates the UI path against the API
+path — it does NOT retroactively make the API path acceptable... The 41 stay valid as
+measurements; the method that produced them is the one just ruled out."*
+
+> **A number obtained an unacceptable way can still be a true number. And a successful
+> validation of a REPLACEMENT method says nothing about whether the method it replaced should
+> have been used.**
+
+The live temptation is to read a clean calibration as *"voyager was fine after all"* — reasoning
+from *it worked* to *it was permissible*. **That is exactly AV4**, which CRMx itself
+generalised: identifying a drawback and then selecting for a different axis. Here it would mean
+vindicating a ruled-out method on an accuracy axis it was never charged on.
+
+**A validation exercise answers the question it was designed to answer, and no adjacent question
+its result happens to bear on.**
+
+## BB3 — A correctly described control, for once
+Their call-site grep answered honestly: `Budget` now has a caller (the CLI), and **nothing in
+code invokes the CLI — it is run per company by hand.** The chain is JD → agent → the CLI's
+arithmetic, and **only the last link is mechanical.**
+
+Stating that plainly is what makes this control trustworthy where the last one was not (AZ1).
+**The failure in AZ1 was never that the control was weak — it was that it was DESCRIBED as
+strong.** A weak control accurately described is a usable input to judgment; a weak control
+described as strong is worse than none, because decisions get built on it — as round 45's did.
+
+## BB4 — Two costs, not one average
+2 page loads where `salesnav_url` is stored, 3 where the company must first be found.
+**Refusing to blend two populations into a single average is the same discipline as carrying
+the denominator (AH2)** — an average over a mixture describes no member of it.
