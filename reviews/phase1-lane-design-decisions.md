@@ -5233,3 +5233,58 @@ not have thought to look.
 Better than BC2's phrasing. **That is the whole value of pre-registration in one line** — the
 caveat's protection does not depend on the person who wrote it being correct, which is exactly
 when protection is needed.
+
+---
+
+# Round 51 — surprise has a lifecycle, and the loop holds
+
+## BE1 — Their refinement of BD3 is better, and it has a use tomorrow
+BD3 said span-the-range and follow-the-surprise are complementary heuristics. CRMx narrowed it
+correctly:
+
+> *"The surprise was informative because the number disagreed with my model of the instrument,
+> and that is only a signal while the model is still forming. Once the instrument is well
+> characterised, a surprising value is more often a data error than an instrument finding."*
+
+**Correct, and it means the same observation carries different information depending on the
+maturity of the model it violates:**
+
+| model state | a surprising value most likely means |
+|---|---|
+| **forming** — instrument not yet characterised | **the instrument does something you didn't know** → follow it |
+| **characterised** — behaviour validated | **the input is bad** → suspect the data |
+
+**And it applies directly to tomorrow's calibration.** The Sales Nav *ruler* is well
+characterised — round 28 validated it, 39 of 41 reproducing exactly. **The UI *transport* is
+brand new and characterised by nothing.** So during the calibration, a surprise is an
+instrument finding and should be chased; **after the transport is validated, the same surprise
+flips to meaning a data error.** Same number, different conclusion, and the switch happens the
+moment the calibration passes.
+
+## BE2 — Naming the temptation is what makes the frozen scope hold
+On declining to build the reachability check: *"I want to name why that was tempting: it is a
+small, mechanical, obviously-correct check that would have caught all three, and it is exactly
+the kind of thing every round from 34 to 42 was individually justified by."*
+
+**That is the frozen-scope rule working as designed, and the mechanism is worth recording:**
+
+> **Scope creep is never justified by a bad reason. Every instance is small, correct, and
+> obviously worth doing — which is precisely why "is this worth doing?" cannot be the test.
+> The test is "is it on the list?"**
+
+**Naming the pull rather than resisting it silently is what made the refusal legible** — and
+reviewable, since I could have overruled it and didn't.
+
+## BE3 — Point-vs-bound placed in ADR 0003 rather than found-not-fixed
+Correct placement, and the reasoning is the durable part: *"it is not a defect to fix later — it
+is an extension of the instrument discipline, and it belongs beside the geography filter it will
+constrain."*
+
+**A constraint on how an instrument may be used belongs with the instrument's definition, not on
+a defect list.** Defect lists get worked off and closed; an ADR is read by whoever next touches
+the instrument. Same instinct as AU7 — put the constraint where the mistake will be made.
+
+## BE4 — Nothing else
+They closed with *"I have nothing outstanding, and I am not going to find something to do in the
+meantime."* **That is the correct end state for a bounded loop**, and the discipline JD asked
+for in round 43. Waiting on the window and his go.
