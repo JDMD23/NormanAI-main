@@ -3606,3 +3606,90 @@ companies at two reads each — and **starting with the `ruler_audit` list is co
 are the companies whose numbers the dispute actually turns on, so the first session answers
 the question rather than merely making progress. JD's call to trigger, since it is his
 account and his throttle.
+
+---
+
+# Follow-up rulings (round 30) — the ruler is validated; the HQ field is a constant
+
+The measurement session answered the question properly. **The instrument is sound, and
+JD's instinct found a real defect anyway — a different one, and a bigger one.**
+
+## AK1 — Instrument validated: unbiased AND repeatable. The undercount question is closed.
+NYC-native controls come back high — **GovWell 50/63 = 79%, Hanover Park 75%, Marble
+Health 70%, Manifest OS 68%, Adaptive 53%.** An instrument that systematically lost NYC
+people **cannot** produce those numbers; the geo facet works. And re-measuring 41 companies
+**reproduced 39 exactly**, the two movers inside the already-calibrated ±1. That is
+*unbiased* and *stable* — two properties, separately demonstrated, which is what
+instrument validation actually requires and is more than was asked for.
+
+**Consequence: the low counts are TRUE.** Twenty-one of 41 sit below 15% concentration and
+are genuinely thin here (Nas.com 1/53, Ocean 4/141, Astelia 2/59). **The 16 shelved
+companies are correctly shelved.** Close the undercount thread.
+
+## AK2 — THE FINDING: `hq_city` is a CONSTANT, so the HQ component discriminates nothing
+All 41 carry `hq_city = "New York"` — that is how they entered the board — while measured
+concentration runs **0% to 79%**. Crunchbase's HQ is a **registered address**, not where the
+people are, and the scorer awards `nyc_hq_pts` off that string.
+
+**So every company on the board receives the NYC-HQ points.** A component that awards the
+same value to everyone is **a constant offset, not a signal** — it consumes weight and
+contributes **zero discrimination**. This is the **Y0 "declared but inert" family surfacing
+in the scoring layer**: configured, tested, running, and informationally empty. Worse, it
+was awarding points *for* being NYC-native to companies that are 0% NYC — the exact
+opposite of its intent, on JD's explicitly-ruled signal (U5: NYC-HQ earns real points).
+
+**Ruling: replace the HQ proxy with measured NYC concentration.** This is AH3's two-for-one,
+now realised — and it is strictly better evidence: a *measured* share versus a *registered
+address string*. **Gated change** (it moves companies, in both directions): simulate → show
+JD the movers → apply → oracle → re-freeze. Also **add a guard**: any scoring component whose
+value is identical across the whole board should be **flagged as non-discriminating** —
+that is a cheap, general detector for this entire class, and it would have caught this
+without a measurement session.
+
+## AK3 — On the brain's own correction: right in principle, small in practice. Say the magnitude.
+The company-page number and the geo-dropped Sales Nav total agree **within 1–3% on 38 of
+41**. CRMx says so plainly rather than letting the correction look more consequential than
+it was — correct, and the honesty matters more than the win.
+
+**The principle stands and the definition stays** (same-query sameness costs nothing here
+and is free to keep). But record the honest magnitude: **this was a correctness improvement,
+not a rescue.** Two further notes: the measured agreement is itself a **useful calibration
+result** worth keeping; and it is a result about *this* population — it may not hold for
+very large companies or ones with heavy alumni tails, so the principle remains the reason
+to prefer the geo-dropped definition even where the two agree.
+
+## AK4 — The throttle REPORTS but does not ENFORCE — and it guards the account
+82 views against a documented cap of 80. The tripwire is evaluated at session start and
+printed; **nothing decrements during a run**, so it announced the breach *after* it
+happened. 2.5% over is harmless; **the mechanism failure is not** — there is no enforcement,
+so a bug or a longer run could reach 200 and nothing would stop it.
+
+This is the same family as every prior finding of this shape — but it is **the most
+consequential instance**, because this is the **account-risk control**, and L1/L2 explicitly
+traded static quotas for dynamic monitoring. **A monitor that cannot stop the thing it
+monitors is not the safety that trade assumed.**
+
+**Ruling: the code making the calls must check-and-decrement per call, and the run must
+halt itself at the cap.** Not a session-start reading, not a post-hoc report. And this is
+now a **prerequisite for unattended operation** (L2) — an unattended lane with a reporting-
+only throttle has no ceiling at all.
+
+## AK5 — The Israeli-cluster hypothesis: not a scoring question. It is an INTAKE-QUALITY question.
+Flagging it untested rather than asserting it was right. But reframe what it would mean:
+**for scoring it changes nothing** — concentration already routes those companies correctly,
+so confirming the cause satisfies curiosity without changing an action, and per scope
+honesty that is not worth the lookups.
+
+**Where it does matter is discovery.** If a systematic share of Crunchbase-NYC-sourced
+companies have a NYC registered address and no NYC presence, then **the intake filter is
+importing non-prospects** — the source search is selecting on the same broken field AK2
+just condemned. That is worth knowing for the *discovery lane*: the NYC sourcing filter may
+need a presence-based criterion rather than a registered-address one. Park it as a discovery
+question, not a scoring one.
+
+## AK6 — JD's outstanding items, both cleared
+- **Silna Health: confirmed a real prospect** (JD, directly). Correct its industry tags,
+  restore it to the board, leave the exclusion rule untouched, and implement the AJ3
+  declared-vs-inferred routing so the next stray tag routes to review rather than exiling.
+- **The 3-company drift correction (Casap 55→54, Daytona 51→47, Ilant 41→39): GO**, run
+  alone. The 40 first-scorings stay unscored (AJ2).
