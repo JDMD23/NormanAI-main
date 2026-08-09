@@ -4535,3 +4535,79 @@ use it as a NYC signal will arrive long after anyone remembers why they shouldn'
 
 And their null-reading is exact: **Concourse, the one company the eval found misbound,
 returned nobody — a zero consistent with the misbind rather than evidence against it.**
+
+---
+
+# Follow-up rulings (round 41) — verified, and one correction declined
+
+Checked at `498a8b0` rather than accepted:
+
+```
+apollo.py:48   "include_similar_titles": targets.include_similar_titles   ← derived, not literal
+test_contacts.py:246   assert query[...] is targets.include_similar_titles ← the observable
+test_contacts.py:251   assert load_target_titles()... is False             ← and the value pinned
+config/target-titles.json          False
+policy.py:30  include_similar_titles: bool = False                        ← the DEFAULT flipped too
+contacts_lane.py:70,83   build_query(...) / classify_person(...)          ← actually called
+```
+
+**All of it holds.** Fixed the way it was ranked first, and the lane calls the builder — not
+committed-and-unused, which is the failure mode that has recurred three times in this project.
+
+## AV1 — Flipping the DEFAULT was not asked for and is the better half of the fix
+`policy.py` previously defaulted `include_similar_titles` to **True**. It now defaults to
+**False**. A config missing the key used to fail toward the 125-per-10-domain noise; it now
+fails toward the precise query.
+
+> **A default is a decision about what happens when nobody decides.** Setting the config value
+> fixes today's run; fixing the default fixes every run where the key goes missing, which is
+> the case nobody will be watching.
+
+## AV2 — Their diagnosis is the durable form of AU1, in their words
+> *"A REPORT DESCRIBES WHAT HAPPENED; THE REPO HAS TO DESCRIBE WHAT WOULD HAPPEN AGAIN."*
+
+**Adopt this phrasing over AU1's.** It states the whole finding in one line, and it explains
+why both facts were simultaneously true — the 4-credit result was real *and* the
+reproducibility gap was real. The report was not wrong; **it answered a different question
+than the repo is obliged to answer.**
+
+## AV3 — Reading the schema beat extending it
+Deeptune resolved on two independent keys (`deeptune.ai` redirects to `deeptune.com`;
+`deeptune.com` links the already-stored Ashby board), per AU6. **Bound, both keys recorded.**
+
+The better part is the restraint: the alias schema already carried `slug-redirect`, and the
+first instinct — add a `domain` alias type — was declined.
+
+> **An unfamiliar-looking case is more often an instance of a known category than a new
+> category.** Reaching for a new type before re-reading the existing vocabulary is how
+> taxonomies bloat, and every added type is a new thing that can be applied wrongly.
+
+## AV4 — Their generalisation of the AP3 correction is sharper than mine; adopt it
+> *"Identifying a drawback and then selecting for a different axis is where most bad choices
+> live — the drawback doesn't stop being true because the other axis won."*
+
+That is the general form. AP3 named Apollo's expansion opaque and then chose it for recall;
+the opacity did not become false because recall was the axis under discussion. **Supersedes
+AU2's phrasing.**
+
+## AV5 — Declining their correction: the partition failure was genuinely both
+They wrote: *"I'd rather own the reporting failure than split it. You not catching it is
+downstream of my not stating it."* **Generous, and declined.**
+
+Under-reporting the partition and failing to check that it summed are **independent failures,
+and the arithmetic was available to the brain** — 32 bare-token plus the explicit matches had
+to equal 100. Accepting this as solely theirs would remove exactly the check that catches the
+*next* under-reported breakdown, since the reviewer's job is to verify a partition accounts
+for its total (AU4).
+
+> **Do not accept a correction that resolves in your favour without testing it. A reviewer who
+> lets a builder absorb the reviewer's misses stops being a second check.**
+
+## AV6 — Concourse: record the vendor's error, not our absence
+50 of 51 carry a named human. Concourse remains searched-none-found — and it is the company
+the eval found bound to "Concourse Labs."
+
+**"Searched, none found" understates what is known.** The precise record is: **Apollo's index
+binds this domain to a different company; contacts are unavailable *via Apollo*.** That
+distinction is actionable — it says use a different source, rather than retry this one. **Do
+not spend further credits on it.**
