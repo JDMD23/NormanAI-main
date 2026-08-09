@@ -3693,3 +3693,85 @@ question, not a scoring one.
   declared-vs-inferred routing so the next stray tag routes to review rather than exiling.
 - **The 3-company drift correction (Casap 55→54, Daytona 51→47, Ilant 41→39): GO**, run
   alone. The 40 first-scorings stay unscored (AJ2).
+
+---
+
+# Follow-up rulings (round 31) — replacing a constant with a variable: the information is all in the variance
+
+The HQ→concentration mechanism is built and inert behind a config switch, bands anchored so
+the component's ceiling is unchanged and only its basis moves. Three good calls before the
+ruling: **not landing the list** (below), **correcting the brain's framing** (below), and
+**stating the fork rather than quietly choosing it.**
+
+## AL1 — Coverage first: a mover list that is half artifact is worse than no list
+52 of 93 scored companies have no denominator, **and all 52 are NYC-HQ**. Simulated today
+the swap yields 83 movers of which **48 move because they were never measured** — an
+artifact of who happened to fall inside yesterday's throttle window. **Endorsed: do not
+produce the list until coverage is complete.** A list where the majority of movement
+encodes *measurement timing* rather than *signal* would be read as a finding and isn't one;
+worse, it would train JD to distrust mover lists generally. ~49 companies, two sessions.
+
+## AL2 — "Nobody gains" — correction accepted, and it is the mechanism of the level shift
+The brain said the swap would let real NYC companies "gain ground." **Wrong.** The current
+rule gives **every** company the full 6 points, so a measured basis **can only subtract**;
+NYC-native companies rise only *relatively*, by standing still while others fall. That is
+not a wording nit — **it is precisely why the board-wide level drops**, and it sets up AL3.
+
+## AL3 — THE RULING: compensate, and the precise operation is "preserve the location, let the dispersion through"
+CRMx has the diagnosis exactly right: replacing the constant does **two separable things** —
+a **re-ranking** (the improvement, which must land) and a **~5-point board-wide drop**
+(not an improvement; an artifact of removing a constant). And they correctly identify it as
+the **round-21 pattern**, not the round-25 one: in round 25 the movement *was* the
+improvement, so compensating would have cancelled the point; here the level shift is
+incidental to a mechanism fix.
+
+**Ruling: compensate the thresholds.** But state the operation precisely, because
+"compensate" is ambiguous and the wrong version would cancel the signal:
+- The old component had **mean 6, variance 0**. The new one has **mean ≈1.5, variance > 0**.
+  **All of the information is in the variance. The mean change is pure artifact.**
+- So **lower every threshold by the board-wide mean drop** — not the component's range, and
+  not each company's own value. Then a company at *median* concentration sits exactly where
+  it sat before, above-median companies rise, below-median companies fall, and **the
+  thresholds keep meaning what they meant when they were anchored.**
+- This is *not* round-21's "zero movers." It is **zero systematic movement, full
+  differential movement** — which is the only version that isolates the signal.
+
+**Generalisable: when a constant is replaced by a variable, preserve the distribution's
+LOCATION and let only its DISPERSION through. The mean shift is an artifact of the
+substitution; the spread is the thing you built.**
+
+**Two conditions:** compute the compensation **only after coverage is complete** (a mean
+drop measured on 41 of 93 — and a non-random 41 — mis-calibrates the shift); and present
+the 6 downward status changes *after* compensation, since most should evaporate.
+
+## AL4 — The weight question is real, correct to raise, and must stay SEPARATE
+Their §5 is the sharper long-run point: **the re-rank is modest because the component is
+worth 6 of 100.** If measured NYC-ness is meant to genuinely reorder the board, the live
+question is the **weight**, not the basis.
+
+**Ruling: real, and JD's — but a separate change, never bundled** (AB2). And there is a
+principle that makes it more than a preference:
+
+> **When a proxy is replaced by a direct measurement, the weight deserves revisiting — the
+> old weight was calibrated for the proxy's noise.** A noisy stand-in earns a small weight
+> precisely *because* it is noisy; a clean measurement of the same underlying thing can
+> justify more.
+
+JD's standing ruling (U5/W-round) is "meaningful, but modest enough that a large
+growth/momentum gap overcomes it." **6/100 was calibrated when the signal was an HQ string.
+Whether it is still the right number now that it is a measured share is his call** —
+made *after* the basis swap lands and he can see the re-ranked board, not before.
+
+## AL5 — Throttle enforcement ahead of AE4: agreed, and for their reason
+The next two sessions will sit at the cap again, and the control that guards the account
+currently reports rather than enforces (AK4). **Endorsed: reorder it ahead of the
+last-projected baseline.** Sequencing driven by what the next action actually needs is
+correct — this is the same reasoning that put the Manhattan/metro landmine fix ahead of the
+careers lane.
+
+## AL6 — Two items already cleared by JD (they appear as still-awaiting)
+Both were answered in the round-29/30 messages and should not block:
+- **Silna Health: confirmed a real prospect.** Fix the industry tags, restore to the board,
+  leave the exclusion rule untouched, implement the AJ3 declared-vs-inferred routing.
+- **The 3-company drift correction (Casap 55→54, Daytona 51→47, Ilant 41→39): GO**, run
+  alone; the 40 first-scorings stay unscored.
