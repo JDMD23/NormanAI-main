@@ -4271,3 +4271,80 @@ after every expansion.** Nothing saved, 8 page loads, no interstitials.
 **That is AO1 behaviour from a tool asked only to read** — and it is why the capture is
 trustworthy: the URL signature is the authority and it was checked rather than assumed.
 Worth holding as the standard for any future operator-surface capture.
+
+---
+
+# Follow-up rulings (round 37) — JD's three answers, and the prospect type Norman cannot currently see
+
+## AR1 — The SF answer corrects AP4's emphasis: decision-maker location is DECOUPLED from office location, and that is normal
+JD, asked why `San Francisco Bay Area` sits in his canonical `Workplace POC` persona:
+**deliberate — SF-headquartered companies opening or growing a NYC office, where the
+decision-maker sits in SF.**
+
+**AP4 framed person-location as a convenience signal** — *"a founder in Manhattan is a coffee,
+a founder in Tel Aviv is a 7am call."* That was not wrong but it was the smaller half.
+**JD's actual model: the person who signs a NYC lease routinely does not sit in NYC, and that
+is an expected case rather than an anomaly.**
+
+**This makes the never-filter ruling load-bearing rather than cautious.** Filtering contacts
+to NYC-metro would systematically drop the decision-makers at precisely the companies
+standing up a *new* NYC office — the case with no incumbent broker and no existing lease.
+
+**Ruling, reconciling all three answers: geography is a BAND on the returned person, never a
+filter on the query.**
+- **NYC band = metro** (region `90000070`), per JD and consistent with ADR 0003 — which also
+  resolves the persona-narrower-than-ruler inconsistency (AQ3) in the ruler's favour.
+- **SF Bay = a recognised, expected second band**, not a stray.
+- **Everything else = other**, captured and shown.
+
+Recorded as `apollo/person-state` granularity per AP7 — coarse enough for banding, never a
+NYC measurement.
+
+## AR2 — The SF-HQ prospect type is INVISIBLE to Norman's current intake
+JD wants SF-HQ'd companies growing into NYC. **Norman cannot currently represent one.**
+
+All 95 companies carry `hq_city = "New York"` — that is how they entered, via a Crunchbase
+NYC filter that selects on **registered address**. Round 30 found measured NYC concentration
+running 0–79% against that constant, and parked the consequence as a discovery-lane question:
+*"the NYC sourcing filter may need a presence-based criterion rather than a registered-address
+one."*
+
+**JD's answer converts that parked question into a stated requirement.** The prospect profile
+he just described — leadership in SF, headcount growing in NYC — **is structurally excluded by
+an intake filter that selects on NYC registered address.** The board cannot contain the type
+he says he wants.
+
+**Ruling: unpark the discovery-lane geography question.** Not urgent enough to preempt the
+contact layer, but it is no longer a curiosity — it is a named gap between the intake
+criterion and the operator's stated target. **Do not fix it by loosening the filter; fix it by
+sourcing on NYC PRESENCE (headcount, roles, offices) rather than registered address.**
+
+## AR3 — Contact layer, final spec: one broad query, tiered ranking, recency by second pass
+JD ruled **both** — roster and trigger together (AQ1). The spec:
+
+**Do not filter on:** geography (AR1), seniority. Seniority would drop Office Manager,
+Operations Coordinator and *EA to the CEO* — exactly the small-company long tail that carries
+JD's expertise (AQ2).
+
+**Tier the titles, don't filter them — AF4's cascade, applied to people:**
+- **Tier 1 (specific, high-signal):** CEO · Founder · Co-Founder · COO · CFO · Chief of Staff ·
+  Head of Operations · Head of Finance · Head of People / CPO · Head of HR · Workplace Manager ·
+  Workplace Coordinator · Office Manager · Director of Operations · VP Finance · VP Operations ·
+  General Counsel · Head of Legal · EA to the CEO
+- **Tier 2 (generic tokens):** `Head` · `Vice President` · `Talent` — carried, but **ranked
+  below tier 1 and used as the answer only when tier 1 returns nobody for that company.**
+
+**The tier IS the rank**, which is what AQ4 asked for without adding a scoring mechanism.
+
+**Recency by a second query, not by a returned field.** Whether Apollo's people-search
+*response* carries time-in-role is unverified, so do not depend on it:
+1. roster query — no recency filter
+2. same query + `person_days_in_current_title_range: {max: 90}`
+
+Anyone in set 2 is flagged **TRIGGER**. Deterministic, independent of response shape, and it
+reproduces the filter that appears in 6 of 6 of JD's own searches (AQ1). **The observable:
+both set sizes reported, per company.**
+
+**Still binding from round 35:** per-domain accounting including zeros (AP1), name-echo before
+attach (AP7), `include_similar_titles` set explicitly to true and the matched titles recorded
+(AP3), declared-or-nothing on anything actionable (AP5).
