@@ -4875,3 +4875,99 @@ is the right call: **do not take an irreversible action to measure whether it is
 Dry-run convergence (95/95, stable) is the correct substitute, and declaring it as a substitute
 rather than as proof is the honest part. Same for `careers_lane` verified with `--no-board`,
 projection path stated as unverified.
+
+---
+
+# Round 46 — I traded a human gate for a control that had never been called
+
+Verified at `be54089^` before ruling. Every reference to the enforcing budget was its own
+definition or its export:
+
+```
+core/observe/__init__.py:21,36   salesnav_budget          ← export
+core/observe/tripwires.py:134    return Budget(store, …)  ← the factory itself
+```
+
+**No call sites.** The 82 round-28 events were hand-written after the session ended.
+
+## AZ1 — The brain ruled on this throttle three times and never once checked it was wired in
+- **Round 30:** *"the code making the calls checks and decrements per call"* — ruled.
+- **Round 44:** found the timestamp jam, verified the **fix**, and asserted *"the throttle
+  enforces per call now."*
+- **Round 45:** **removed JD's per-session approval and justified the removal on that
+  assertion** — *"the throttle now enforcing and the halt-on-challenge rule do that job better
+  than a second approval click."*
+
+**The reasoning was valid and one premise was false.** I weakened a human gate on the strength
+of a mechanism that had never executed.
+
+> **"Does it work?" is downstream of "does it run?" Before trusting a control, find its
+> callers.** AO1 said verify the artifact rather than the account of it; this is a level
+> beneath that — **I verified a repair to something that was never invoked.**
+
+**And the specific trap is worth naming, because it is what fooled me:** `salesnav_budget`
+appears in `__init__.py`'s `__all__`. A grep returns three hits and reads like usage.
+**An export is evidence of intent to be used, not evidence of use.** A symbol in `__all__`
+with no call site is Y0 wearing the costume of a public API.
+
+## AZ2 — Two independent defects in one mechanism; neither would have surfaced the other
+It **was never invoked**, and it **would have failed if invoked** (the round-44 jam). Fixing
+only the jam leaves a control that enforces nothing; wiring only the callers leaves one that
+refuses everything forever.
+
+> **When a mechanism is found broken, the fix is not complete until you have asked whether it
+> was ever reached.** A bug found inside dead code is evidence about the code, not about the
+> system.
+
+Round 44's work was still worth doing — the boundary guard is real, the 90-row repair was
+derived rather than invented — but the **framing was wrong.** *"The throttle had jammed shut"*
+implies a connected control. It was never connected.
+
+## AZ3 — Reinstate the per-session gate, and note WHY it matters more now
+**Ruling: JD approves each coverage session individually. Round 45's removal is void** — an
+inference whose premise turned out false does not survive the premise.
+
+**And the new control is honestly weaker than the one I imagined.** Their own statement:
+*"the Sales Nav calls happen in a browser through an MCP tool, so nothing in Python can block a
+request. Enforcement is mechanical per company and procedural per call."*
+
+**That refusal to over-claim is the most valuable thing in the report** — *"I would rather say
+that than describe it as a hard gate, because the last time a control was described as
+enforcing, it wasn't."*
+
+> **A control that cannot block the action it governs is advisory. The human gate is the
+> enforcement, and it therefore cannot be traded against the control.** I traded it for
+> something that was, at best, going to be advisory even when working.
+
+## AZ4 — Never derive a limit from the thing it limits
+Their tool printed **"cap 82" against a configured cap of 80**, because it computed
+`spent + remaining` where `remaining = max(0, cap − spent)`. So the displayed cap equalled
+`max(spent, cap)`.
+
+**An overspend rendered as a larger cap and looked like compliance.** The invariant
+`spent ≤ cap` was true by construction and therefore carried no information.
+
+> **A limit must be READ from where it is declared, never derived from the measurements it
+> constrains.** A constraint computed from its own subject is a tautology, and it will report
+> success at exactly the moment it is being violated.
+
+Same family as AK1's non-discriminating component: **a value that cannot vary against the thing
+it is supposed to test is not a test.**
+
+## AZ5 — The one thing round 45 got right caught the thing it got wrong
+Condition 3 — *"the gauge is only just repaired… a control fixed yesterday deserves one
+skeptical look"* — is what found this. **The same message contained the error and its
+corrective.**
+
+> **When an approval leans on a recently repaired control, say so explicitly AND require the
+> control be re-checked.** The second half is what catches the first half being wrong.
+
+## AZ6 — The plan's numbers changed and JD must be told
+Round 28 made **three** calls per company and recorded **two**: 123 real calls booked as 82.
+**52 companies is 156 calls, not the 104 JD approved.**
+
+Session count is unchanged (2, at the 80/day cap) and daily exposure is unchanged, so **the
+risk profile he approved is intact and the accounting was wrong.** Say both.
+
+**Before session 1: grep the NEW budget tool for call sites and show the result.** The defect
+that killed the old control is the first thing to rule out in its replacement.
