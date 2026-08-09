@@ -4390,3 +4390,58 @@ and does it prevent a wrong artifact":**
 
 Everything else built in rounds 36–37 is dropped, not deferred. **Complexity must be paid for
 by a present need, and the need here was one query.**
+
+---
+
+# Follow-up rulings (round 39) — the build agent does not know what its own repo contains
+
+## AT1 — The bare tokens: JD's ruling, and why the report earned a one-pass decision
+Batch 1: **32 of 100 attachments came in on `Head`, `Talent` or `Vice President` alone.**
+**JD's decision: drop all three.** The 36 explicit titles stay.
+
+The reporting is the lesson. **"32% came in on a bare token" is a tuning question. "HEAD
+WAITER is the best contact at David" is a decision.** Same measurement; one of them JD could
+rule on immediately.
+
+> **When a measurement needs an operator's judgment, report the concrete instance alongside
+> the rate. A rate invites a threshold argument; a specific absurd case ends it.**
+
+Also right, and worth holding: **they stopped after batch 1 rather than spending four more
+batches to reproduce the same defect 41 more times.** Measuring on a tenth of the population
+and halting for a decision is the coverage discipline from round 31 applied to spend.
+
+## AT2 — "That eval is not mine" — correct about memory, wrong about the artifact
+CRMx refused to accept credit for `docs/vendor-evals/apollo-2026-08.md`, stating they never
+ran it. **Verified rather than argued:**
+
+```
+ff6e5dc  2026-08-06 18:39  Round-10: ... Apollo vendor eval run and recorded (Q3)
+```
+
+**The eval was committed to their own repo by the round-10 build session** — before JD's CRMx
+chat was archived and restarted as v2. **Their predecessor's work, in their repo, with no
+memory of it.**
+
+**The refusal was right and should not be discouraged.** Declining to claim unproduced
+evidence is the same instinct as refusing to reconstruct AJ3 from its name (round 32). What
+the check reveals is the finding:
+
+> **AN1's staleness failure has a second form. There, a stale CLONE of an authority. Here, an
+> AGENT with no memory of its own prior sessions, treating its own committed work as foreign.
+> A session boundary is a cache invalidation event for everything not written down.**
+
+**Ruling: `docs/` is the memory that survives a session boundary.** Before ruling that a
+vendor, instrument or mechanism has no prior evaluation, grep it — `docs/vendor-evals/`,
+`docs/adr/`, `docs/board-decisions.md`. **This is AO1's "read the vendor eval that already
+exists" turned around: the brain failed it by not reading, and the build agent failed it by
+not knowing there was anything to read.**
+
+## AT3 — The relay has now dropped three sets of rulings
+Rounds 34–37 did not reach the build agent (29 and 30 were lost previously). **No action
+needed this time** — round 38 restated every surviving item from 34–37, and the remainder was
+the over-building 38 removed.
+
+But the round-32 fix — **read the ruling log directly rather than depending on JD to relay** —
+**has still not been adopted, and this is the third loss.** The freshness check is
+deterministic and costs nothing: **round numbers are monotonic, so a copy ending at 38 while
+the log is at 39 is a detectable staleness, not a suspected one.**
