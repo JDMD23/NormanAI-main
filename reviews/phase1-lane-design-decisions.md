@@ -4766,3 +4766,112 @@ does not depend on anyone's judgment about whether more looking would find more.
 - **One sequencing hazard:** 49 companies without denominators. **Ingesting 50 more before
   clearing them takes the unmeasured population to ~99 and makes every subsequent mover list
   measurement timing rather than signal** — round 31's coverage artifact at double scale.
+
+---
+
+# Round 44 — the loop terminated at pass 1, and its first detector run found something bigger than its motive
+
+**The loop worked.** One pass, one report, scope held, eight items recorded-not-fixed, two
+non-verifications declared. That is the shape rounds 34–42 never had.
+
+## AY1 — The throttle had jammed permanently SHUT, and fail-closed is what hid it
+`record_event(kind, at, …)` takes two adjacent string positionals. Two callers — `Budget.spend()`
+and `record_contact_search` — passed a **source string into `at`**. `count_events` filters
+`at >= since` **as TEXT**, and `"salesnav-round28"` sorts above every ISO timestamp. So 82 views
+counted as "within the last 24 hours" **forever**, and the budget would have refused every
+future session.
+
+Round 30 ruled the throttle must enforce rather than report. Round 31 built the enforcement.
+**It had been jammed shut ever since, and would have blocked the exact coverage sessions this
+loop exists to unblock.**
+
+> **Fail-closed is the safe direction to fail AND the direction that conceals the failure.**
+> A fail-open bug announces itself the first time something bad gets through. **A fail-closed
+> bug is indistinguishable from the control working** — nobody investigates a safety mechanism
+> that is saying no.
+
+**Name this as the counterpart to AO2.** There, a recorder failing *silently* was worse than
+absent. Here, an enforcer failing *closed* is worse than one failing loudly, for the same
+underlying reason: **both convert a broken mechanism into something that looks correct.**
+
+Three details in the fix that generalise:
+- **Root cause is two adjacent same-typed positional parameters.** Nothing could catch it —
+  not the type checker, not a test asserting the call succeeded. **Keyword-only arguments, or a
+  real `datetime`, make it impossible rather than unlikely** (`brain/09`: enforce mechanically).
+- **The 90 malformed rows were repaired with a timestamp DERIVED FROM THE CHANGE LOG, not
+  invented.** Stamping "now" would have looked identical and been fabricated. That is AP5's
+  declared-or-nothing applied to a data repair.
+- **The boundary guard immediately caught two of their own round-31 test fixtures** carrying the
+  same defect. **That is the argument for validating at the boundary rather than documenting the
+  rule** — the fixtures were written by someone who knew the rule.
+
+## AY2 — The detector's first run surfaced a bigger defect than the one that motivated it
+Ruled in round 30, parked, built now. Output includes `fit_hq = 6.0 on all 93` — the HQ
+component awarding its **maximum to every company**, which converts AK1 from an argument into a
+measurement.
+
+**But the significant line is `funding_stage` — CONSTANT across all 93.** Verified that it is
+the input to `stage_fit` (`scorer.py:234–254`), which is **§2 of the spec: the stage-relative
+lens** — one of JD's core validated judgments. If genuinely constant, then
+`stage_expectation_heads`, the early-rocket redemption and the HQ-conditional stall are each
+uniformly on or uniformly off.
+
+**And the eval gate structurally cannot catch it** — its own `blind_to_note` states the gate can
+only validate signals present in the frozen corpus. **A component can be inert, pass every gate,
+and carry a validated pedigree.**
+
+**This is a QUESTION, not yet a finding.** Either the board genuinely is single-stage, or the
+field is unpopulated. One query settles it. Also reported: 13 EMPTY fields including
+`down_round`, `layoffs_hit_nyc`, `nyc_jobs_senior`, `nyc_jobs_facilities` — the same class.
+
+**Recording rather than fixing was correct under the frozen-scope rule.** It is the top item for
+the next loop.
+
+> **A detector built to catch a known defect is worth more than the defect it was built for.**
+> Round 30 justified it on `hq_city`; its first run reached the spec's core.
+
+## AY3 — AL3's compensation was underspecified; the fix is mine, not JD's
+Boot validation refused the compensated config: mean raw drop 3.06 puts `demote_below` at 43.44,
+**below** `no_growth_signal_cap` at 44.0 — a cap at or above the demotion line caps nothing. The
+config was right to refuse.
+
+AL3 said *"lower every threshold by the board-wide mean drop"* and did not say that **caps are
+thresholds too.**
+
+**Ruling: the compensation applies to EVERY anchored constant on the score scale — band edges
+and caps alike.** `no_growth_signal_cap` drops 3.06 to 40.94, preserving its 2.5-point gap below
+the demotion line. Moving some anchors and not others is a second change riding along with the
+first, which is the exact error AL3 exists to prevent — **preserve location means preserve the
+whole ladder's geometry, not just its edges.**
+
+## AY4 — JD has ONE decision, not two: B2 cannot be decided yet
+48 of the 83 movers move only because they **have no denominator** and lose the component
+entirely. **The simulation is still mostly coverage artifact**, and two of the six status changes
+(Belfry, Fig Security) are explicitly artifacts.
+
+**Ruling: B1 first — approve the two coverage sessions — then re-simulate B2 against complete
+coverage.** Deciding the swap now is deciding on noise, which is round 31's ruling reasserting
+itself unchanged.
+
+## AY5 — Promote one found-not-fixed item to a Band C precondition
+`rescore --apply` in drift mode would land the 40 first-scorings JD deferred in round 28. *"The
+tool is correct and idempotent; its default scope is simply wider than the last decision made
+about it."*
+
+**In a batch pipeline that fires silently** — which makes it precisely *a defect that changes
+what the operator does*, in the very operation this loop prepares for.
+
+**This is not a scope violation to correct.** Band C has not started; the loop recorded it
+correctly and it is promoted **before** C runs. **The recorded list feeding the next gate is the
+frozen-scope rule working, not being bypassed.**
+
+> **A tool whose default scope is wider than the last decision made about it is a loaded
+> instrument.** Bound the scope at the call site, or the next routine run makes a decision
+> nobody took.
+
+## AY6 — Both non-verifications were correct refusals
+Not double-applying `reconcile_sweep` because a second `--apply` writes to the live Notion board
+is the right call: **do not take an irreversible action to measure whether it is idempotent.**
+Dry-run convergence (95/95, stable) is the correct substitute, and declaring it as a substitute
+rather than as proof is the honest part. Same for `careers_lane` verified with `--no-board`,
+projection path stated as unverified.
