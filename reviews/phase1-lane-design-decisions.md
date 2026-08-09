@@ -4026,3 +4026,116 @@ preferred count — and the distinction is exactly why the number is high.
 legitimately long list has a useful top. A view that is occasionally long is fine if it is
 ordered; a view that is long *and* unordered is noise. And their caveat stands honestly: in
 steady state this view will be short, and this week was an outlier for real reasons.
+
+---
+
+# Follow-up rulings (round 35) — the contact layer: approval was requested on the cheap axis
+
+The contact plan is staged correctly and the refusal at the end of it is the best thing in
+the message. **Approve the spend.** But four corrections land before it runs, all of them
+free, and one of them opens a risk class the brain does not yet cover.
+
+**Framing first: the cost is not the decision.** ~4 credits of 3,995 is 0.1% of the balance;
+at ten times the estimate it is 1%. Asking JD to approve that is asking him to approve the
+axis that cannot hurt him. **The decision that actually matters — what counts as "reachable"
+— was not put to him.** Rulings AP1 and AP2 are that decision.
+
+Two things verified from Apollo's API schema rather than assumed, both of which change the
+query: `include_similar_titles` **defaults to true**, and `q_organization_domains_list`
+constrains the *employer* while `person_locations` constrains *where the human is*, with
+Apollo's own documentation warning that filtering on the former alone "returns employees of
+those companies wherever in the world they live, which wastes credits when those results are
+enriched." Neither parameter was named in the plan.
+
+## AP1 — Zero contacts is never a fact. Every one of the 51 has a founder.
+If the search returns nobody for a domain, the true statement is **"Apollo's coverage of this
+company is thin,"** not "this company has no leadership." A funded NYC startup definitionally
+has a CEO or a co-founder. **A zero here is always an instrument reading, never a property of
+the world** — which makes it the strongest available instance of Unknown ≠ 0, because the
+ground truth is known a priori to be non-zero.
+
+**Ruling: a domain returning no people records as Unknown / coverage gap and routes to a
+different lane** (the company's own team page, a hand check), never as "unreachable."
+
+And `call_list` must carry **three states, not two**: a human attached / searched and nothing
+returned / never searched. Two states would let a pagination boundary read as a fact about a
+company — the round-31 coverage-artifact failure arriving at the contact layer. **Per-domain
+result accounting is the observable (AO1): every one of the 51 domains must appear in the
+run's ledger, with a count, including the zeros.** If pagination ends before all 51 are
+accounted for, that is a truncation event and it must fail loudly (AO2), not return a short
+list that looks complete.
+
+## AP2 — A LinkedIn URL is an identifier, not a channel
+The plan says JD will have *"a call list with a channel for anyone reachable on LinkedIn."*
+**That overstates what a profile URL is.** JD's LinkedIn account is the highest-ban-risk
+asset in the system — the L1/L2 apparatus, the per-source circuit breaker, and a throttle
+that refused to start at 82/80 all exist to protect it. Cold outreach at fifty-companies'
+volume from his real account is precisely the behaviour that machinery was built to prevent.
+
+**Ruling: store the LinkedIn URL as identity and provenance. It does not count as
+"reachable" in `call_list` until there is a policy for how JD actually makes contact.**
+A board that reports reachability it cannot act on is the same defect as a throttle that
+reports and cannot enforce (AK3) — a status that describes a capability the system does not
+have.
+
+## AP3 — Name the title knob; record the titles that actually matched
+`include_similar_titles` defaults to **true**, so "filtered to your fifteen target titles"
+currently describes two materially different queries and the plan does not say which:
+
+| setting | effect |
+|---|---|
+| **true** (default) | Apollo expands the fifteen by its own similarity model — catches "Head of People Operations", but the effective filter is **opaque** |
+| **false** | strict fifteen — misses "VP, Finance & Strategy", "Cofounder & CTO", exactly at the small companies where titles are loosest |
+
+This is **AF4's cascade problem in a new place**: a fixed title list is as brittle as a fixed
+role list, and the same failure — the right person is unclassifiable and therefore invisible.
+
+**Ruling: set the flag explicitly rather than inheriting it, and set it TRUE** — recall over
+precision, because a missed founder is silent while an extra VP costs nothing at zero
+marginal credit. **The observable: record the distinct titles actually returned, not just the
+count.** An expanded filter whose expansion is never inspected is an uncharacterised
+instrument (F1/K3).
+
+## AP4 — Capture where the PERSON is. For a NYC broker this is a field, not a detail.
+Apollo separates `organization_locations` (employer HQ) from `person_locations` (where the
+human lives), and a domain-only query returns leadership **wherever in the world they sit.**
+
+Round 30 established that a real share of this board is NYC-*registered* with little NYC
+presence — the parked Israeli-cluster question. Which makes this a live and never-measured
+possibility: **a meaningful fraction of the 51 may have leadership who do not live in New
+York.**
+
+**Ruling: do NOT filter on person location** — the CEO decides the NYC lease from wherever
+they are, and filtering would silently drop real decision-makers. **DO capture and display
+it.** It is free at discovery and it changes the action: a founder in Manhattan is a coffee,
+a founder in Tel Aviv is a 7am call. It is also the cheapest available test of the parked
+discovery-lane hypothesis.
+
+## AP5 — Values that trigger irreversible external action are held to declared-or-nothing
+Their refusal is the most important sentence in the message: *"a wrong score gets fixed on
+the next pass, a wrong address gets sent to a stranger."* **Affirmed absolutely**, and it
+names a class the brain has been missing.
+
+Everything built in four days rests on one assumption: **errors are correctable on the next
+measurement pass.** J1's hysteresis, the reconcile loop, the drift corrections, every
+rescore — all of it assumes a wrong value is re-measured and healed.
+
+**An email address is the first value in Norman that ESCAPES that assumption.** Once used it
+has left the system, and no reconcile loop can un-send it.
+
+**Ruling: the provenance ladder (Declared > Inferred > Defaulted > Unknown) governs values
+Norman REASONS with. For values Norman ACTS on, only the top rung counts — declared or
+nothing.** No inference, no defaulting, no construction, no `first.last@domain`.
+
+**And the wider flag, stated now rather than at step 2: every safety mechanism built so far
+protects JD's ACCOUNTS. Nothing yet protects his REPUTATION.** Throttles, breakers,
+tombstones, write guards — all of them stop Norman from getting an account banned. Contacts
+are the last read-only step in the system; **outreach is the first write to the outside
+world**, and there is no equivalent machinery for it. That gap is named here so it is not
+discovered at send time.
+
+## AP6 — Sequencing: `contexts/priority` does not wait on the email decision
+Their order puts priority third, after the email reveal. **Decouple them.** Ranking needs a
+human *attached*, not a human *reachable* — so priority can be built the moment discovery
+lands, in parallel with JD scoping the reveal. Making a build step wait on an operator
+decision it does not depend on is the deferral pattern AM2 already caught once.
