@@ -5392,3 +5392,41 @@ Their (b) — a clean run does not validate what it never reached — is BC1 res
 *"The rehearsal says it will not crash, which is a smaller claim and the only one the evidence
 supports."* **Correct scoping of a rehearsal's reach**, and the three untested surfaces
 (projection at 170, Sales Nav at scale, mixed-stage) are named in advance rather than after.
+
+## BF7 — JD declines the batch: readiness first. Loop 2 defined.
+JD, offered four batch sizes, chose none: *"I'm not sending a batch yet — I want to make sure
+the system is ready to receive a batch and execute elite research and scoring."*
+
+**Correct, and it goes further than the option I recommended.** `outbox/GOAL-batch-readiness-loop-2.md`
+supersedes `PROMPT-next-batch.md`.
+
+**The readiness definition, stated as knowable gaps rather than as a feeling:**
+
+| gap | status |
+|---|---|
+| Careers-URL discovery | **does not exist** — 142 manual pastes per 200 companies |
+| The K1 render pass | **on the standing list since round 4**, never built; unblocks reading *and* finding |
+| The stage-relative lens | **never exercised** — all 133 companies are Series A |
+| 13 empty / 6 constant fields | **unknown** which are scoring inputs |
+| Reachability | **3 built-but-unwired found by hand**; unknown how many remain |
+| `hq_source` constant | fix built and inert, **blocked on coverage** |
+
+**Ordered per BF3 — the checklist opens with the measured operator bottleneck**, and Band B's
+scoring work is deliberately second despite being cheaper and cleaner to test, which is the rule
+being applied against its own pull.
+
+## BF8 — Functional is not validated, and this one cannot be closed by engineering
+**B1 makes the stage lens functional. Nothing in the loop can make it validated.**
+
+> **JD's eval corpus is entirely Series A. His labelling exercised the components his corpus
+> could vary; the stage lens was frozen beside them having never been tested.** Synthetic rows
+> prove the code does something sensible. **They cannot prove it does what JD would judge.**
+
+**Ruling: the report must name this as the one gap engineering cannot supply.** Closing it costs
+an hour of JD's time — he labels a handful of non-Series-A companies — and no amount of building
+substitutes.
+
+**This generalises past the stage lens:** the eval gate's own `blind_to_note` already says it can
+only validate signals present in its frozen evidence. **So every component whose input does not
+vary in the corpus carries a validation it never earned** — and B2's field trace is how we find
+out which ones those are.
