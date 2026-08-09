@@ -84,12 +84,16 @@ making progress. JD's to trigger; it's his account and his throttle.
 
 ---
 
-## What's going to JD
+## JD's answers — all three cleared
 
-1. **Silna Health** — is it a real prospect? If yes, the fix is correcting its industry
-   tags, not loosening the rule.
-2. **Go on the measurement session** (~35 companies, ruler_audit order).
-3. **Go on the 3-company drift correction**, run alone.
+1. **Silna Health: YES, a real prospect.** *"Fix the tag."* So: **correct its industry
+   tags, restore it to the board, and leave the biotech exclusion rule exactly as it is.**
+   This confirms AJ3's split — the rule was never the problem, the input was. Implement the
+   declared-vs-inferred routing so the next bad tag routes to review instead of exiling.
+2. **Measurement session: GO.** Run it now — ~35 companies, two reads each,
+   **`ruler_audit` order** so the first session answers the undercount question rather
+   than merely making progress. Capture numerator and denominator in the same visit.
+3. **The 3-company drift correction: GO**, run alone. Do not score the 40.
 
 ## Order after that
 
