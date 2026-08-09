@@ -5288,3 +5288,107 @@ the instrument. Same instinct as AU7 — put the constraint where the mistake wi
 They closed with *"I have nothing outstanding, and I am not going to find something to do in the
 meantime."* **That is the correct end state for a bounded loop**, and the discipline JD asked
 for in round 43. Waiting on the window and his go.
+
+---
+
+# Round 52 — the binding constraint moved, and the same misdirection recurred after being named
+
+## BF1 — Sequencing ruling: the next loop targets the human bottleneck. Yes.
+Their measured projection for a 200-company batch:
+
+```
+scored · routed · projected · contacted · chase-listed   ~170   automatic, ~free
+careers URLs JD must paste BY HAND                       ~142   ← the entire cost
+Sales Nav page loads                                     510    7 sessions
+```
+
+**The machine column costs nothing. The human column is the whole cost, and 142 of it is one
+repetitive action.** No further correctness work in the scoring layer moves that number.
+
+**Ruling: the next loop's goal is careers-URL discovery, and its instrument is the K1 render
+pass.** That is one piece of work serving two blocked things — the 31 boards that cannot be read
+*and* the boards that cannot be found — and **it has been on the standing list since round 4
+without ever being built.**
+
+**Exit criterion is a measurement, not a promise:** *of N new companies, how many careers URLs
+are found without JD?* Baseline is **2 of 12 by conventional paths.** Measure the render pass
+against that. Do not commit to a target.
+
+## BF2 — The same misdirection recurred AFTER being diagnosed, three times now
+Days 3–4 built six ATS adapters, a capability model, contract tests against recorded payloads, a
+two-phase bind and the desk-role cascade — **6,692 lines** (my own count from the operational
+review). **Every line serves a company that already has a careers URL. All 85 URLs came from
+`jd-board-edit`. JD pasted them.**
+
+**The lane reads boards beautifully and nothing finds boards.**
+
+**Their observation is the one that matters: this is the same shape the operational review
+already named** — *"the build learned JD's target vocabulary and pointed it at scoring instead
+of reaching."* Third occurrence:
+
+1. **Round 32 self-audit** — 19 scoring commits vs 2 product-layer; `priority`, `warm_path`,
+   `views` absent.
+2. **Operational review** — contacts absent, nothing unattended, the human relay unengineered.
+3. **Now** — board *reading* industrialised, board *finding* untouched.
+
+> **A pattern that recurs after diagnosis is not an oversight. It is a selection bias in what
+> looks like work — and a bias that survives three namings will survive a fourth.**
+
+## BF3 — The standing rule they asked for, sharpened
+Their proposed form: *"prefer the blocking problem over the tractable one, especially when the
+tractable one has a cleaner test."* **Accepted, and the mechanism is worth stating because it
+explains why naming it has not been enough:**
+
+> **Testability is a property of a problem, not evidence about its value — and the correlation
+> runs the WRONG WAY.** Well-specified problems are tractable *because* they are already
+> understood. The blocking problems are hard precisely because they resist specification. So an
+> agent optimising for "work I can verify I did correctly" drifts systematically toward the
+> tractable adjacent problem, **and every individual choice looks rigorous.**
+
+**This is round 32's finding restated at its root:** *depth of rigor stays; breadth of attention
+rebalances.* The rigor was never the problem. **The clean contract test is what made the wrong
+work feel like the right work.**
+
+**And because it has now survived three diagnoses, the fix cannot be another ruling
+(`brain/09`: enforce mechanically, persuade only where judgment lives):**
+
+> **Ruling: every loop's checklist must OPEN with an item derived from a measurement of where
+> the operator's time actually goes.** Not "consider the bottleneck" — the first item is
+> computed from it. A checklist that begins anywhere else has to justify why.
+
+## BF4 — The stage-relative lens has never been exercised, and JD's validation is not evidence it works
+`funding_stage` is **one value across all 133 companies** — every company is Series A, because
+the Crunchbase intake filter selected for it. So `stage_expectation_heads`, the early-rocket
+redemption and the HQ-conditional stall have **never run against varying input.**
+
+**The consequence is sharper than "untested":**
+
+> **JD's labelling validated the components his corpus could vary. The stage lens was frozen
+> alongside them and never tested at all.** The eval's own `blind_to_note` says the gate can
+> only validate signals present in its frozen evidence — **so a component can be carried as
+> validated for four days on the strength of a corpus that could not have falsified it.**
+
+**Ruling: a mixed-stage batch is not a risk to manage. It is the first genuine test of a
+component we have been treating as proven.** Frame and report it that way.
+
+**Cheap pre-batch check, and it belongs inside the existing dry run rather than as new work:**
+put a synthetic Seed row and a synthetic Series C row through the scorer and look at what the
+stage lens does. Costs nothing, and a broken component surfaces before it touches real data.
+
+## BF5 — Pre-register the Unknown surge; the apparent regression is the honesty arriving
+Their (a) is right and worth sharpening. The batch will show ~142 Unknown job counts, ~64 with
+no desk split, all 170 without a denominator — **and it will read as regression.**
+
+> **The earlier board's numbers were not better. They were less honest.** It asserted things it
+> had not established; the new one says *not established*. **An instrument that learns to report
+> absence looks worse at exactly the moment it becomes trustworthy.**
+
+Write it down before the batch, because after it the first reading will be "it got worse" and
+that reading will be wrong.
+
+Their (b) — a clean run does not validate what it never reached — is BC1 restated and holds.
+
+## BF6 — What they are NOT claiming, affirmed
+*"The rehearsal says it will not crash, which is a smaller claim and the only one the evidence
+supports."* **Correct scoping of a rehearsal's reach**, and the three untested surfaces
+(projection at 170, Sales Nav at scale, mixed-stage) are named in advance rather than after.
