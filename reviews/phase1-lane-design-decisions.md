@@ -4611,3 +4611,94 @@ the eval found bound to "Concourse Labs."
 binds this domain to a different company; contacts are unavailable *via Apollo*.** That
 distinction is actionable — it says use a different source, rather than retry this one. **Do
 not spend further credits on it.**
+
+---
+
+# Follow-up rulings (round 42) — the uniqueness fix has no repair step for the state it was written to fix
+
+## AW1 — `CREATE UNIQUE INDEX` on a table that already holds duplicates
+Verified at `b805e90`, `sqlite.py:347`:
+
+```sql
+CREATE UNIQUE INDEX IF NOT EXISTS people_identity ON people
+  (company_id, COALESCE(linkedin_url, full_name))
+```
+
+**There is no dedup preceding it.** By their own report the table already contained every
+contact twice — *"the chase list was showing every contact twice."* SQLite **raises** on
+creating a unique index over existing duplicates.
+
+So either the live DB was deduped by hand outside the migration, or the index never took.
+Both are problems, and the first is the more likely and the more dangerous: **the migration
+would then be runnable only against a database somebody already repaired by hand.** Restore
+the backup from between `8a30d16` and `b805e90` and the migration fails.
+
+> **A migration that introduces a uniqueness constraint must contain the dedup that makes the
+> constraint applicable.** Otherwise the schema change is not a migration — it is an assertion
+> that someone else already did the work.
+
+**This is AV2's own rule one level down:** *a report describes what happened; the repo has to
+describe what would happen again.* The code describes the end state correctly and cannot
+reach it from the state it diagnosed.
+
+**Observables, two numbers:**
+```sql
+SELECT COUNT(*) FROM people;                              -- expect ~170, not ~340
+SELECT COUNT(*) FROM (SELECT company_id, COALESCE(linkedin_url, full_name)
+                      FROM people GROUP BY 1,2 HAVING COUNT(*) > 1);  -- expect 0
+```
+And a test that **applies the lane twice against a store seeded with the duplicate state**,
+not merely twice against a clean one — the second apply is not the case that broke.
+
+## AW2 — "Never touched" is a constant, and that is the second instance of a known defect
+Their §5 flag is right and worth naming precisely: every why-now in the top ten reads *"never
+touched"* because nothing writes `last_touched_on`.
+
+**A field with the same value on every row discriminates nothing.** That is exactly AK1 —
+`hq_city = "New York"` across all 95, a component consuming weight and contributing zero
+signal. **This is the same defect class, in a new column, three rounds later.**
+
+Round 30 ruled: *"add the general detector, because it's cheap: flag any scoring component
+whose value is identical across the whole board as non-discriminating."* **It was parked and
+never built.** Two demonstrated instances is the argument.
+
+**Ruling: unpark the non-discriminating-component detector and build it.** It would have
+caught both without anyone looking. And it generalises past scoring — **any field driving a
+display order or a why-string qualifies.**
+
+Their forward-looking framing stands and is the better half: today "never touched" is honest;
+once JD works the list it becomes *stale* rather than false, and the degradation will look
+like the feature getting worse rather than like a field nobody writes.
+
+## AW3 — Consolidating: the presentation layer is where settled decisions silently return
+Their §3: *"A CUT FEATURE CAN REAPPEAR AS AN IMPLEMENTATION DETAIL. Nobody rebuilt ranking;
+the display just had to choose, and choosing IS ranking."*
+
+**This is AO4 again** — the `Joe:` / `Joe says:` catch, where a suppression enforced in the
+data layer was about to be undone by a view's string match. Both are the same shape:
+
+> **The presentation layer must choose — an order, a filter, a single "best" — and every one
+> of those choices re-decides something the system settled elsewhere. A decision is not
+> enforced until the layer that renders it cannot make it differently.**
+
+Alphabetical is not neutral. **There is no neutral order**; there is only a stated one and an
+accidental one, and the accidental one put David's HR Manager ahead of the CEO.
+
+## AW4 — "Unreachable is not LAST, it is ELSEWHERE" — Unknown ≠ 0 at the interface
+*"Bottom-of-list is where work goes to be quietly ignored, while a named bucket is a different
+job for a different day."* **Affirmed, and it is more than a UX preference.**
+
+Sorting a person with no channel to the bottom makes **"we lack a phone number" render as
+"this is a poor prospect."** That is Unknown collapsing into zero — the project's oldest rule
+— committed in the ordering rather than in the data.
+
+> **A missing attribute must not sort as a bad value.** Absence gets its own bucket, because a
+> rank position is read as a judgment.
+
+## AW5 — Their symmetry on corrections: accepted
+*"I should not offer to absorb your misses either — a builder who takes the reviewer's errors
+removes the second check just as surely as a reviewer who takes the builder's."*
+
+**Correct, and it completes AV5.** The rule is not "the reviewer keeps their misses"; it is
+**neither party may absorb the other's, in either direction, because the value of two checks
+is that they fail independently.**
