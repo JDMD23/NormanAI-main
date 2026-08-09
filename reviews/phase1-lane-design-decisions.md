@@ -3860,3 +3860,73 @@ process whose reliability depends on a human copying text will drop messages —
    `nyc_open_jobs`, the non-discriminating-component detector, the HQ→concentration swap
    itself. All real, all small, none urgent. One "scoring hygiene" round later, together.
 **The rule to hold: depth of rigor stays; breadth of attention rebalances.**
+
+---
+
+# Follow-up rulings (round 33) — the staleness diagnosis, and where the views live
+
+AE4 shipped from its own text. Two details in it are sharper than the requirement was:
+**the baseline is recorded only after a verified readback** — *"recording an unverified
+write would poison the very thing that's supposed to arbitrate"* — which is a real
+correctness point, since a baseline taken from what you *intended* to write rather than
+what *landed* corrupts the arbiter itself. And **no-baseline falls back to two-way
+explicitly in code**, because *"pretending to know who moved when there's no ancestor is the
+original sin in a new costume."* Pinning the hazard field set as a test so it cannot grow
+silently is the third good call. Accept all three as written.
+
+Also accepted: CRMx's own point that **reading the order back is their job too** — they
+reported "AE4 next" for seven rounds and took the next scoring ruling each time without
+objecting. Correct, and worth holding as shared responsibility rather than a one-sided
+failure: **the builder is a check on the reviewer's sequencing, not only its executor.**
+
+## AN1 — The staleness finding is right; the mechanism is different, and the fix is simpler
+CRMx reports their NormansBrain clone lacks the index/collision note/superseded table and
+attributes it to those living on `origin/claude/software-design-learning-dvzg27`. **Checked:
+that diagnosis is slightly off, and the brain's first guess at it was wrong too** (the
+initial read was "the rulings are stranded on a non-default branch" — not true).
+
+**Actual state: NormansBrain has exactly ONE branch, and it IS the default HEAD branch.**
+So a *fresh* clone gets everything. **The problem is purely that their clone is stale** —
+cloned once, never pulled.
+
+**Ruling: the convention is "pull before you read," not "read from a special ref."** And add
+the cheap self-check that makes staleness *detectable* rather than assumed: **the ruling
+rounds are monotonic, so the highest round number in your copy tells you your freshness.**
+Before citing a ruling, confirm the file actually contains the round being cited — if you
+are asked for AM3 and your copy ends at round 24, you are stale and you know it
+deterministically.
+
+**Their framing is the durable part and it generalises beyond this incident:** *"a stale
+clone is the same failure as a dropped message wearing different clothes."* Both are a
+cached copy of a source of truth trusted without a freshness check — **which is the
+reconcile loop's own premise, applied to documentation.** Any cached copy of an authority
+needs a freshness check before it is trusted; that now includes ours.
+
+## AN2 — The three views are NOTION NATIVE VIEWS on the existing board. Not a second database, not a new surface.
+Right to stop and ask — S6 specified *what* the views are and *that* they are derived, but
+never *where* they live, and it is expensive to reverse. **Ruling: native Notion views —
+filters and sorts over the same database.**
+
+Grounding, in order of weight:
+1. **ADR 0001: Notion is a VIEW of the datastore.** A separate database would be a *second*
+   derived copy with its own drift problem — and brain/02 is explicit: *every cache is a
+   second copy of the truth with an invalidation problem.* We already run one reconcile
+   loop to keep one projection honest; a second projection doubles that surface for no
+   informational gain.
+2. **Zero data duplication, zero new write path, reconcile untouched.** The views are
+   configuration *of* the board, not a new projection *from* the store.
+3. **JD's edits keep working exactly as they do now** — same rows, same properties, same
+   adopt path. A separate surface would need its own edit story.
+4. **The `"Joe:"` / `"Norman:"` prefix convention was designed for precisely this** — the
+   Action Needed view is a filter on the prefix. That convention anticipating the view is
+   evidence the shape is right.
+
+**Two consequences to build in that order:** `fit_raw` must exist as a board property
+(hidden is fine) for the ranked view to sort on it — which is exactly why their sequencing
+puts it first; and "Changed Recently" filters on the existing change date property.
+
+**Weight-class call on enforcement: declare the three views in config so they are
+reproducible** (ADR 0001 makes the board rebuildable — the views should be too), **but do
+NOT have reconcile enforce them.** Views are operator surface; JD should be able to adjust a
+filter without the machine fighting him. **Declare, don't enforce** — the same distinction
+as machine-owned vs human-owned columns, applied one level up.
