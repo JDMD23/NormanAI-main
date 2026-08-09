@@ -4177,3 +4177,97 @@ observable: count of contacts rejected on name mismatch, reported per run.**
 **Standing addition to AO1: before approving a vendor operation, read the vendor eval that
 already exists for that vendor.** The brain has now twice ruled on Apollo without opening
 `docs/vendor-evals/apollo-2026-08.md`.
+
+---
+
+# Follow-up rulings (round 36) — the workplace-POC instrument is a TRIGGER, and the contact layer was specced as a roster
+
+JD's Sales Navigator persona and five saved searches were captured
+(`reference/salesnav-workplace-poc.md`, raw at
+`reference/captures/salesnav-workplace-poc-2026-08-09.json`). It contradicts the shape of the
+round-35 contact plan in a way worth correcting before that plan hardens.
+
+## AQ1 — Six of six searches filter on RECENCY. This is an event stream, not a roster.
+`years_in_current_position = "Less than 1 year"` appears in **6 of 6** saved searches;
+`Changed jobs in last 90 days` in **5 of 6**. Not one of them asks *who is the workplace POC
+at company X*. Every one asks **who just BECAME one.**
+
+**The recency is the signal, not a refinement of it.** A new COO/CFO/Chief of Staff/Head of
+People at a growing company is the moment office needs reopen; someone three years in the
+seat has already solved their space problem.
+
+**Ruling: the contact layer is TWO things, and round 35 specified only the first.**
+1. **Roster** — who holds the relevant seat at each of the 51. Static, what AP1–AP7 covers.
+2. **Trigger** — who moved INTO one of those seats recently. An event, perishable, and
+   **the higher-value half** because it is time-bound.
+
+**And it closes a loop the build already half-owns.** `config/desk-roles.json` already
+records that "Head of Workplace" is *"a desk role AND the strongest buy signal — somebody is
+standing up an office."* The careers lane detects a company **hiring** that role; a
+person-recency trigger detects it **having hired** one. **The same signal at two stages;
+Norman built the earlier stage and not the later one.**
+
+## AQ2 — Two title vocabularies are two theories, and the split is company size
+The `Workplace POC` persona (28 titles: founder/CEO/COO/CFO/ops/finance/people/chief of
+staff, down to Office Manager and *Executive Assistant to the CEO*) is used with headcount
+**11-50/51-200/201-500**. The real-estate vocabulary (14 titles: Head of Real Estate, Global
+Corporate Real Estate, Head of Global Facilities…) is used up to **1001-5000**, North America
+and Europe.
+
+> **The rule JD encoded without stating it: WHO to call is a function of company size, and it
+> is a DISCONTINUITY, not a gradient.** Below ~500 heads there is no real-estate person and
+> the seat is ops/finance/founder. Above it there is one.
+
+**Norman's board is 11–500 end to end. Vocabulary A is the operative one; Vocabulary B
+belongs to a different book of business and must not be blended into the contact layer.**
+
+## AQ3 — The canonical persona is narrower than the canonical ruler, and carries an unexplained geography
+Two near-identical searches differ essentially only in geography and return **93 vs 121** —
+`New York, New York, United States` (city) versus `New York City Metropolitan Area` (region
+`90000070`, metro). **~30% of JD's workplace-POC population lives outside New York City
+proper.**
+
+Region `90000070` is the metro geography ADR 0003 pins as the ruler — so **the persona named
+`Workplace POC` is narrower than the instrument Norman treats as authoritative.** One of the
+two should move; that is JD's call, but the inconsistency must not be inherited silently.
+
+**`San Francisco Bay Area` sits in the canonical persona.** Any port of the persona would
+silently import Bay Area people. **Do not port it until JD explains it** — an unexplained
+value in a canonical definition is exactly the kind of thing that becomes load-bearing by
+accident.
+
+## AQ4 — Pull broadly, RANK, do not filter — and a second ranking problem exists
+`"Head"`, `"Vice President"` and `"Talent"` are in the persona. They are safe in Sales Nav
+because the company set is already narrow (`All my saved accounts`) and seniority constrains
+the rest. In Apollo with `include_similar_titles: true` they match every VP of anything.
+
+Norman's batch is scoped to 51 known domains, so the blast radius is bounded — but a
+200-person company would still return a dozen irrelevant VPs.
+
+**Ruling: pull broadly and rank; do not filter narrowly.** Filtering would discard exactly
+the long-tail titles that carry JD's expertise (the EA to the CEO at a 40-person company).
+**This means a second, unmodelled ranking problem: ranking PEOPLE WITHIN a company**, which
+is distinct from `contexts/priority` ranking companies and should not be folded into it.
+
+## AQ5 — What does not port, recorded so it is never silently assumed
+Full table in `reference/salesnav-workplace-poc.md` §5. The rows that fail:
+- **The 90-day job-change flag has no people-search equivalent in Apollo**
+  (`contact_job_changed` covers already-saved contacts only). Approximate with
+  `person_days_in_current_title_range: {max: 90}` — arguably better, a measured duration
+  rather than a platform event flag.
+- **Geography ports in name and fails in granularity** (AP7, measured 60–88%).
+- **LinkedIn's 39-value industry taxonomy has no Apollo crosswalk.** Use Norman's own
+  taxonomy rather than translating between two foreign ones.
+- **Boolean title syntax does not exist in Apollo.** JD's strings are pure ORs so
+  decomposition is lossless today; any future AND/NOT would be dropped silently, which is the
+  failure mode to guard.
+
+## AQ6 — On the capture: a read-only tool that verified its own artifact
+Codex reported that a bulk expansion drifted the results page to an unrelated
+excluded-company filter, then **discarded the transient state, re-opened the saved search,
+expanded each section individually, and verified the encoded URL filter signature unchanged
+after every expansion.** Nothing saved, 8 page loads, no interstitials.
+
+**That is AO1 behaviour from a tool asked only to read** — and it is why the capture is
+trustworthy: the URL signature is the authority and it was checked rather than assumed.
+Worth holding as the standard for any future operator-surface capture.

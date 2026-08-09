@@ -1,0 +1,983 @@
+{
+  "saved_searches_found": [
+    "NYC - New Target Roles - 90 days",
+    "New Real Estate Jobs - Tech/Media/Finance",
+    "New Stealth Launch",
+    "NYC - New Roles (90d)",
+    "NYC Tier1 Alumni → New Founders",
+    "Head of Real Estate - Recent Job Change",
+    "Saved Accounts - New CXO",
+    "Ben's Client --> New Company - Recent Job Changes",
+    "Saved Accounts - New Senior Roles",
+    "JD Main - Last 90 Days"
+  ],
+  "personas_found": [
+    {
+      "name": "Workplace POC",
+      "updated": "7/23/2026",
+      "current_job_title": {
+        "include": [
+          "Founder",
+          "Co-Founder",
+          "Vice President Finance",
+          "Vice President Operations",
+          "Chief Executive Officer",
+          "Chief Financial Officer",
+          "Chief Operating Officer",
+          "Director of Operations",
+          "Head of Finance",
+          "Head of Operations",
+          "Finance Executive",
+          "Chief of Staff",
+          "Head of Human Resources",
+          "Chief People Officer",
+          "Talent",
+          "Workplace Manager",
+          "Head of Talent Management",
+          "Head",
+          "Vice President",
+          "Executive Assistant to Chief Executive Officer",
+          "Workplace Coordinator",
+          "Operations Manager",
+          "Office Manager",
+          "Human Resources Manager",
+          "Head of Legal",
+          "General Counsel",
+          "Operations Coordinator",
+          "Finance Manager"
+        ],
+        "exclude": []
+      },
+      "person_geography": {
+        "include": [
+          "New York, New York, United States",
+          "San Francisco Bay Area"
+        ],
+        "exclude": [],
+        "exact_labels": [
+          "New York, New York, United States",
+          "San Francisco Bay Area"
+        ]
+      }
+    }
+  ],
+  "lead_lists_found": [
+    "All saved leads (2)",
+    "Recently Accepted Connections and InMails",
+    "Recommended Leads",
+    "New Executives at Saved Accounts",
+    "UM"
+  ],
+  "captured": [
+    {
+      "name": "NYC - New Target Roles - 90 days",
+      "url": "https://www.linkedin.com/sales/search/people?query=(filters%3AList((type%3ACOMPANY_HEADCOUNT%2Cvalues%3AList((id%3AC%2Ctext%3A11-50%2CselectionType%3AINCLUDED)%2C(id%3AD%2Ctext%3A51-200%2CselectionType%3AINCLUDED)%2C(id%3AE%2Ctext%3A201-500%2CselectionType%3AINCLUDED)))%2C(type%3ACURRENT_TITLE%2Cvalues%3AList((text%3A%2522VP%2520Finance%25E2%2580%259D%2520OR%2520%25E2%2580%259CVice%2520President%2520Finance%25E2%2580%259D%2520OR%2520CFO%2520OR%2520%25E2%2580%259CVP%2520People%25E2%2580%259D%2520OR%2520%25E2%2580%259CVice%2520President%2520People%25E2%2580%259D%2520OR%2520%25E2%2580%259CHead%2520of%2520People%25E2%2580%259D%2520OR%2520%25E2%2580%259CChief%2520People%2520Officer%25E2%2580%259D%2520OR%2520%25E2%2580%259CHead%2520of%2520Talent%25E2%2580%259D%2520OR%2520%25E2%2580%259CHead%2520of%2520Recruiting%25E2%2580%259D%2520OR%2520%25E2%2580%259CVice%2520President%2520of%2520Operations%25E2%2580%259D%2520OR%2520%25E2%2580%259CVP%2520Operations%25E2%2580%259D%2520OR%2520%25E2%2580%259CVP%2520of%2520Operations%25E2%2580%259D%2520OR%2520COO%2520OR%2520%25E2%2580%259CChief%2520Operating%2520Officer%25E2%2580%259D%2520OR%2520%25E2%2580%259CHead%2520of%2520Workplace%25E2%2580%259D%2520OR%2520%25E2%2580%259CWorkplace%2520Experience%25E2%2580%259D%2520OR%2520%25E2%2580%259CChief%2520of%2520Staff%25E2%2580%259D%2CselectionType%3AINCLUDED)))%2C(type%3ASENIORITY_LEVEL%2Cvalues%3AList((id%3A220%2Ctext%3ADirector%2CselectionType%3AINCLUDED)%2C(id%3A310%2Ctext%3ACXO%2CselectionType%3AINCLUDED)%2C(id%3A300%2Ctext%3AVice%2520President%2CselectionType%3AINCLUDED)))%2C(type%3AYEARS_IN_CURRENT_POSITION%2Cvalues%3AList((id%3A1%2Ctext%3ALess%2520than%25201%2520year%2CselectionType%3AINCLUDED)))%2C(type%3AREGION%2Cvalues%3AList((id%3A102571732%2Ctext%3ANew%2520York%252C%2520New%2520York%252C%2520United%2520States%2CselectionType%3AINCLUDED)))%2C(type%3AINDUSTRY%2Cvalues%3AList((id%3A43%2Ctext%3AFinancial%2520Services%2CselectionType%3AINCLUDED)%2C(id%3A41%2Ctext%3ABanking%2CselectionType%3AINCLUDED)%2C(id%3A46%2Ctext%3AInvestment%2520Management%2CselectionType%3AINCLUDED)%2C(id%3A45%2Ctext%3AInvestment%2520Banking%2CselectionType%3AINCLUDED)%2C(id%3A106%2Ctext%3AVenture%2520Capital%2520and%2520Private%2520Equity%2520Principals%2CselectionType%3AINCLUDED)%2C(id%3A14%2Ctext%3AHospitals%2520and%2520Health%2520Care%2CselectionType%3AINCLUDED)%2C(id%3A6%2Ctext%3ATechnology%252C%2520Information%2520and%2520Internet%2CselectionType%3AINCLUDED)%2C(id%3A4%2Ctext%3ASoftware%2520Development%2CselectionType%3AINCLUDED)%2C(id%3A91%2Ctext%3AConsumer%2520Services%2CselectionType%3AINCLUDED)%2C(id%3A118%2Ctext%3AComputer%2520and%2520Network%2520Security%2CselectionType%3AINCLUDED)%2C(id%3A1720%2Ctext%3AInvestment%2520Advice%2CselectionType%3AINCLUDED)%2C(id%3A98%2Ctext%3APublic%2520Relations%2520and%2520Communications%2520Services%2CselectionType%3AINCLUDED)%2C(id%3A126%2Ctext%3AMedia%2520Production%2CselectionType%3AINCLUDED)%2C(id%3A129%2Ctext%3ACapital%2520Markets%2CselectionType%3AINCLUDED)%2C(id%3A1594%2Ctext%3ATechnology%252C%2520Information%2520and%2520Media%2CselectionType%3AINCLUDED)%2C(id%3A1862%2Ctext%3AMarketing%2520Services%2CselectionType%3AINCLUDED)%2C(id%3A2458%2Ctext%3AData%2520Infrastructure%2520and%2520Analytics%2CselectionType%3AINCLUDED)%2C(id%3A109%2Ctext%3AComputer%2520Games%2CselectionType%3AINCLUDED)%2C(id%3A113%2Ctext%3AOnline%2520Audio%2520and%2520Video%2520Media%2CselectionType%3AINCLUDED)%2C(id%3A1285%2Ctext%3AInternet%2520Marketplace%2520Platforms%2CselectionType%3AINCLUDED)%2C(id%3A1745%2Ctext%3APension%2520Funds%2CselectionType%3AINCLUDED)%2C(id%3A28%2Ctext%3AEntertainment%2520Providers%2CselectionType%3AINCLUDED)%2C(id%3A3100%2Ctext%3AMobile%2520Computing%2520Software%2520Products%2CselectionType%3AINCLUDED)%2C(id%3A3101%2Ctext%3ADesktop%2520Computing%2520Software%2520Products%2CselectionType%3AINCLUDED)%2C(id%3A3124%2Ctext%3AInternet%2520News%2CselectionType%3AINCLUDED)%2C(id%3A3128%2Ctext%3ABusiness%2520Intelligence%2520Platforms%2CselectionType%3AINCLUDED)%2C(id%3A3130%2Ctext%3AData%2520Security%2520Software%2520Products%2CselectionType%3AINCLUDED)%2C(id%3A3131%2Ctext%3AMobile%2520Gaming%2520Apps%2CselectionType%3AINCLUDED)%2C(id%3A3133%2Ctext%3AMedia%2520and%2520Telecommunications%2CselectionType%3AINCLUDED)%2C(id%3A3134%2Ctext%3ABlockchain%2520Services%2CselectionType%3AINCLUDED)%2C(id%3A3190%2Ctext%3AApparel%2520%2526%2520Fashion%2CselectionType%3AINCLUDED)%2C(id%3A3207%2Ctext%3AHealth%252C%2520Wellness%2520%2526%2520Fitness%2CselectionType%3AINCLUDED)%2C(id%3A3210%2Ctext%3AHuman%2520Resources%2CselectionType%3AINCLUDED)%2C(id%3A3214%2Ctext%3AOnline%2520Media%2CselectionType%3AINCLUDED)%2C(id%3A3231%2Ctext%3AInformation%2520Technology%2520%2526%2520Services%2CselectionType%3AINCLUDED)%2C(id%3A3233%2Ctext%3AResearch%2CselectionType%3AINCLUDED)%2C(id%3A3237%2Ctext%3AEntertainment%2CselectionType%3AINCLUDED)%2C(id%3A70%2Ctext%3AResearch%2520Services%2CselectionType%3AINCLUDED)%2C(id%3A84%2Ctext%3AInformation%2520Services%2CselectionType%3AINCLUDED)))%2C(type%3ARECENTLY_CHANGED_JOBS%2Cvalues%3AList((id%3ARPC%2Ctext%3AChanged%2520jobs%2CselectionType%3AINCLUDED)))%2C(type%3ALEAD_HIGHLIGHTS%2Cvalues%3AList((id%3ARPC%2Ctext%3AChanged%2520jobs%2520in%2520last%252090%2520days%2CselectionType%3AINCLUDED)))))&savedSearchId=1984857218&sessionId=3rcYb9VCSt%2BWb%2Bo0mUREKA%3D%3D&viewAllFilters=true",
+      "result_count": 93,
+      "filters": {
+        "current_job_title": {
+          "include": [],
+          "exclude": [],
+          "boolean": "\"VP Finance” OR “Vice President Finance” OR CFO OR “VP People” OR “Vice President People” OR “Head of People” OR “Chief People Officer” OR “Head of Talent” OR “Head of Recruiting” OR “Vice President of Operations” OR “VP Operations” OR “VP of Operations” OR COO OR “Chief Operating Officer” OR “Head of Workplace” OR “Workplace Experience” OR “Chief of Staff”"
+        },
+        "past_job_title": {
+          "include": [],
+          "exclude": []
+        },
+        "seniority": {
+          "include": [
+            "Director",
+            "CXO",
+            "Vice President"
+          ],
+          "exclude": []
+        },
+        "function": {
+          "include": [],
+          "exclude": []
+        },
+        "years_in_current_position": "Less than 1 year",
+        "years_in_current_company": null,
+        "person_geography": {
+          "include": [
+            "New York, New York, United States"
+          ],
+          "exclude": [],
+          "exact_labels": [
+            "New York, New York, United States"
+          ]
+        },
+        "company_hq_location": {
+          "include": [],
+          "exclude": [],
+          "exact_labels": []
+        },
+        "company_headcount": [
+          "11-50",
+          "51-200",
+          "201-500"
+        ],
+        "company_type": [],
+        "industry": {
+          "applied_to": "person",
+          "values": [
+            "Financial Services",
+            "Banking",
+            "Investment Management",
+            "Investment Banking",
+            "Venture Capital and Private Equity Principals",
+            "Hospitals and Health Care",
+            "Technology, Information and Internet",
+            "Software Development",
+            "Consumer Services",
+            "Computer and Network Security",
+            "Investment Advice",
+            "Public Relations and Communications Services",
+            "Media Production",
+            "Capital Markets",
+            "Technology, Information and Media",
+            "Marketing Services",
+            "Data Infrastructure and Analytics",
+            "Computer Games",
+            "Online Audio and Video Media",
+            "Internet Marketplace Platforms",
+            "Pension Funds",
+            "Entertainment Providers",
+            "Mobile Computing Software Products",
+            "Desktop Computing Software Products",
+            "Internet News",
+            "Business Intelligence Platforms",
+            "Data Security Software Products",
+            "Mobile Gaming Apps",
+            "Media and Telecommunications",
+            "Blockchain Services",
+            "Apparel & Fashion",
+            "Health, Wellness & Fitness",
+            "Human Resources",
+            "Online Media",
+            "Information Technology & Services",
+            "Research",
+            "Entertainment",
+            "Research Services",
+            "Information Services"
+          ]
+        },
+        "keywords": null,
+        "connection_degree": [],
+        "recent_updates": [
+          "Changed jobs"
+        ],
+        "buyer_intent": [],
+        "other_filters_set": {
+          "URL filter type LEAD_HIGHLIGHTS": [
+            "Changed jobs in last 90 days"
+          ]
+        }
+      },
+      "sections_present_but_empty": [
+        "Current company",
+        "Past company",
+        "Company type",
+        "Company headquarters location",
+        "Function",
+        "Past job title",
+        "Years in current company",
+        "First name",
+        "Last name",
+        "Profile language",
+        "Years of experience",
+        "Groups",
+        "School",
+        "Following your company",
+        "Viewed your profile recently",
+        "Connection",
+        "Connections of",
+        "Past colleague",
+        "Shared experiences",
+        "Posted on LinkedIn",
+        "Persona",
+        "Account lists",
+        "Lead lists",
+        "People in CRM",
+        "People you interacted with",
+        "Saved leads and accounts",
+        "Search keywords"
+      ],
+      "sections_not_found_in_ui": [
+        "TeamLink",
+        "Mentioned in news"
+      ],
+      "screenshots": [
+        "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/05a-nyc-new-target-roles-top.jpg",
+        "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/05b-nyc-new-target-roles-middle.jpg",
+        "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/05c-nyc-new-target-roles-bottom.jpg"
+      ],
+      "screenshot_contact_sheet": "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/05-nyc-new-target-roles-contact-sheet.jpg"
+    },
+    {
+      "name": "New Real Estate Jobs - Tech/Media/Finance",
+      "url": "https://www.linkedin.com/sales/search/people?query=(filters%3AList((type%3ACOMPANY_HEADCOUNT%2Cvalues%3AList((id%3AC%2Ctext%3A11-50%2CselectionType%3AINCLUDED)%2C(id%3AD%2Ctext%3A51-200%2CselectionType%3AINCLUDED)%2C(id%3AE%2Ctext%3A201-500%2CselectionType%3AINCLUDED)%2C(id%3AF%2Ctext%3A501-1000%2CselectionType%3AINCLUDED)%2C(id%3AG%2Ctext%3A1001-5000%2CselectionType%3AINCLUDED)))%2C(type%3ACURRENT_TITLE%2Cvalues%3AList((text%3AHead%2520of%2520Workplace%2CselectionType%3AINCLUDED)%2C(text%3AGlobal%2520Head%2520of%2520Real%2520Estate%2CselectionType%3AINCLUDED)%2C(text%3ASenior%2520Director%2520Real%2520Estate%2CselectionType%3AINCLUDED)%2C(text%3AGlobal%2520Head%2520of%2520Real%2520Estate%2520%2526%2520Workplace%2520Services%2CselectionType%3AINCLUDED)%2C(text%3ADirector%2520of%2520Real%2520Estate%2520%2526%2520Workplace%2CselectionType%3AINCLUDED)%2C(text%3AGlobal%2520Corporate%2520Real%2520Estate%2CselectionType%3AINCLUDED)%2C(text%3AHead%2520of%2520Global%2520Facilities%2CselectionType%3AINCLUDED)%2C(text%3ASenior%2520Manager%252C%2520Real%2520Estate%2520%2526%2520Workplace%2CselectionType%3AINCLUDED)%2C(text%3AReal%2520Estate%2520%2526%2520Workplace%2520leader%2CselectionType%3AINCLUDED)%2C(text%3AGlobal%2520Real%2520Estate%2520%2526%2520Workplace%2520Experience%2CselectionType%3AINCLUDED)%2C(text%3AHead%2520of%2520Global%2520Real%2520Estate%2520%252B%2520Workplace%2CselectionType%3AINCLUDED)%2C(text%3AHead%2520of%2520Real%2520Estate%2CselectionType%3AINCLUDED)%2C(text%3ADirector%2520of%2520Real%2520Estate%2CselectionType%3AINCLUDED)%2C(text%3AVP%2520Workplace%2520Experience%2CselectionType%3AINCLUDED)))%2C(type%3AYEARS_IN_CURRENT_POSITION%2Cvalues%3AList((id%3A1%2Ctext%3ALess%2520than%25201%2520year%2CselectionType%3AINCLUDED)))%2C(type%3AREGION%2Cvalues%3AList((id%3A102221843%2Ctext%3ANorth%2520America%2CselectionType%3AINCLUDED)%2C(id%3A100506914%2Ctext%3AEurope%2CselectionType%3AINCLUDED)))%2C(type%3AINDUSTRY%2Cvalues%3AList((id%3A43%2Ctext%3AFinancial%2520Services%2CselectionType%3AINCLUDED)%2C(id%3A6%2Ctext%3ATechnology%252C%2520Information%2520and%2520Internet%2CselectionType%3AINCLUDED)%2C(id%3A4%2Ctext%3ASoftware%2520Development%2CselectionType%3AINCLUDED)%2C(id%3A28%2Ctext%3AEntertainment%2520Providers%2CselectionType%3AINCLUDED)%2C(id%3A3100%2Ctext%3AMobile%2520Computing%2520Software%2520Products%2CselectionType%3AINCLUDED)%2C(id%3A41%2Ctext%3ABanking%2CselectionType%3AINCLUDED)%2C(id%3A45%2Ctext%3AInvestment%2520Banking%2CselectionType%3AINCLUDED)%2C(id%3A46%2Ctext%3AInvestment%2520Management%2CselectionType%3AINCLUDED)%2C(id%3A3130%2Ctext%3AData%2520Security%2520Software%2520Products%2CselectionType%3AINCLUDED)%2C(id%3A3133%2Ctext%3AMedia%2520and%2520Telecommunications%2CselectionType%3AINCLUDED)%2C(id%3A3134%2Ctext%3ABlockchain%2520Services%2CselectionType%3AINCLUDED)%2C(id%3A3128%2Ctext%3ABusiness%2520Intelligence%2520Platforms%2CselectionType%3AINCLUDED)%2C(id%3A70%2Ctext%3AResearch%2520Services%2CselectionType%3AINCLUDED)%2C(id%3A1594%2Ctext%3ATechnology%252C%2520Information%2520and%2520Media%2CselectionType%3AINCLUDED)%2C(id%3A3214%2Ctext%3AOnline%2520Media%2CselectionType%3AINCLUDED)%2C(id%3A126%2Ctext%3AMedia%2520Production%2CselectionType%3AINCLUDED)%2C(id%3A2458%2Ctext%3AData%2520Infrastructure%2520and%2520Analytics%2CselectionType%3AINCLUDED)%2C(id%3A3231%2Ctext%3AInformation%2520Technology%2520%2526%2520Services%2CselectionType%3AINCLUDED)%2C(id%3A14%2Ctext%3AHospitals%2520and%2520Health%2520Care%2CselectionType%3AINCLUDED)%2C(id%3A3207%2Ctext%3AHealth%252C%2520Wellness%2520%2526%2520Fitness%2CselectionType%3AINCLUDED)%2C(id%3A3101%2Ctext%3ADesktop%2520Computing%2520Software%2520Products%2CselectionType%3AINCLUDED)%2C(id%3A3124%2Ctext%3AInternet%2520News%2CselectionType%3AINCLUDED)%2C(id%3A84%2Ctext%3AInformation%2520Services%2CselectionType%3AINCLUDED)%2C(id%3A98%2Ctext%3APublic%2520Relations%2520and%2520Communications%2520Services%2CselectionType%3AINCLUDED)%2C(id%3A106%2Ctext%3AVenture%2520Capital%2520and%2520Private%2520Equity%2520Principals%2CselectionType%3AINCLUDED)%2C(id%3A109%2Ctext%3AComputer%2520Games%2CselectionType%3AINCLUDED)%2C(id%3A113%2Ctext%3AOnline%2520Audio%2520and%2520Video%2520Media%2CselectionType%3AINCLUDED)%2C(id%3A118%2Ctext%3AComputer%2520and%2520Network%2520Security%2CselectionType%3AINCLUDED)%2C(id%3A3190%2Ctext%3AApparel%2520%2526%2520Fashion%2CselectionType%3AINCLUDED)%2C(id%3A3210%2Ctext%3AHuman%2520Resources%2CselectionType%3AINCLUDED)%2C(id%3A3233%2Ctext%3AResearch%2CselectionType%3AINCLUDED)%2C(id%3A3237%2Ctext%3AEntertainment%2CselectionType%3AINCLUDED)%2C(id%3A1285%2Ctext%3AInternet%2520Marketplace%2520Platforms%2CselectionType%3AINCLUDED)%2C(id%3A1720%2Ctext%3AInvestment%2520Advice%2CselectionType%3AINCLUDED)%2C(id%3A1745%2Ctext%3APension%2520Funds%2CselectionType%3AINCLUDED)%2C(id%3A1862%2Ctext%3AMarketing%2520Services%2CselectionType%3AINCLUDED)%2C(id%3A3131%2Ctext%3AMobile%2520Gaming%2520Apps%2CselectionType%3AINCLUDED)%2C(id%3A129%2Ctext%3ACapital%2520Markets%2CselectionType%3AINCLUDED)%2C(id%3A91%2Ctext%3AConsumer%2520Services%2CselectionType%3AINCLUDED)))%2C(type%3ARECENTLY_CHANGED_JOBS%2Cvalues%3AList((id%3ARPC%2Ctext%3AChanged%2520jobs%2CselectionType%3AINCLUDED)))%2C(type%3ALEAD_HIGHLIGHTS%2Cvalues%3AList((id%3ARPC%2Ctext%3AChanged%2520jobs%2520in%2520last%252090%2520days%2CselectionType%3AINCLUDED)))))&savedSearchId=1984857210&sessionId=MjackBKBTl2CVrwKEGHMaA%3D%3D&viewAllFilters=true",
+      "result_count": 130,
+      "filters": {
+        "current_job_title": {
+          "include": [
+            "Head of Workplace",
+            "Global Head of Real Estate",
+            "Senior Director Real Estate",
+            "Global Head of Real Estate & Workplace Services",
+            "Director of Real Estate & Workplace",
+            "Global Corporate Real Estate",
+            "Head of Global Facilities",
+            "Senior Manager, Real Estate & Workplace",
+            "Real Estate & Workplace leader",
+            "Global Real Estate & Workplace Experience",
+            "Head of Global Real Estate + Workplace",
+            "Head of Real Estate",
+            "Director of Real Estate",
+            "VP Workplace Experience"
+          ],
+          "exclude": [],
+          "boolean": null
+        },
+        "past_job_title": {
+          "include": [],
+          "exclude": []
+        },
+        "seniority": {
+          "include": [],
+          "exclude": []
+        },
+        "function": {
+          "include": [],
+          "exclude": []
+        },
+        "years_in_current_position": "Less than 1 year",
+        "years_in_current_company": null,
+        "person_geography": {
+          "include": [
+            "North America",
+            "Europe"
+          ],
+          "exclude": [],
+          "exact_labels": [
+            "North America",
+            "Europe"
+          ]
+        },
+        "company_hq_location": {
+          "include": [],
+          "exclude": [],
+          "exact_labels": []
+        },
+        "company_headcount": [
+          "11-50",
+          "51-200",
+          "201-500",
+          "501-1000",
+          "1001-5000"
+        ],
+        "company_type": [],
+        "industry": {
+          "applied_to": "person",
+          "values": [
+            "Financial Services",
+            "Technology, Information and Internet",
+            "Software Development",
+            "Entertainment Providers",
+            "Mobile Computing Software Products",
+            "Banking",
+            "Investment Banking",
+            "Investment Management",
+            "Data Security Software Products",
+            "Media and Telecommunications",
+            "Blockchain Services",
+            "Business Intelligence Platforms",
+            "Research Services",
+            "Technology, Information and Media",
+            "Online Media",
+            "Media Production",
+            "Data Infrastructure and Analytics",
+            "Information Technology & Services",
+            "Hospitals and Health Care",
+            "Health, Wellness & Fitness",
+            "Desktop Computing Software Products",
+            "Internet News",
+            "Information Services",
+            "Public Relations and Communications Services",
+            "Venture Capital and Private Equity Principals",
+            "Computer Games",
+            "Online Audio and Video Media",
+            "Computer and Network Security",
+            "Apparel & Fashion",
+            "Human Resources",
+            "Research",
+            "Entertainment",
+            "Internet Marketplace Platforms",
+            "Investment Advice",
+            "Pension Funds",
+            "Marketing Services",
+            "Mobile Gaming Apps",
+            "Capital Markets",
+            "Consumer Services"
+          ]
+        },
+        "keywords": null,
+        "connection_degree": [],
+        "recent_updates": [
+          "Changed jobs"
+        ],
+        "buyer_intent": [],
+        "other_filters_set": {
+          "URL filter type LEAD_HIGHLIGHTS": [
+            "Changed jobs in last 90 days"
+          ]
+        }
+      },
+      "sections_present_but_empty": [
+        "Current company",
+        "Past company",
+        "Company type",
+        "Company headquarters location",
+        "Function",
+        "Seniority level",
+        "Past job title",
+        "Years in current company",
+        "First name",
+        "Last name",
+        "Profile language",
+        "Years of experience",
+        "Groups",
+        "School",
+        "Following your company",
+        "Viewed your profile recently",
+        "Connection",
+        "Connections of",
+        "Past colleague",
+        "Shared experiences",
+        "Posted on LinkedIn",
+        "Persona",
+        "Account lists",
+        "Lead lists",
+        "People in CRM",
+        "People you interacted with",
+        "Saved leads and accounts",
+        "Search keywords"
+      ],
+      "sections_not_found_in_ui": [
+        "TeamLink",
+        "Mentioned in news"
+      ],
+      "screenshots": [
+        "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/01a-new-real-estate-top.jpg",
+        "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/01b-new-real-estate-middle.jpg",
+        "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/01c-new-real-estate-bottom.jpg"
+      ],
+      "screenshot_contact_sheet": "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/01-new-real-estate-contact-sheet.jpg"
+    },
+    {
+      "name": "NYC - New Roles (90d)",
+      "url": "https://www.linkedin.com/sales/search/people?query=(filters%3AList((type%3ACOMPANY_HEADCOUNT%2Cvalues%3AList((id%3AC%2Ctext%3A11-50%2CselectionType%3AINCLUDED)%2C(id%3AD%2Ctext%3A51-200%2CselectionType%3AINCLUDED)%2C(id%3AE%2Ctext%3A201-500%2CselectionType%3AINCLUDED)))%2C(type%3ACURRENT_TITLE%2Cvalues%3AList((text%3A%2522VP%2520Finance%2522%2520OR%2520%2522Vice%2520President%2520Finance%2522%2520OR%2520CFO%2520OR%2520%2522VP%2520People%2522%2520OR%2520%2522Vice%2520President%2520People%2522%2520OR%2520%2522Head%2520of%2520People%2522%2520OR%2520%2522Chief%2520People%2520Officer%2522%2520OR%2520%2522Head%2520of%2520Talent%2522%2520OR%2520%2522Head%2520of%2520Recruiting%2522%2520OR%2520%2522Vice%2520President%2520of%2520Operations%2522%2520OR%2520%2522VP%2520Operations%2522%2520OR%2520%2522VP%2520of%2520Operations%2522%2520OR%2520COO%2520OR%2520%2522Chief%2520Operating%2520Officer%2522%2520OR%2520%2522Head%2520of%2520Workplace%2522%2520OR%2520%2522Workplace%2520Experience%2522%2520OR%2520%2522Chief%2520of%2520Staff%2522%2CselectionType%3AINCLUDED)))%2C(type%3ASENIORITY_LEVEL%2Cvalues%3AList((id%3A310%2Ctext%3ACXO%2CselectionType%3AINCLUDED)%2C(id%3A300%2Ctext%3AVice%2520President%2CselectionType%3AINCLUDED)%2C(id%3A220%2Ctext%3ADirector%2CselectionType%3AINCLUDED)))%2C(type%3AYEARS_IN_CURRENT_POSITION%2Cvalues%3AList((id%3A1%2Ctext%3ALess%2520than%25201%2520year%2CselectionType%3AINCLUDED)))%2C(type%3AREGION%2Cvalues%3AList((id%3A90000070%2Ctext%3ANew%2520York%2520City%2520Metropolitan%2520Area%2CselectionType%3AINCLUDED)))%2C(type%3AINDUSTRY%2Cvalues%3AList((id%3A4%2Ctext%3ASoftware%2520Development%2CselectionType%3AINCLUDED)%2C(id%3A6%2Ctext%3ATechnology%252C%2520Information%2520and%2520Internet%2CselectionType%3AINCLUDED)%2C(id%3A3231%2Ctext%3AInformation%2520Technology%2520%2526%2520Services%2CselectionType%3AINCLUDED)%2C(id%3A1594%2Ctext%3ATechnology%252C%2520Information%2520and%2520Media%2CselectionType%3AINCLUDED)%2C(id%3A70%2Ctext%3AResearch%2520Services%2CselectionType%3AINCLUDED)%2C(id%3A43%2Ctext%3AFinancial%2520Services%2CselectionType%3AINCLUDED)%2C(id%3A28%2Ctext%3AEntertainment%2520Providers%2CselectionType%3AINCLUDED)%2C(id%3A3100%2Ctext%3AMobile%2520Computing%2520Software%2520Products%2CselectionType%3AINCLUDED)%2C(id%3A3130%2Ctext%3AData%2520Security%2520Software%2520Products%2CselectionType%3AINCLUDED)%2C(id%3A2458%2Ctext%3AData%2520Infrastructure%2520and%2520Analytics%2CselectionType%3AINCLUDED)%2C(id%3A1285%2Ctext%3AInternet%2520Marketplace%2520Platforms%2CselectionType%3AINCLUDED)%2C(id%3A3252%2Ctext%3AClimate%2520Data%2520and%2520Analytics%2CselectionType%3AINCLUDED)%2C(id%3A3237%2Ctext%3AEntertainment%2CselectionType%3AINCLUDED)%2C(id%3A3214%2Ctext%3AOnline%2520Media%2CselectionType%3AINCLUDED)%2C(id%3A3210%2Ctext%3AHuman%2520Resources%2CselectionType%3AINCLUDED)%2C(id%3A126%2Ctext%3AMedia%2520Production%2CselectionType%3AINCLUDED)%2C(id%3A118%2Ctext%3AComputer%2520and%2520Network%2520Security%2CselectionType%3AINCLUDED)%2C(id%3A3190%2Ctext%3AApparel%2520%2526%2520Fashion%2CselectionType%3AINCLUDED)%2C(id%3A3132%2Ctext%3AInternet%2520Publishing%2CselectionType%3AINCLUDED)%2C(id%3A5%2Ctext%3AComputer%2520Networking%2520Products%2CselectionType%3AINCLUDED)%2C(id%3A80%2Ctext%3AAdvertising%2520Services%2CselectionType%3AINCLUDED)))%2C(type%3ARECENTLY_CHANGED_JOBS%2Cvalues%3AList((id%3ARPC%2Ctext%3AChanged%2520jobs%2CselectionType%3AINCLUDED)))%2C(type%3ALEAD_HIGHLIGHTS%2Cvalues%3AList((id%3ARPC%2Ctext%3AChanged%2520jobs%2520in%2520last%252090%2520days%2CselectionType%3AINCLUDED)))))&savedSearchId=1982705490&sessionId=UsF1qHHWRkyF%2BGrzCiG5rA%3D%3D&viewAllFilters=true",
+      "result_count": 121,
+      "filters": {
+        "current_job_title": {
+          "include": [],
+          "exclude": [],
+          "boolean": "\"VP Finance\" OR \"Vice President Finance\" OR CFO OR \"VP People\" OR \"Vice President People\" OR \"Head of People\" OR \"Chief People Officer\" OR \"Head of Talent\" OR \"Head of Recruiting\" OR \"Vice President of Operations\" OR \"VP Operations\" OR \"VP of Operations\" OR COO OR \"Chief Operating Officer\" OR \"Head of Workplace\" OR \"Workplace Experience\" OR \"Chief of Staff\""
+        },
+        "past_job_title": {
+          "include": [],
+          "exclude": []
+        },
+        "seniority": {
+          "include": [
+            "CXO",
+            "Vice President",
+            "Director"
+          ],
+          "exclude": []
+        },
+        "function": {
+          "include": [],
+          "exclude": []
+        },
+        "years_in_current_position": "Less than 1 year",
+        "years_in_current_company": null,
+        "person_geography": {
+          "include": [
+            "New York City Metropolitan Area"
+          ],
+          "exclude": [],
+          "exact_labels": [
+            "New York City Metropolitan Area"
+          ]
+        },
+        "company_hq_location": {
+          "include": [],
+          "exclude": [],
+          "exact_labels": []
+        },
+        "company_headcount": [
+          "11-50",
+          "51-200",
+          "201-500"
+        ],
+        "company_type": [],
+        "industry": {
+          "applied_to": "person",
+          "values": [
+            "Software Development",
+            "Technology, Information and Internet",
+            "Information Technology & Services",
+            "Technology, Information and Media",
+            "Research Services",
+            "Financial Services",
+            "Entertainment Providers",
+            "Mobile Computing Software Products",
+            "Data Security Software Products",
+            "Data Infrastructure and Analytics",
+            "Internet Marketplace Platforms",
+            "Climate Data and Analytics",
+            "Entertainment",
+            "Online Media",
+            "Human Resources",
+            "Media Production",
+            "Computer and Network Security",
+            "Apparel & Fashion",
+            "Internet Publishing",
+            "Computer Networking Products",
+            "Advertising Services"
+          ]
+        },
+        "keywords": null,
+        "connection_degree": [],
+        "recent_updates": [
+          "Changed jobs"
+        ],
+        "buyer_intent": [],
+        "other_filters_set": {
+          "URL filter type LEAD_HIGHLIGHTS": [
+            "Changed jobs in last 90 days"
+          ]
+        }
+      },
+      "sections_present_but_empty": [
+        "Current company",
+        "Past company",
+        "Company type",
+        "Company headquarters location",
+        "Function",
+        "Past job title",
+        "Years in current company",
+        "First name",
+        "Last name",
+        "Profile language",
+        "Years of experience",
+        "Groups",
+        "School",
+        "Following your company",
+        "Viewed your profile recently",
+        "Connection",
+        "Connections of",
+        "Past colleague",
+        "Shared experiences",
+        "Posted on LinkedIn",
+        "Persona",
+        "Account lists",
+        "Lead lists",
+        "People in CRM",
+        "People you interacted with",
+        "Saved leads and accounts",
+        "Search keywords"
+      ],
+      "sections_not_found_in_ui": [
+        "TeamLink",
+        "Mentioned in news"
+      ],
+      "screenshots": [
+        "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/06a-nyc-new-roles-top.jpg",
+        "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/06b-nyc-new-roles-middle.jpg",
+        "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/06c-nyc-new-roles-bottom.jpg"
+      ],
+      "screenshot_contact_sheet": "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/06-nyc-new-roles-contact-sheet.jpg"
+    },
+    {
+      "name": "Head of Real Estate - Recent Job Change",
+      "url": "https://www.linkedin.com/sales/search/people?query=(filters%3AList((type%3ACURRENT_TITLE%2Cvalues%3AList((text%3AHead%2520of%2520Workplace%2CselectionType%3AINCLUDED)%2C(text%3AGlobal%2520Head%2520of%2520Real%2520Estate%2CselectionType%3AINCLUDED)%2C(text%3ASenior%2520Director%2520Real%2520Estate%2CselectionType%3AINCLUDED)%2C(text%3AGlobal%2520Head%2520of%2520Real%2520Estate%2520%2526%2520Workplace%2520Services%2CselectionType%3AINCLUDED)%2C(text%3ADirector%2520of%2520Real%2520Estate%2520%2526%2520Workplace%2CselectionType%3AINCLUDED)%2C(text%3AGlobal%2520Corporate%2520Real%2520Estate%2CselectionType%3AINCLUDED)%2C(text%3AHead%2520of%2520Global%2520Facilities%2CselectionType%3AINCLUDED)%2C(text%3ASenior%2520Manager%252C%2520Real%2520Estate%2520%2526%2520Workplace%2CselectionType%3AINCLUDED)%2C(text%3AReal%2520Estate%2520%2526%2520Workplace%2520leader%2CselectionType%3AINCLUDED)%2C(text%3AGlobal%2520Real%2520Estate%2520%2526%2520Workplace%2520Experience%2CselectionType%3AINCLUDED)%2C(text%3AHead%2520of%2520Global%2520Real%2520Estate%2520%252B%2520Workplace%2CselectionType%3AINCLUDED)))%2C(type%3AYEARS_IN_CURRENT_POSITION%2Cvalues%3AList((id%3A1%2Ctext%3ALess%2520than%25201%2520year%2CselectionType%3AINCLUDED)))%2C(type%3ARECENTLY_CHANGED_JOBS%2Cvalues%3AList((id%3A3%2Ctext%3AYes%2CselectionType%3AINCLUDED)))%2C(type%3ALEAD_HIGHLIGHTS%2Cvalues%3AList((id%3ARPC%2Ctext%3AChanged%2520jobs%2520in%2520last%252090%2520days%2CselectionType%3AINCLUDED)))))&savedSearchId=1888038114&sessionId=P4VullsOTF%2B6aIJxVsHSlw%3D%3D&viewAllFilters=true",
+      "result_count": 185,
+      "filters": {
+        "current_job_title": {
+          "include": [
+            "Head of Workplace",
+            "Global Head of Real Estate",
+            "Senior Director Real Estate",
+            "Global Head of Real Estate & Workplace Services",
+            "Director of Real Estate & Workplace",
+            "Global Corporate Real Estate",
+            "Head of Global Facilities",
+            "Senior Manager, Real Estate & Workplace",
+            "Real Estate & Workplace leader",
+            "Global Real Estate & Workplace Experience",
+            "Head of Global Real Estate + Workplace"
+          ],
+          "exclude": [],
+          "boolean": null
+        },
+        "past_job_title": {
+          "include": [],
+          "exclude": []
+        },
+        "seniority": {
+          "include": [],
+          "exclude": []
+        },
+        "function": {
+          "include": [],
+          "exclude": []
+        },
+        "years_in_current_position": "Less than 1 year",
+        "years_in_current_company": null,
+        "person_geography": {
+          "include": [],
+          "exclude": [],
+          "exact_labels": []
+        },
+        "company_hq_location": {
+          "include": [],
+          "exclude": [],
+          "exact_labels": []
+        },
+        "company_headcount": [],
+        "company_type": [],
+        "industry": {
+          "applied_to": "person",
+          "values": []
+        },
+        "keywords": null,
+        "connection_degree": [],
+        "recent_updates": [
+          "Changed jobs"
+        ],
+        "buyer_intent": [],
+        "other_filters_set": {
+          "URL filter type LEAD_HIGHLIGHTS": [
+            "Changed jobs in last 90 days"
+          ]
+        }
+      },
+      "sections_present_but_empty": [
+        "Current company",
+        "Company headcount",
+        "Past company",
+        "Company type",
+        "Company headquarters location",
+        "Function",
+        "Seniority level",
+        "Past job title",
+        "Years in current company",
+        "Geography",
+        "Industry",
+        "First name",
+        "Last name",
+        "Profile language",
+        "Years of experience",
+        "Groups",
+        "School",
+        "Following your company",
+        "Viewed your profile recently",
+        "Connection",
+        "Connections of",
+        "Past colleague",
+        "Shared experiences",
+        "Posted on LinkedIn",
+        "Persona",
+        "Account lists",
+        "Lead lists",
+        "People in CRM",
+        "People you interacted with",
+        "Saved leads and accounts",
+        "Search keywords"
+      ],
+      "sections_not_found_in_ui": [
+        "TeamLink",
+        "Mentioned in news"
+      ],
+      "screenshots": [
+        "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/02a-head-of-real-estate-top.jpg",
+        "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/02b-head-of-real-estate-middle.jpg",
+        "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/02c-head-of-real-estate-bottom.jpg"
+      ],
+      "screenshot_contact_sheet": "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/02-head-of-real-estate-contact-sheet.jpg"
+    },
+    {
+      "name": "Saved Accounts - New CXO",
+      "url": "https://www.linkedin.com/sales/search/people?query=(filters%3AList((type%3ASENIORITY_LEVEL%2Cvalues%3AList((id%3A310%2Ctext%3ACXO%2CselectionType%3AINCLUDED)))%2C(type%3AYEARS_IN_CURRENT_POSITION%2Cvalues%3AList((id%3A1%2Ctext%3ALess%2520than%25201%2520year%2CselectionType%3AINCLUDED)))%2C(type%3ARECENTLY_CHANGED_JOBS%2Cvalues%3AList((id%3ARPC%2Ctext%3AChanged%2520jobs%2CselectionType%3AINCLUDED)))%2C(type%3APERSONA%2Cvalues%3AList((id%3A1742191267%2Ctext%3AWorkplace%2520POC%2CselectionType%3AINCLUDED)))%2C(type%3ASAVED_LEADS_AND_ACCOUNTS%2Cvalues%3AList((id%3ASA%2Ctext%3AAll%2520my%2520saved%2520accounts%2CselectionType%3AINCLUDED)))%2C(type%3ALEAD_HIGHLIGHTS%2Cvalues%3AList((id%3ARPC%2Ctext%3AChanged%2520jobs%2520in%2520last%252090%2520days%2CselectionType%3AINCLUDED)))))&savedSearchId=1885268866&sessionId=OKL83bzRSs2mNRwIrkXv6g%3D%3D&viewAllFilters=true",
+      "result_count": 7,
+      "filters": {
+        "current_job_title": {
+          "include": [
+            "Founder",
+            "Co-Founder",
+            "Vice President Finance",
+            "Vice President Operations",
+            "Chief Executive Officer",
+            "Chief Financial Officer",
+            "Chief Operating Officer",
+            "Director of Operations",
+            "Head of Finance",
+            "Head of Operations",
+            "Finance Executive",
+            "Chief of Staff",
+            "Head of Human Resources",
+            "Chief People Officer",
+            "Talent",
+            "Workplace Manager",
+            "Head of Talent Management",
+            "Head",
+            "Vice President",
+            "Executive Assistant to Chief Executive Officer",
+            "Workplace Coordinator",
+            "Operations Manager",
+            "Office Manager",
+            "Human Resources Manager",
+            "Head of Legal",
+            "General Counsel",
+            "Operations Coordinator",
+            "Finance Manager"
+          ],
+          "exclude": [],
+          "boolean": null,
+          "inherited_via_persona": "Workplace POC"
+        },
+        "past_job_title": {
+          "include": [],
+          "exclude": []
+        },
+        "seniority": {
+          "include": [
+            "CXO"
+          ],
+          "exclude": []
+        },
+        "function": {
+          "include": [],
+          "exclude": []
+        },
+        "years_in_current_position": "Less than 1 year",
+        "years_in_current_company": null,
+        "person_geography": {
+          "include": [
+            "New York, New York, United States",
+            "San Francisco Bay Area"
+          ],
+          "exclude": [],
+          "exact_labels": [
+            "New York, New York, United States",
+            "San Francisco Bay Area"
+          ],
+          "inherited_via_persona": "Workplace POC"
+        },
+        "company_hq_location": {
+          "include": [],
+          "exclude": [],
+          "exact_labels": []
+        },
+        "company_headcount": [],
+        "company_type": [],
+        "industry": {
+          "applied_to": "person",
+          "values": []
+        },
+        "keywords": null,
+        "connection_degree": [],
+        "recent_updates": [
+          "Changed jobs"
+        ],
+        "buyer_intent": [],
+        "other_filters_set": {
+          "URL filter type LEAD_HIGHLIGHTS": [
+            "Changed jobs in last 90 days"
+          ],
+          "Persona": {
+            "include": [
+              "Workplace POC"
+            ],
+            "expanded_definition": {
+              "name": "Workplace POC",
+              "updated": "7/23/2026",
+              "current_job_title": {
+                "include": [
+                  "Founder",
+                  "Co-Founder",
+                  "Vice President Finance",
+                  "Vice President Operations",
+                  "Chief Executive Officer",
+                  "Chief Financial Officer",
+                  "Chief Operating Officer",
+                  "Director of Operations",
+                  "Head of Finance",
+                  "Head of Operations",
+                  "Finance Executive",
+                  "Chief of Staff",
+                  "Head of Human Resources",
+                  "Chief People Officer",
+                  "Talent",
+                  "Workplace Manager",
+                  "Head of Talent Management",
+                  "Head",
+                  "Vice President",
+                  "Executive Assistant to Chief Executive Officer",
+                  "Workplace Coordinator",
+                  "Operations Manager",
+                  "Office Manager",
+                  "Human Resources Manager",
+                  "Head of Legal",
+                  "General Counsel",
+                  "Operations Coordinator",
+                  "Finance Manager"
+                ],
+                "exclude": []
+              },
+              "person_geography": {
+                "include": [
+                  "New York, New York, United States",
+                  "San Francisco Bay Area"
+                ],
+                "exclude": [],
+                "exact_labels": [
+                  "New York, New York, United States",
+                  "San Francisco Bay Area"
+                ]
+              }
+            }
+          },
+          "Saved leads and accounts": [
+            "All my saved accounts"
+          ]
+        }
+      },
+      "sections_present_but_empty": [
+        "Current company",
+        "Company headcount",
+        "Past company",
+        "Company type",
+        "Company headquarters location",
+        "Function",
+        "Past job title",
+        "Years in current company",
+        "Industry",
+        "First name",
+        "Last name",
+        "Profile language",
+        "Years of experience",
+        "Groups",
+        "School",
+        "Following your company",
+        "Viewed your profile recently",
+        "Connection",
+        "Connections of",
+        "Past colleague",
+        "Shared experiences",
+        "Posted on LinkedIn",
+        "Account lists",
+        "Lead lists",
+        "People in CRM",
+        "People you interacted with",
+        "Search keywords"
+      ],
+      "sections_not_found_in_ui": [
+        "TeamLink",
+        "Mentioned in news"
+      ],
+      "screenshots": [
+        "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/03a-saved-accounts-new-cxo-top.jpg",
+        "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/03b-saved-accounts-new-cxo-middle.jpg",
+        "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/03c-saved-accounts-new-cxo-bottom.jpg"
+      ],
+      "screenshot_contact_sheet": "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/03-saved-accounts-new-cxo-contact-sheet.jpg"
+    },
+    {
+      "name": "Saved Accounts - New Senior Roles",
+      "url": "https://www.linkedin.com/sales/search/people?query=(filters%3AList((type%3AYEARS_IN_CURRENT_POSITION%2Cvalues%3AList((id%3A1%2Ctext%3ALess%2520than%25201%2520year%2CselectionType%3AINCLUDED)))%2C(type%3APERSONA%2Cvalues%3AList((id%3A1742191267%2Ctext%3AWorkplace%2520POC%2CselectionType%3AINCLUDED)))%2C(type%3ASAVED_LEADS_AND_ACCOUNTS%2Cvalues%3AList((id%3ASA%2Ctext%3AAll%2520my%2520saved%2520accounts%2CselectionType%3AINCLUDED)))))&savedSearchId=1880703434&sessionId=5yHnVfADQVi5%2FMEU48pCYQ%3D%3D&viewAllFilters=true",
+      "result_count": "2K+",
+      "filters": {
+        "current_job_title": {
+          "include": [
+            "Founder",
+            "Co-Founder",
+            "Vice President Finance",
+            "Vice President Operations",
+            "Chief Executive Officer",
+            "Chief Financial Officer",
+            "Chief Operating Officer",
+            "Director of Operations",
+            "Head of Finance",
+            "Head of Operations",
+            "Finance Executive",
+            "Chief of Staff",
+            "Head of Human Resources",
+            "Chief People Officer",
+            "Talent",
+            "Workplace Manager",
+            "Head of Talent Management",
+            "Head",
+            "Vice President",
+            "Executive Assistant to Chief Executive Officer",
+            "Workplace Coordinator",
+            "Operations Manager",
+            "Office Manager",
+            "Human Resources Manager",
+            "Head of Legal",
+            "General Counsel",
+            "Operations Coordinator",
+            "Finance Manager"
+          ],
+          "exclude": [],
+          "boolean": null,
+          "inherited_via_persona": "Workplace POC"
+        },
+        "past_job_title": {
+          "include": [],
+          "exclude": []
+        },
+        "seniority": {
+          "include": [],
+          "exclude": []
+        },
+        "function": {
+          "include": [],
+          "exclude": []
+        },
+        "years_in_current_position": "Less than 1 year",
+        "years_in_current_company": null,
+        "person_geography": {
+          "include": [
+            "New York, New York, United States",
+            "San Francisco Bay Area"
+          ],
+          "exclude": [],
+          "exact_labels": [
+            "New York, New York, United States",
+            "San Francisco Bay Area"
+          ],
+          "inherited_via_persona": "Workplace POC"
+        },
+        "company_hq_location": {
+          "include": [],
+          "exclude": [],
+          "exact_labels": []
+        },
+        "company_headcount": [],
+        "company_type": [],
+        "industry": {
+          "applied_to": "person",
+          "values": []
+        },
+        "keywords": null,
+        "connection_degree": [],
+        "recent_updates": [],
+        "buyer_intent": [],
+        "other_filters_set": {
+          "Persona": {
+            "include": [
+              "Workplace POC"
+            ],
+            "expanded_definition": {
+              "name": "Workplace POC",
+              "updated": "7/23/2026",
+              "current_job_title": {
+                "include": [
+                  "Founder",
+                  "Co-Founder",
+                  "Vice President Finance",
+                  "Vice President Operations",
+                  "Chief Executive Officer",
+                  "Chief Financial Officer",
+                  "Chief Operating Officer",
+                  "Director of Operations",
+                  "Head of Finance",
+                  "Head of Operations",
+                  "Finance Executive",
+                  "Chief of Staff",
+                  "Head of Human Resources",
+                  "Chief People Officer",
+                  "Talent",
+                  "Workplace Manager",
+                  "Head of Talent Management",
+                  "Head",
+                  "Vice President",
+                  "Executive Assistant to Chief Executive Officer",
+                  "Workplace Coordinator",
+                  "Operations Manager",
+                  "Office Manager",
+                  "Human Resources Manager",
+                  "Head of Legal",
+                  "General Counsel",
+                  "Operations Coordinator",
+                  "Finance Manager"
+                ],
+                "exclude": []
+              },
+              "person_geography": {
+                "include": [
+                  "New York, New York, United States",
+                  "San Francisco Bay Area"
+                ],
+                "exclude": [],
+                "exact_labels": [
+                  "New York, New York, United States",
+                  "San Francisco Bay Area"
+                ]
+              }
+            }
+          },
+          "Saved leads and accounts": [
+            "All my saved accounts"
+          ]
+        }
+      },
+      "sections_present_but_empty": [
+        "Current company",
+        "Company headcount",
+        "Past company",
+        "Company type",
+        "Company headquarters location",
+        "Function",
+        "Seniority level",
+        "Past job title",
+        "Years in current company",
+        "Industry",
+        "First name",
+        "Last name",
+        "Profile language",
+        "Years of experience",
+        "Groups",
+        "School",
+        "Following your company",
+        "Viewed your profile recently",
+        "Connection",
+        "Connections of",
+        "Past colleague",
+        "Shared experiences",
+        "Changed jobs",
+        "Posted on LinkedIn",
+        "Account lists",
+        "Lead lists",
+        "People in CRM",
+        "People you interacted with",
+        "Search keywords"
+      ],
+      "sections_not_found_in_ui": [
+        "TeamLink",
+        "Mentioned in news"
+      ],
+      "screenshots": [
+        "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/04a-saved-accounts-new-senior-roles-top.jpg",
+        "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/04b-saved-accounts-new-senior-roles-middle.jpg",
+        "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/04c-saved-accounts-new-senior-roles-bottom.jpg"
+      ],
+      "screenshot_contact_sheet": "/Users/normanai/Documents/Core CRM/sales-nav-filter-captures/04-saved-accounts-new-senior-roles-contact-sheet.jpg"
+    }
+  ],
+  "page_loads_used": 8,
+  "interstitials_encountered": "none",
+  "anything_ambiguous": "Six saved searches were treated as plausible workplace/office searches. “Saved Accounts - New Senior Roles” reports only “2K+” rather than an exact integer. For “New Real Estate Jobs - Tech/Media/Finance”, the compact pinned summary displayed “501-1,000” and “1,001-5,000”, while the expanded all-filters panel and encoded URL displayed “501-1000” and “1001-5000”; the JSON uses the expanded-panel labels. Persona-derived title and geography values are marked inherited_via_persona. “People in CRM” was present but disabled with “To enable filter, upgrade contract.” During one initial bulk expansion of “Head of Real Estate - Recent Job Change”, the transient open results page drifted to an unrelated excluded-company filter; nothing was saved. That transient state was discarded, the saved search was re-opened, and every section was then expanded individually with the encoded filter signature verified unchanged after each expansion."
+}
