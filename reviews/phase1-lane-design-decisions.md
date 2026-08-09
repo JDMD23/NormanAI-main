@@ -3930,3 +3930,99 @@ reproducible** (ADR 0001 makes the board rebuildable — the views should be too
 NOT have reconcile enforce them.** Views are operator surface; JD should be able to adjust a
 filter without the machine fighting him. **Declare, don't enforce** — the same distinction
 as machine-owned vs human-owned columns, applied one level up.
+
+---
+
+# Follow-up rulings (round 34) — "shipped" is a claim about an artifact, not a description of one
+
+`fit_raw` landed with the round-26 lesson applied **unprompted** — backfilling only the 89
+rows whose integer score is current and deliberately leaving the 4 stale ones, because *"a
+sort-key backfill is not a licence to correct scores."* That is the bundling rule being
+applied without being invoked, which is the point of a rule.
+
+But §3 is the round, and it lands on the brain too.
+
+## AO1 — The brain accepted AE4 as shipped on the strength of its DESCRIPTION. It was raising on every company.
+Round 33 said of AE4: *"Accept all three as written."* The brain praised two sharp design
+details in a mechanism that **was not recording anything at all.** Every company raised;
+**the board healed while the ancestor silently never recorded.**
+
+The check was trivial and never asked for: **how many companies have a baseline?** The
+answer was **zero.** One question would have exposed it.
+
+**Standing rule, and it sharpens AM1's correction rather than repeating it: verify the
+artifact, not the account of it.** A feature is proven by **an observable it produces**, not
+by a description of its design — and **every ruling that lands a mechanism must name the
+observable that proves it works**, so "shipped" becomes checkable rather than asserted.
+For AE4 that observable is one number. This is the same family as X1 (test the race, not the
+API) and Y7 (test the writer, not the plan), one level further out: **test the output, not
+the report.**
+
+CRMx found both bugs **by running it rather than reviewing it** — which is AG3 ("go to the
+source") applied to one's own work, and the reason it was caught at all.
+
+## AO2 — A safety mechanism that fails SILENTLY is worse than one that is absent
+Their phrasing is exact and worth keeping: *"a baseline that fails quietly is worse than
+none, because the next sweep believes it has one."*
+
+Name this as **distinct from — and worse than — "declared but inert" (Y0).** An inert rule
+provides no protection. A **silently failing** one converts *no protection* into **false
+confidence in protection**, which removes the caution that plain absence would have
+preserved. The system does not merely lack a guard; it *acts as though it has one*.
+
+**Ruling: any component whose job is to RECORD must fail loudly.** A recorder that swallows
+its own failure destroys the evidence that would reveal it. Concretely: the projection
+recorder raising per company should have surfaced at the sweep level, not been absorbed
+per-company — **per-company isolation (L5) is correct for enrichment work and wrong for the
+mechanism that arbitrates every subsequent write.** Isolation must not extend to the
+infrastructure that isolation depends on.
+
+## AO3 — Convergence is an observation. The ancestor is a state snapshot, not a change log.
+The second bug is the more interesting one: the baseline was written **only on heal**, so a
+converged board never acquired an ancestor. As they put it — *"exactly backwards, since the
+companies that never drift are the ones whose next divergence most needs attributing."*
+
+The conceptual error is precise and generalisable: **"record it when something changed" is
+the instinct of a change log; an ancestor is a *state snapshot*, and a state is equally
+observed when it is unchanged.** A verified convergence *is* evidence of what the board
+holds. Record on **verified convergence and on heal alike** — 93 baselines where there were
+zero.
+
+## AO4 — The `Joe:` / `Joe says:` catch: a suppression built at the data layer can be undone at the presentation layer
+`Action Needed: Joe` must exclude `"Joe says: no careers page"` despite the prefix — because
+`Joe:` means *the queue is waiting on him* while `Joe says:` is *a fact he already
+supplied*. A naive `starts_with("Joe")` **would have refilled his queue with the exact ask
+the M6 durable state exists to silence.**
+
+That is **M6 reappearing through a different door**, and the general rule is worth holding:
+**a suppression enforced in the data layer can be silently undone in the presentation
+layer.** The view is a *second place* where "is this asking Joe something?" gets decided.
+
+**Ruling: any predicate that exists in two layers must be DEFINED ONCE.** Derive the view
+filter from the same constant/predicate the data layer uses — never a hand-written string
+match that must be remembered to stay in agreement. (Same finding as the earlier audit's
+board-schema duplication: derivable vocabularies must be derived.)
+
+## AO5 — "Changed Recently": the refusal to tune the filter is right; the view's MEANING still needs one correction
+Affirm the discipline first, loudly: *"I'd rather say that than tune the filter until it
+looks better."* **Tuning a filter until its output matches expectation is fitting the
+instrument to the hypothesis** — the same error as tuning weights to pass the corpus, and
+the temptation is stronger here because the output is JD-facing.
+
+But the view returns 93 of 95, and there is a real correction available that is **not**
+tuning — it is fixing what the view *means*:
+
+> **"What moved" should mean *the company* moved — not that *we* re-measured or re-scored
+> it.** A formula change that moves 43 scores is **not 43 companies changing.**
+
+The change log records both **evidence changes** (the company did something) and
+**system-originated changes** (we changed how we score, we corrected drift, we re-weighted
+remote). This week's 93 is dominated by the latter — remote→0, the drift correction, the
+rescore. **Ruling: tag change records by origin and exclude system-originated changes from
+"Changed Recently."** That is correcting the predicate's meaning, not adjusting it toward a
+preferred count — and the distinction is exactly why the number is high.
+
+**Second, proportionate addition: sort the view by recency or magnitude**, so that even a
+legitimately long list has a useful top. A view that is occasionally long is fine if it is
+ordered; a view that is long *and* unordered is noise. And their caveat stands honestly: in
+steady state this view will be short, and this week was an outlier for real reasons.
