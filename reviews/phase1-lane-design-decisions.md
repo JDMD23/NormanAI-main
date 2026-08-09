@@ -4445,3 +4445,93 @@ But the round-32 fix — **read the ruling log directly rather than depending on
 **has still not been adopted, and this is the third loss.** The freshness check is
 deterministic and costs nothing: **round numbers are monotonic, so a copy ending at 38 while
 the log is at 39 is a detectable staleness, not a suspected one.**
+
+---
+
+# Follow-up rulings (round 40) — the result is real; the setting that produced it is recorded as its opposite
+
+49 of 51 prospects carry a named human, 170 people, 4 Apollo credits. **Two days ago the store
+had no person table.** The largest gap in the operational review is closed.
+
+## AU1 — The config contradicts the run on the only parameter that mattered
+Report line 34: *"Setting `include_similar_titles: false` was the other half."* Verified at
+`8a30d16`:
+
+```
+config/target-titles.json       include_similar_titles: true
+contexts/contacts/policy.py:29  include_similar_titles: bool = True
+```
+
+**And no committed code builds or executes an Apollo query** — no `person_titles`, no
+`q_organization_domains_list` in `src/`. The query ran through the agent's live MCP calls.
+
+So the parameter that took 125-per-10-domains to 51-per-14 **is recorded in the repo as its
+opposite, in the file named for it, and nothing executes the config either way.**
+
+**This is Y0 with a sharper edge: an inert rule provides nothing; this one provides
+misinformation.** The next reader learns `true`, reproduces the noise, spends the credits, and
+has no way to find out why their run differs. **It also breaks ADR 0001's premise — a result
+that cannot be rebuilt from the repo is a result, not a capability.**
+
+Fix in order: commit the runner so the config is executed; failing that, set the config to
+what was used and state that it is applied by hand and unenforced. **The observable is a test
+asserting config equals what the runner passes — which cannot be written until the runner
+exists, and that is the argument for the first option.**
+
+## AU2 — AP3 was wrong on mechanism, by a flaw the same ruling named
+The brain ruled `include_similar_titles: TRUE` for recall — while *in the same ruling* calling
+Apollo's expansion *"opaque."* **The flaw was identified and then chosen.**
+
+Their `normalize_title` is strictly better: an eight-pair `_ABBREV` map that can be read, one
+function applied to **both** sides (AO4's define-once where it bites), testable and versioned.
+
+> **Prefer a vocabulary you can read to a vendor's model you cannot. Recall you BUILT is worth
+> more than recall you were GIVEN, because only one of them can be audited when it fails.**
+
+The load-bearing detail is `"of"` treated as noise on both sides — normalising only the
+observed title would have left the vocabulary unable to match most of its own targets, and the
+bug would have presented as thin Apollo coverage.
+
+## AU3 — CPO left unexpanded: Unknown ≠ 0 applied to vocabulary
+*"CPO is chief people officer at some companies and chief product officer at others."*
+Expanding it would silently import product leaders into a workplace-POC list, and nothing
+downstream could catch it — the title reads correctly and the person is wrong.
+
+> **An ambiguous token resolved by guessing manufactures evidence.** Left unexpanded, the miss
+> stays visible as a miss.
+
+## AU4 — A partition that does not sum is a silent category, and the brain accepted one
+They reported *"32 of 100 on bare tokens"*; the true drop was 58, the remaining 26 matching **no
+target title at all**. Their self-correction was right. **The failure to catch it was the
+brain's** — 32 plus the explicit matches should have summed to 100, and that was never asked.
+
+> **When a breakdown is offered as the basis of a decision, confirm it accounts for the
+> total.** Here the unreported category was the larger one.
+
+## AU5 — Removing a noisy component removed signal riding along with it
+Dropping the bare tokens also removed abbreviation coverage nobody knew they were providing —
+**the inverse of declared-but-inert: something that looked like pure noise was partly
+load-bearing.**
+
+> **A component's stated purpose is not its only effect.**
+
+Which is exactly why re-running batch 1 to measure the delta, rather than trusting the
+predicted 32, was correct: the prediction was wrong in both directions simultaneously.
+
+## AU6 — A domain is a hypothesis about identity, not identity
+`deeptune.ai` held, `deeptune.com` indexed. Leaving it unattached was right — this is the
+identity bulkhead, and **it is Concourse in a different costume.**
+
+**Ruling: resolve by two independent keys agreeing (own site, LinkedIn URL, careers-page
+host), and record which agreed. Never by choosing the more plausible domain.** Disagreement
+stays a coverage gap.
+
+## AU7 — Put a constraint where the mistake will be made
+The Apollo-geography warning now sits **on the `person.location` field** — *"the temptation to
+use it as a NYC signal will arrive long after anyone remembers why they shouldn't."*
+
+> **A doc records a decision; a field-level warning intercepts the mistake.** Constraints
+> belong where the error will occur, not where the decision was taken.
+
+And their null-reading is exact: **Concourse, the one company the eval found misbound,
+returned nobody — a zero consistent with the misbind rather than evidence against it.**
