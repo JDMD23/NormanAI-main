@@ -5550,3 +5550,105 @@ whether `growth` should key on something a CSV actually supplies.
 > **Wiring a computation whose inputs are absent is how `read_headcount` came to exist.**
 > Establish the input coverage first; the connection is the easy half and the wrong half to do
 > first.
+
+---
+
+# Round 55 — the wiring fixed reproducibility, not readiness; and my checklist contradicted itself
+
+## BI1 — `newly computed: 0` is in their own report, and it is the headline they did not draw
+Their numbers: 94 of 133 non-null before; after wiring, **reproduces 123 · disagrees 10 · newly
+computed 0 · still Unknown 0.**
+
+**The code was right — that is a real and valuable result.** The board's velocity values are now
+**reproducible and defensible** where before they were hand-written from a path that no longer
+exists. That was worth doing on its own.
+
+**But `newly computed: 0` means wiring the producer gave a value to NONE of the 39 companies that
+lacked one.** And because the 10 disagreements were stored-tags-where-the-code-returns-None,
+correcting them *increases* the gap:
+
+```
+before   non-null 94   null 39
+after    non-null 84   null 49      ← growth EXCLUDED for 49 of 133 = 37% of the board
+```
+
+> **The fix made the existing values defensible. It did not change what a company without dated
+> rounds receives — which is still nothing.** BH2's blocker is untouched, and it is now visibly
+> a *present* problem rather than a future one: **37% of the current board is already being
+> scored by the renormalized formula**, not just the batch that hasn't arrived.
+
+**This is BH4 confirmed by measurement rather than argument:** wiring a computation does not
+supply its inputs. **Establish input coverage before connecting a producer** — the connection was
+the easy half, and it was the half that could be done without answering the question.
+
+## BI2 — A new category: a ruling the code obeys and the data never did
+All 10 disagreements are one shape — a stored tag where the code returns `None`, every one a
+single-ladder-round company. **That is ruling U-c**, made rounds ago, implemented correctly, and
+**silently violated by rows written before it.**
+
+Their framing is exact: *"A ruling was made, the code obeyed it, and the data never did."*
+
+**Name it, because it is distinct from Y0.** Declared-but-inert is a rule that cannot fire. This
+is a rule that fires perfectly — **on new writes only** — while a cohort of rows derived under
+the previous rule keeps feeding downstream components unchallenged.
+
+> **Every ruling that changes a DERIVATION creates a cohort of rows derived under the old one,
+> and nothing re-derives them. A ruling is not applied until the existing rows have been
+> re-derived or counted.**
+
+**And this project already solved it once, for scores, and did not generalise it.** The
+`formula_version` stamp exists precisely because *"nothing forced a rescore when the file changed
+— so a company kept whatever score it had until some lane happened to touch it."* Velocity
+carries `velocity_basis` but no rule-version stamp, so its stale cohort was invisible until
+someone recomputed all 133.
+
+**Ruling: any stored DERIVED value carries the version of the rule that derived it** — so a
+ruling change yields a countable stale set instead of a silent one. **Check which other derived
+fields lack it:** desk-role classification, industry tags, status routing.
+
+## BI3 — 0d: my checklist contradicted itself, and halting was correct
+Band 0 required `read_headcount` to have a caller; a caller must do something with the result;
+the only meaningful thing is to store it; **floor storage is out of scope in the same document.**
+
+**That is my error, not theirs.** And their refusal to satisfy the letter is exactly right:
+*"a caller that drops the one value the function exists to produce is a control that looks wired
+and is not — the exact pattern Band 0 exists to eliminate."*
+
+**They did what the loop spec instructs when a frozen criterion is wrong: said so and halted
+rather than rewriting it.** That is the freeze-the-judge design working on its first real
+occasion.
+
+**Ruling: resolution (b) — 0d leaves Band 0 and joins floor storage.** Not (a): the board's
+largest total is 329 and the abbreviation threshold is above it, so **floor storage cannot be
+exercised against real data even if built** — which is BH4's error a third time.
+
+> **A checklist item that cannot be satisfied without violating the same checklist's scope is a
+> defect in the checklist.** The reviewer owns it, and escalation is the correct response.
+
+## BI4 — The A2 test set was my conflation; a test set is defined by the QUESTION
+I wrote that the 31 unreadable boards were *"the test set you already have."* **They are the test
+set for the render pass and useless for URL discovery — because all 31 already have a URL. That
+is why they are on the list.**
+
+Correct catch, unprompted, and the general form belongs beside BF3:
+
+> **The availability of a test set is not evidence that it tests your question.** BF3 said the
+> cleanliness of the available test is not evidence about the value of the work; this is the same
+> error one step earlier — **convenience selecting the evidence rather than the question
+> selecting it.**
+
+Their handling is right: report A2 against a fresh set and say which is which.
+
+## BI5 — B3's gate must CATEGORISE, not merely report
+`status_owner` was not a disconnected mechanism — the ownership rule was enforced via
+`HUMAN_OWNED` at four call sites, and `status_owner` was **a second way of saying the same
+thing.** Their point stands: *"two ways of saying it eventually disagree."*
+
+Their inference — *"the gate should report, not fail, or it will train people to silence it"* —
+is right about tooling and slightly understates the finding. **A dead alias is not a non-bug; it
+is a different bug with a different fix.**
+
+**Ruling: the reachability gate reports three categories, not one flag** — disconnected
+mechanism (a real gap), duplicate expression (converge on one), and framework-dispatched (ignore
+by rule). **A detector whose output requires a human to sort it will be silenced; one that sorts
+its own output gets read.**
