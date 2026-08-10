@@ -5741,3 +5741,72 @@ looking) · more rigor per item (the rigor was never the problem — its aim was
 > **The target is not zero defects. It is the DISTANCE between introducing one and meeting it —
 > currently measured in rounds, and it should be measured in hours.** Band B is what converts
 > one into the other; every other item is caught faster *because* of it.
+
+---
+
+# Round 57 — the property prototype found a scoring bug in one run
+
+Prototyped properties 1 and 2 against `6d54b06`. **No live data required.**
+`outbox/BRAIN-RUN-property-prototype.md`.
+
+## BK1 — `fresh_raise_growth_pts` (14) exceeds the `growth` weight (10), erasing velocity
+```python
+pts = VELOCITY_POINTS[velocity]
+if fresh_raise:  pts = max(pts, 14)   # floor
+pts = min(pts * scale, 10)            # ceiling
+```
+Measured:
+```
+BIG FRESH RAISE ($25M, 60d)   Fast 79 · Normal 79 · Slow 79   spread 0
+old round ($25M, 900d)        Fast 74 · Normal 71 · Slow 69   spread 5
+```
+
+> **For every recently well-funded company, funding velocity is non-discriminating** — and
+> recently well-funded is precisely the population JD chases. The fastest-compounding and the
+> slowest score identically on growth.
+
+**A unit test on the growth function passes; the function is correct. The defect lives in the
+relationship between two constants in a config file, and nothing owns relationships.**
+
+**And boot validation already catches this CLASS.** `formula_is_coherent` /
+`hysteresis_is_coherent` exist, and the config correctly refused to load in round 44 when
+`demote_below` fell below `no_growth_signal_cap` (AY3). **Same class, unchecked instance.**
+
+> **A floor that can exceed the ceiling it feeds erases the signal beneath it.** Every "at least
+> X" bonus must be validated against the maximum of what it floors, as a boot check beside the
+> coherence rules that already exist.
+
+## BK2 — Presence is not discrimination; A1 needed a second property
+The loop-3 spec's *"every scoring component has a real value for ≥1 company"* **would have passed
+here** — growth had a value. **The property that caught it asks whether the component's input
+moves the output.**
+
+**The board has now produced two instances of that distinction:** `hq_city` awarding 6 points to
+all 93, and this. **Add to A1: for every component, an input exists that changes its
+contribution.**
+
+## BK3 — Two open loops is my error, and it dissolves rather than needing a choice
+Loop 2's Bands A and B are unstarted and loop 3 was written on top. **Two open checklists means
+neither is frozen in practice — the exact failure the frozen-scope rule exists to prevent, caused
+by the reviewer.**
+
+**Resolution, and it is a dissolution rather than a priority call:**
+- Loop 2 **B1 is already green** (round 54, verified by execution).
+- Loop 2 **B2** (trace every scoring input: read / constant / empty) **IS a loop-3 property.**
+- Loop 2 **B3** (reachability as a permanent gate) **IS a loop-3 property.**
+- **So loop 2's Band B dissolves entirely into loop 3's Band A.** Only loop 2's Band A — the
+  render pass and careers discovery — survives as separate work.
+
+**One checklist: properties + scheduler + stamps, then the render pass.**
+
+## BK4 — Sequencing: properties before the render pass, and this inverts BF3 on purpose
+BF3 ruled the checklist opens with the measured operator bottleneck — 142 manual pastes. **That
+payoff is deferred: JD has declined to send a batch, so the pastes do not bite until he does.**
+
+**The property set and the scheduler pay off on the very next thing built, including the render
+pass itself.**
+
+> **Infrastructure for building goes before product when the product's payoff is deferred and the
+> infrastructure's is immediate.** BF3's rule stands; its input changed when JD deferred the
+> batch, and a rule applied without re-reading its input is how the wrong thing gets built
+> rigorously.
