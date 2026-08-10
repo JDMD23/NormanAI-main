@@ -45,6 +45,10 @@ and a trigger (`brain/10 #1`). Nothing else lives in it.
 **Disposition is blank for everything in play.** That is the whole trick: *out* is a separate
 field, so a disqualification never destroys the funnel position it had.
 
+> **CORRECTION (JD's ruling): `Recently Signed Lease` is NOT a disposition. It stays a live
+> stage — companies outgrow their space quickly.** See the section at the end; the revisit
+> trigger is **growth, not time**, and this changes the design.
+
 **Attention tier is derived and never hand-set** — `brain/10 #9`: *"attention is a budget; make
 cadence a function of tier and freshness."* Watchlist was never a stage; it was a cadence.
 
@@ -116,3 +120,76 @@ this is computed from.**
 studies precisely so you would not have to go back to them. **What has never happened is anyone
 applying it to your status vocabulary** — which was designed on day 1, before most of `brain/10`
 landed.
+
+---
+
+# CORRECTION — JD: keep Recently Signed Lease, because companies outgrow their space quickly
+
+**He is right and it breaks the model I proposed.** I treated a signed lease as a parked state
+with a revisit date at lease expiry. **That is the wrong clock.**
+
+> **The revisit trigger is GROWTH, not TIME.** A company that signed 8 months ago and has doubled
+> its NYC headcount is out of room *now*. A company that signed 4 years ago and hasn't grown is
+> not a prospect just because the term is ending.
+
+## Why this is the strongest prospect type on the board, not a parked one
+
+A recently-signed company has **proven it transacts** — it has a budget, a decision process, and
+a signature. Everything else on the board is a hypothesis about whether they will ever move.
+**These are the only companies where that question is already answered.**
+
+So: **`Recently Signed Lease` stays a stage, and it gets its own clock.**
+
+## What it needs, and the data does not exist today
+
+Verified: `Company` has **no lease fields at all** — no signed date, no square footage, no
+headcount at signing. `nyc_office_verified` is the closest and it is a boolean.
+
+**Three fields, and only the third is hard:**
+
+| field | why |
+|---|---|
+| `lease_signed_on` | the baseline date |
+| `lease_rsf` | square feet, where known |
+| **`nyc_heads_at_signing`** | **the baseline that makes outgrowth computable** |
+
+**Without a headcount baseline there is no outgrowth signal** — only a current number with
+nothing to compare it to. This is the denominator problem again (AH2), in a new place.
+
+## The signal, and it uses a number already in JD's profile
+
+`brain/jd-operator-profile.md` records **170 RSF per employee** — captured months ago and never
+scored. **This is where it earns its place:**
+
+```
+capacity      = lease_rsf / 170
+utilisation   = nyc_employees_now / capacity
+```
+
+**Above ~85% they are out of room.** And where RSF is unknown, the cruder form still works:
+
+```
+growth since signing = nyc_employees_now / nyc_heads_at_signing
+```
+
+**Doubled since signing means out of room regardless of what they signed for.**
+
+## Why this is cheap to build
+
+**Norman already measures NYC headcount on a cadence.** The numerator is flowing today. The only
+new data is the baseline at signing — three fields, entered once per company, by JD, at the
+moment he learns of the lease.
+
+> **One new view: "Outgrowing" — `Stage = Recently Signed Lease`, sorted by utilisation
+> descending.** That is a call list of companies who have already proved they will sign and are
+> now running out of room.
+
+## What I got wrong, stated plainly
+
+I assumed the trigger was the lease **term**, because that is how a parked record thinks. **JD's
+model is that the trigger is the company's own growth against the space it bought** — which is
+the same signal Norman already exists to measure, pointed at a population that has already
+demonstrated it transacts.
+
+> **When a state looks like it should be parked, ask what would bring it back. If the answer is
+> a date, it is a disposition. If the answer is a measurement you already take, it is a stage.**
