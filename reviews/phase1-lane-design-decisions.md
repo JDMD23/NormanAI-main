@@ -5917,3 +5917,72 @@ declined to send a batch** — the 142 pastes cost nothing until one runs, while
 pays off on the next thing built, the render pass included.
 
 > **A rule applied without re-reading its input is how the wrong thing gets built rigorously.**
+
+---
+
+# Round 60 — the status field is carrying five questions, and the funnel has no flow view
+
+JD asked for a body of knowledge to design the funnel's structure and views. **`brain/10` is that
+document, and it has never been applied to the status vocabulary — which was designed on day 1,
+before most of `brain/10` landed.** `reference/funnel-structure-proposal.md`.
+
+## BN1 — Fourteen statuses, five orthogonal axes, one select field
+| axis | values |
+|---|---|
+| where in the funnel | Research · Prospect · Top Pursuit · Engaged · Active TIM · Client |
+| why it's out | Not a Fit · Low NYC Presence · Do Not Pursue |
+| how cold | Tracking · Watchlist |
+| what's blocking | Needs Review · Needs Angle |
+| a timing event | Recently Signed Lease |
+
+**`brain/10 #1` describes it exactly:** *"the states that aren't enumerated are where the bugs
+live (an entity that's 'sort of qualified but also under review'). A status field that is
+stringly-typed and set from twelve places is the god-object anti-pattern wearing a business
+costume."*
+
+**The forced choices are real:** a Prospect that needs review must pick one, and the operational
+state overwrites the funnel position — **silently removing it from the chase list.** This is
+`brain/10 #7` — *operational outcomes are a separate vocabulary from entity state* — violated in
+the field that matters most.
+
+> **The views feel hard to design because one field is being filtered on five different
+> questions.**
+
+## BN2 — Four fields, one new, one derived
+**Stage** (an ordered, total state machine, nothing else in it) · **Disposition** (blank for
+everything in play — so a disqualification never destroys the funnel position it had) ·
+**Action Needed** (exists) · **attention tier** (derived from stage + fit, never typed).
+
+**Watchlist was never a stage; it was a cadence** — `brain/10 #9`, *attention is a budget, make
+cadence a function of tier and freshness.*
+
+**And `Recently Signed Lease` is an event with an expiry, not a state.** A 2026 signing on a
+5-year term is a prospect again in 2030, and **nothing brings it back.** Disposition carrying a
+revisit date turns a dead end into a scheduled return — **the highest-value view on the page and
+it does not exist.**
+
+## BN3 — The system has STOCK views and no FLOW view
+> **Every view shows what IS. None shows what MOVED between stages.**
+
+**A funnel's health is flow, not stock.** Entries and exits per stage per week: inflow drying up,
+a stage nothing ever leaves, disqualifications spiking on one reason. **The change log already
+holds what this is computed from.**
+
+This is `brain/10 #11` — *score change and state change are different truths, surface both* —
+half-implemented: **the mover list is the score truth; the flow table is the state truth, and
+only the first exists.**
+
+## BN4 — What stops the structure generating noise is already built
+`brain/10 #2`'s hysteresis — asymmetric enter/exit thresholds so a score wobbling 59↔60 does not
+thrash a company between stages and spam the moved view. **Already implemented (J1).** **The
+constraint that makes a finer-grained funnel safe is in place before the funnel needs it**, which
+is the argument that this is a re-partition rather than a redesign.
+
+## BN5 — On "is there a repo for this": no, and saying so is the answer
+The two closest — `studies/controller-runtime.md` (desired vs actual, level-triggered) and
+`studies/temporal.md` (orchestration split from side effects) — **are already studied, and
+neither is about funnels.**
+
+> **`brain/10` was written FROM those studies precisely so the funnel question would not require
+> going back to them.** The gap was never missing knowledge; it was knowledge never pointed at
+> the artifact it was written for.
