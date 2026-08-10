@@ -5491,3 +5491,62 @@ BF3 ruled that a checklist opens with the measured operator bottleneck. **Band B
 cheaper, needs no external calls, and has far cleaner tests than Band A — which is exactly why it
 is second.** The cleanliness of the available test is not evidence about the value of the work,
 and this project has now mistaken it for such three times.
+
+---
+
+# Round 54 — the brain RAN loop 2: the stage lens is fine, and a batch would be scored by a different formula
+
+Executed against `ab1f00d`, not read. `outbox/BRAIN-RUN-readiness-loop-2.md` carries the numbers.
+
+## BH1 — B1 is green: the stage lens, early-rocket and stall all fire and discriminate
+The predicted highest-probability failure is **not** one.
+
+| test | result |
+|---|---|
+| 18 heads held constant, stage varied | 64 · 64 · 59 · 55 · 54 — **10 pts of discrimination on stage alone** |
+| heads at each stage's own expectation | 45 · 50 · 59 · 66 · 71 — a 26-pt spread, **which is JD's §1a "size leads" ruling, not a defect** |
+| early rocket | 54 qualifying vs 50/50/39 with each gate broken |
+| HQ-conditional stall | 19 qualifying vs 45/44/30 with each gate broken |
+
+The pre-seed/seed tie is the ratio cap at 2.0 saturating — **the cap working.** **A component
+being untested is not evidence it is broken**, and BF4 was right to require the test and wrong
+to imply the outcome.
+
+## BH2 — The real blocker: `growth` depends on a field no commit has ever produced
+Executed: `growth` is **MISSING** when `funding_velocity` is None — recency alone does not
+rescue it (60d and 400d both missing); only a **big fresh raise** does.
+
+Traced across the entire history: **`compute_velocity` has no caller outside its own module and
+tests in ANY commit; `set_funding_velocity` is called nowhere at all; the CSV parser does not
+produce it; no tool writes it.** **Yet the frozen corpus carries velocity on all 32 evidence
+records** with `velocity.py`'s own basis vocabulary.
+
+**So the board's values were written by hand from outside the repo — the third instance of that
+pattern**, after the 82 throttle events and the 85 careers URLs.
+
+> **The consequence, and it is the answer to "is the system ready for a batch": a new batch
+> would not be scored WRONGLY — it would be scored by a DIFFERENT FORMULA than the board it
+> joins.** Velocity absent → `growth` excluded and renormalized (correctly, per Unknown ≠ 0) →
+> the growth weight silently redistributed across the newcomers' other components. **And the
+> board's ranking is the product.**
+
+**Correction to BG1:** I called this "disconnected at both ends" implying a regression. **It was
+never connected**, in any commit. Checking the history changed the finding.
+
+## BH3 — The eval structurally cannot catch it, and this is that limitation with a live consequence
+The frozen corpus has velocity populated on **every** record, so the oracle validates the
+*with-velocity* path and **never exercises the without-velocity path every new company will
+take.** The gate's own `blind_to_note` said it could only validate signals present in its frozen
+evidence; **BH2 is the first case where that limitation costs something real.**
+
+> **A corpus that is uniform in a field cannot validate the behaviour that field's absence
+> triggers — and absence is the normal state for every company the corpus does not contain.**
+
+## BH4 — Do not wire velocity before asking what its inputs are
+`compute_velocity` needs dated funding rounds. **How many of the 133 have enough round history
+for it to return anything?** If few, wiring it yields `None` anyway and the real question is
+whether `growth` should key on something a CSV actually supplies.
+
+> **Wiring a computation whose inputs are absent is how `read_headcount` came to exist.**
+> Establish the input coverage first; the connection is the easy half and the wrong half to do
+> first.
