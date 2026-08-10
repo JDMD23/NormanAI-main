@@ -5652,3 +5652,92 @@ is a different bug with a different fix.**
 mechanism (a real gap), duplicate expression (converge on one), and framework-dispatched (ignore
 by rule). **A detector whose output requires a human to sort it will be silenced; one that sorts
 its own output gets read.**
+
+---
+
+# Round 56 — the root of ten defects, and the fix collapses four items into two builds
+
+Eighteen real defects in a week. **Ten shared one root and none was caught by 548 passing tests.**
+`outbox/GOAL-loop-3-close-the-gap.md` targets the root.
+
+## BJ1 — The classification, and what it proves
+| class | n | caught by tests? |
+|---|---|---|
+| **built but never connected** | 6 | **no — all six had passing tests** |
+| **code right, data doesn't match it** | 4 | **no — all four had correct code** |
+| logic errors | 6 | some |
+| display re-deciding settled things | 2 | no |
+
+> **A unit test is a contract on a function. It says nothing about whether that function is in
+> the graph.** 200 public functions, 548 unit tests, **zero assertions on the artifact the system
+> produces.** The parts are individually verified and the connections between them are not.
+
+## BJ2 — `evidently`'s continuum collapses three fixes into one build
+> **`studies/evidently.md`: "The same metrics run as a one-off `Report` (during development /
+> calibration) and as a scheduled monitoring job (in production)."**
+
+**Write the properties once; run them in three contexts** — in `make check` against a fixture,
+on a schedule against the live board, and as a gate before a batch applies.
+
+**Building a system test AND a detector AND a monitor would be three implementations of one
+idea** — and they would drift apart exactly as `status_owner` and `HUMAN_OWNED` did (BI5). **The
+simplification is the design, not a shortcut.**
+
+## BJ3 — These must be PROPERTIES, not examples
+> **`studies/hypothesis.md`: "Property-based testing is the missing half of a testing strategy."**
+
+**An example test asks *did this case work*. A property asks *is this true of everything* — and
+only the second question can catch a component nobody wired**, because the failing case is the
+one nobody thought to write.
+
+Five properties, each traceable to a defect it would have caught, cover **six of the eighteen**.
+
+## BJ4 — Failure produces a table, and each property declares its own policy
+> **`studies/pandera.md`: lazy validation — "surface ALL data problems as a structured
+> `failure_cases` table rather than failing on the first bad row."**
+
+First-failure abort would have reported `hq_city` constant and hidden `funding_stage`.
+
+> **`brain/04`: "Validation is a declared nonconformance policy, not a boolean."**
+
+**A constant scoring input fails the gate. A never-called function reports and does not fail** —
+because a dead alias and a disconnected mechanism both trip that check and only one is a bug
+(BI5). **A detector that fails on non-bugs gets silenced**, so the policy belongs *in* the
+property.
+
+## BJ5 — Norman believes in level-triggering and applies it in exactly one place
+> **`studies/controller-runtime.md`: "Level-triggered is the unattended-reliability principle. A
+> scheduled system that only reacts to events accumulates silent drift; one that periodically
+> reconciles converges."**
+
+**The reconcile loop is level-triggered against the Notion projection. NOTHING is level-triggered
+against the store's own internal consistency.** The board is kept honest; the system underneath
+it is not.
+
+> **Extend the reconcile pattern inward. The same argument that justified the projection loop
+> justifies a daily property run — and it is the oldest unfixed finding in the project.**
+
+**And the causal claim is evidenced, not asserted:** the J1 inversion, AE4's two bugs, the
+duplicate contacts, the bare tokens and the throttle were each found **by running something**,
+always late, always after being declared done. **A system that runs only when a human asks it to
+reveals its defects only when a human asks it to.**
+
+## BJ6 — A stamp nobody reads is not a stamp
+> **`studies/dlt.md`: "Versioned schema with explicit upgrade paths; versioned/hashed state."**
+
+`formula_version` makes score drift countable. **Velocity had `velocity_basis` and no rule
+version — which is why ten rows violated ruling U-c for weeks.** Extend to velocity, desk-role
+classification, industry tags, status routing.
+
+**And C2 is the half that matters: count how many rows carry a rule version older than current,
+and put that number in the daily run.** BI2 said a ruling is not applied until existing rows are
+re-derived or counted — **the stamp makes counting possible; only the daily count makes it
+happen.**
+
+## BJ7 — Naming what will not work, in the spec itself
+More unit tests (548 caught none of the six) · more review rounds (they end when someone stops
+looking) · more rigor per item (the rigor was never the problem — its aim was).
+
+> **The target is not zero defects. It is the DISTANCE between introducing one and meeting it —
+> currently measured in rounds, and it should be measured in hours.** Band B is what converts
+> one into the other; every other item is caught faster *because* of it.
