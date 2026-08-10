@@ -5810,3 +5810,69 @@ pass itself.**
 > infrastructure's is immediate.** BF3's rule stands; its input changed when JD deferred the
 > batch, and a rule applied without re-reading its input is how the wrong thing gets built
 > rigorously.
+
+---
+
+# Round 58 — the property module, built and run: growth needs data the intake cannot supply
+
+`reference/properties.py` — 135 lines, runnable against any checkout. Run against `6d54b06`:
+**2 gating failures, 14 report-only.** It **independently confirms Band 0**: `compute_velocity`,
+`changes_tags` and `status_owner` no longer appear.
+
+## BL1 — `newly computed: 0` has a mechanism, and it is unfixable by wiring
+```
+compute_velocity     needs DATED ROUNDS, ≥2
+funding_rounds       written by exactly one method — add_funding_round (sqlite.py:957)
+add_funding_round    NO CALLER IN src/
+Crunchbase CSV       gives latest_funding_round (a type string) + funding_round_count (an int)
+                     — no dated round history at all
+```
+
+> **Nothing populates `funding_rounds`, and the CSV cannot.** Wiring `compute_velocity` could
+> never have produced a new value: its input table is fed by a method nobody calls, from a source
+> that does not carry the data.
+
+**This is a class beyond built-but-unwired.** It is **a component whose required evidence the
+intake source does not contain** — so `growth` cannot be computed for any CSV-sourced company,
+ever, as designed. BI1 said wiring a computation does not supply its inputs; **BL1 is the case
+where the inputs cannot be supplied at all.**
+
+## BL2 — The resolution is in JD's own spec, and it is his call
+`FIT-SCORING-SPEC.md` §1b: a growth signal is **active in-office NYC hiring** *or* **fresh
+funding**.
+
+| signal | source | obtainable |
+|---|---|---|
+| active NYC hiring | careers lane | **yes** |
+| fresh funding (date + amount) | Crunchbase CSV | **yes** |
+| round-to-round velocity | `funding_rounds` | **no** |
+
+**Velocity is the one input of three the intake cannot supply.** So: **`growth` keys on hiring
+and funding recency, and velocity is a refinement applying only where round history exists.**
+
+> **That is not a weakening of the component — it is the component matching its evidence**, and
+> it follows §1b rather than overriding it. **JD decides; do not implement first.**
+
+## BL3 — P3 and P4 are the same rule in two forms and both are kept
+P3 measures empirically that no component exceeds its declared weight. P4 reads the config and
+names the constant responsible. Both fired on `fresh_raise_growth_pts`.
+
+> **One says THAT, the other says WHY.** A gate that only measures leaves the reader hunting;
+> one that only reads the config misses violations arising from interaction. **Keep both — they
+> are cheap and they fail together, which is itself a signal that the diagnosis is right.**
+
+## BL4 — Four store writers with no caller, and the question they share
+`add_funding_round` · `add_alias` · `set_salesnav_url` · `ledger_digest`.
+
+> **For every table, ask: what writes this, and can the intake source supply it?** BL1 is what
+> that question yields when the answer is *nothing* and *no*. `add_alias` deserves it next — the
+> alias table is the identity/rebrand mechanism, and a rebrand is exactly when it earns its keep.
+
+## BL5 — The module's construction, each choice grounded
+- **Properties not examples** (`studies/hypothesis.md`) — only *is this true of everything*
+  catches an unwired component.
+- **Lazy, never fail-fast** (`studies/pandera.md`) — fail-fast would have shown P2 and hidden
+  P4, and P4 is the one that explains it.
+- **Per-property policy** (`brain/04`) — FAIL gates, REPORT does not; P5 reports because a dead
+  alias and a disconnected mechanism both trip it and **a detector that fails on non-bugs gets
+  silenced** (BI5).
