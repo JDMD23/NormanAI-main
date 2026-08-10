@@ -6180,3 +6180,68 @@ Heads ↑ · Heads ↓ · Status Δ · Velocity Δ.*
 **That is already close to the origin split AO5 asked for**: `New Round`, `Jobs ↑`, `Heads ↑` are
 things the *company* did; `Fit ↑/↓` is something *we* did. **The distinction can be made by tag
 selection today, without new data** — the feed view is buildable now.
+
+---
+
+# Round 63 — the Notion build, and a permission grant declined
+
+Built and verified. `reference/captures/notion-board-audit-2026-08-10.json` is the before;
+the build report is JD-side at `notion-board-build/build-report.json`.
+
+## BQ1 — The integrity proof is the model for any future live-surface change
+**4,650 SHA-256 hashes across 93 rows × 50 original properties**, captured before the first
+write and re-compared at two intermediate gates and the end. **Digest `45490dea…` identical
+three times.**
+
+> **That is a proof, not a claim.** Every prior "nothing was touched" in this project has been an
+> assertion. **A hash manifest converts it into something checkable by anyone, later, without
+> trusting the agent that did the work** — which is AO1 applied to a build rather than to a
+> ruling.
+
+**Adopt the pattern for any change against a live surface.**
+
+## BQ2 — The pre-write gate fired on its first real occasion: 93 rows, not 133
+The plan asserted a 133-row invariant. **The live board holds 93.** Codex stopped before writing.
+
+**Rebasing to 93 was correct, and the reasoning matters:** the proof answers *were the rows on
+this board changed*, and there are 93. It would not be stronger at 133 — it would be wrong about
+what exists. **The report states explicitly that it makes no claim about the other 40.**
+
+**The gap is store-vs-board and remains open.** 133 is CRMx's store count; 93 is what reached
+Notion. **If the missing 40 are tombstoned or DNP, it is by design; if any are Prospects, the
+projection has been silently dropping companies** — which would outrank everything in this build.
+
+## BQ3 — A standing permission grant declined as disproportionate
+Notion required a **Gmail send-on-behalf OAuth grant** to send the Friday digest. **Declined.**
+
+> **The email's entire content was a hyperlink.** A standing third-party grant on a personal mail
+> account is not proportionate to delivering a link, and **a recurring calendar entry does the
+> same job with no grant and fewer dependencies** — no token to expire.
+
+**And it corrects my own over-weighting:** I had treated the digest as the mechanism that made
+absence detectable. **The mechanism was "it fires every week regardless" — not "it arrives by
+email."** A calendar entry preserves the property exactly. **Naming the mechanism rather than the
+implementation would have avoided proposing the grant at all.**
+
+Also declined: having the agent create the calendar entry. **That would trade a mail grant for a
+calendar grant to save fifteen seconds of typing.**
+
+## BQ4 — The formula-grouping rejection converted a free property into a Norman dependency
+Notion: *"Group-by property of type formula does not support grouping."* So `NYC Band` fell back
+to a blank Select.
+
+**That is a material change, not a cosmetic one.** A formula would have worked the moment it was
+created; **the Select must be written by Norman, and until it is, three views are empty** — BY
+SIZE (all rows in one blank group), HIRING, and the band chart.
+
+> **A capability fallback can silently move work from one system to another.** The fallback was
+> approved as a *presentation* choice and lands as a *pipeline* requirement. **Name the transfer
+> when taking a fallback**, or it arrives later as an unexplained empty view.
+
+## BQ5 — Four properties, all computable from data already stored
+`NYC Δ` (from `prev_nyc_employees`, which exists) · `Desk Jobs` (`in_office + 0.8 × hybrid`) ·
+`NYC Band` (banded headcount, must match the eight option strings exactly or the API rejects) ·
+`Reach` (from the 173 contacts).
+
+**`Reach` is the fifth built-but-unfed property in this project** unless it ships in the same
+pass. `outbox/MESSAGE-TO-CRMX-notion-writes.md`.
