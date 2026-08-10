@@ -6113,3 +6113,70 @@ distribution is skewed.
 
 > **Same discipline as anchoring score bands on the measured distribution rather than on
 > intuition (AK1) — applied to segmentation.** Run the query before choosing the cuts.
+
+---
+
+# Round 62 — the board audit: there is nothing to redesign, because nothing was ever built
+
+Captured read-only via Codex, 2026-08-10.
+`reference/captures/notion-board-audit-2026-08-10.json`.
+
+## BP1 — One view. No filters, no sorts, no grouping, nothing hidden.
+```
+view_count   1          layout  table
+filters      []         sorts   []      group_by  null
+properties   50         hidden  []
+```
+
+**Every design I have produced this week assumed a board to improve. There is no view structure
+at all** — a 50-column flat table, unfiltered and unsorted.
+
+> **This is not a redesign. It is a greenfield surface**, and every proposal (tabs, grouping,
+> board layout, size assertions) is additive rather than a change to something JD relies on.
+> **The risk profile of the whole plan is lower than I have been treating it.**
+
+**And it corrects my own framing:** I proposed cutting 50 properties to 24 as the headline. **The
+headline is that all 50 are visible in the only view that exists**, which is a different and
+easier problem — the fix is a view with the right nine shown, not a schema change.
+
+## BP2 — A company page is 4.23 screens tall
+```
+scroll_container_content_px 2469   viewport_px 584   ≈ 4.23 viewports
+```
+**To read one company, JD scrolls four times.** This is the density problem measured rather than
+asserted, and it is worse than assumed. **The page body already carries the fit math** (verified
+on Remark) **and the eight `Fit:` columns exist as properties too** — so the round-3 ruling was
+executed *and* duplicated.
+
+## BP3 — Two properties carry 311 and 161 select options
+`Key Investors` **311 options**; `Lead Investors` **161**.
+
+> **A select property with 311 options is not a taxonomy — it is a log with colours.** It cannot
+> be filtered meaningfully, it cannot be scanned, and every new company grows it. This is
+> `brain/08`'s configuration sprawl in a UI property.
+
+Investor identity belongs in the store; **the board needs at most a tier or a flag** (*"has a
+top-tier lead"*), which is 3 options rather than 311.
+
+## BP4 — Every capability we designed against is available
+Button · Formula · Rollup · Relation · Unique ID · Verification — **all present, none plan-gated.
+Sub-items available and currently OFF.** Database automations available with real triggers and
+actions including **Send notification · Send mail · Send Slack notification · Send webhook**.
+
+**Linked database views: UNVERIFIED, and correctly so** — Codex refused to test it because
+confirming it required inserting a block, which the read-only limit forbade. **A capability
+reported as unverified is worth more than one reported as available on a guess.**
+
+## BP5 — Two single-option properties confirm findings from the data side
+- **`Latest Round` has exactly one option: `Series A`.** The board *is* the Series-A monoculture
+  that made the stage lens untestable (BF4) — visible now in the schema, not just in a query.
+- **`Added From` has exactly one option: `crunchbase-csv:series-a-2026-08`.** **The source-quality
+  table would have one row today**, so it earns its place only once a second source exists.
+
+## BP6 — The change vocabulary is already good, and is the raw material for the feed
+`Changes` already carries: *First check · Fit ↑ · Fit ↓ · New Round · Funding ↑ · Jobs ↑ · Jobs ↓ ·
+Heads ↑ · Heads ↓ · Status Δ · Velocity Δ.*
+
+**That is already close to the origin split AO5 asked for**: `New Round`, `Jobs ↑`, `Heads ↑` are
+things the *company* did; `Fit ↑/↓` is something *we* did. **The distinction can be made by tag
+selection today, without new data** — the feed view is buildable now.

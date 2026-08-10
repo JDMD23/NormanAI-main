@@ -1,0 +1,3077 @@
+{
+  "audit_scope": {
+    "database_title": "Norman CRM",
+    "database_url": "https://app.notion.com/p/3b43930e64f48136a6efc8dfb4ac09a5?pvs=204",
+    "database_id": "3b43930e-64f4-8136-a6ef-c8dfb4ac09a5",
+    "data_source_id": "3b43930e-64f4-8121-9e76-000bc615c97a",
+    "workspace": "JD Workflow",
+    "captured_at": "2026-08-10T02:54:26.008Z",
+    "read_only": true,
+    "property_count": 50,
+    "view_count": 1
+  },
+  "section_2_properties": {
+    "properties": [
+      {
+        "name": "Added On",
+        "type": "date",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 1
+        }
+      },
+      {
+        "name": "Last Checked",
+        "type": "date",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 2
+        }
+      },
+      {
+        "name": "Checked",
+        "type": "multi_select",
+        "options": [
+          {
+            "name": "CB",
+            "color": "blue"
+          },
+          {
+            "name": "LI",
+            "color": "green"
+          },
+          {
+            "name": "Careers",
+            "color": "orange"
+          },
+          {
+            "name": "News",
+            "color": "purple"
+          }
+        ],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 3
+        }
+      },
+      {
+        "name": "Company",
+        "type": "title",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 4
+        }
+      },
+      {
+        "name": "Industries",
+        "type": "multi_select",
+        "options": [
+          {
+            "name": "AI",
+            "color": "purple"
+          },
+          {
+            "name": "Cybersecurity",
+            "color": "red"
+          },
+          {
+            "name": "Healthcare",
+            "color": "green"
+          },
+          {
+            "name": "Fintech",
+            "color": "yellow"
+          },
+          {
+            "name": "Legal",
+            "color": "brown"
+          },
+          {
+            "name": "PropTech",
+            "color": "orange"
+          },
+          {
+            "name": "HR",
+            "color": "pink"
+          },
+          {
+            "name": "GTM / Sales",
+            "color": "blue"
+          },
+          {
+            "name": "Web3",
+            "color": "gray"
+          },
+          {
+            "name": "Data / Analytics",
+            "color": "blue"
+          },
+          {
+            "name": "Dev Tools",
+            "color": "default"
+          },
+          {
+            "name": "Consumer",
+            "color": "orange"
+          },
+          {
+            "name": "Software",
+            "color": "default"
+          },
+          {
+            "name": "Other",
+            "color": "gray"
+          }
+        ],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 5
+        }
+      },
+      {
+        "name": "Founded",
+        "type": "number",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 6
+        }
+      },
+      {
+        "name": "Headquarters",
+        "type": "select",
+        "options": [
+          {
+            "name": "NYC",
+            "color": null
+          },
+          {
+            "name": "SF",
+            "color": null
+          },
+          {
+            "name": "LA",
+            "color": null
+          },
+          {
+            "name": "Boston",
+            "color": null
+          },
+          {
+            "name": "Austin",
+            "color": null
+          },
+          {
+            "name": "Seattle",
+            "color": null
+          },
+          {
+            "name": "Chicago",
+            "color": null
+          },
+          {
+            "name": "Other US",
+            "color": null
+          },
+          {
+            "name": "International",
+            "color": null
+          },
+          {
+            "name": "Unknown",
+            "color": null
+          }
+        ],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 7
+        }
+      },
+      {
+        "name": "Latest Round",
+        "type": "select",
+        "options": [
+          {
+            "name": "Series A",
+            "color": "orange"
+          }
+        ],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 8
+        }
+      },
+      {
+        "name": "Status",
+        "type": "select",
+        "options": [
+          {
+            "name": "Research",
+            "color": "gray"
+          },
+          {
+            "name": "Prospect",
+            "color": "green"
+          },
+          {
+            "name": "Tracking",
+            "color": "blue"
+          },
+          {
+            "name": "Watchlist",
+            "color": "brown"
+          },
+          {
+            "name": "Needs Review",
+            "color": "yellow"
+          },
+          {
+            "name": "Low NYC Presence",
+            "color": "orange"
+          },
+          {
+            "name": "Not a Fit",
+            "color": "red"
+          },
+          {
+            "name": "Top Pursuit",
+            "color": "purple"
+          },
+          {
+            "name": "Engaged",
+            "color": "pink"
+          },
+          {
+            "name": "Needs Angle",
+            "color": "yellow"
+          },
+          {
+            "name": "Client / Dealflow",
+            "color": "green"
+          },
+          {
+            "name": "Active TIM",
+            "color": "blue"
+          },
+          {
+            "name": "Recently Signed Lease",
+            "color": "gray"
+          },
+          {
+            "name": "Do Not Pursue",
+            "color": "red"
+          }
+        ],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 9
+        }
+      },
+      {
+        "name": "NYC Employees",
+        "type": "number",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 10
+        }
+      },
+      {
+        "name": "NYC Open Jobs",
+        "type": "number",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 11
+        }
+      },
+      {
+        "name": "Fit Score",
+        "type": "number",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 12
+        }
+      },
+      {
+        "name": "Funding Velocity",
+        "type": "select",
+        "options": [
+          {
+            "name": "Fast",
+            "color": "green"
+          },
+          {
+            "name": "Normal",
+            "color": "yellow"
+          },
+          {
+            "name": "Slow",
+            "color": "orange"
+          },
+          {
+            "name": "Fast (est.)",
+            "color": null
+          },
+          {
+            "name": "Normal (est.)",
+            "color": null
+          },
+          {
+            "name": "Slow (est.)",
+            "color": null
+          }
+        ],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 13
+        }
+      },
+      {
+        "name": "Data Status",
+        "type": "select",
+        "options": [
+          {
+            "name": "Verified",
+            "color": "green"
+          },
+          {
+            "name": "Partial",
+            "color": "yellow"
+          },
+          {
+            "name": "Review",
+            "color": "orange"
+          },
+          {
+            "name": "Bad data",
+            "color": "red"
+          }
+        ],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 14
+        }
+      },
+      {
+        "name": "Action Needed",
+        "type": "select",
+        "options": [
+          {
+            "name": "Joe says: no careers page",
+            "color": "brown"
+          },
+          {
+            "name": "Joe: decide status",
+            "color": "red"
+          },
+          {
+            "name": "Joe: paste careers link",
+            "color": "yellow"
+          },
+          {
+            "name": "Joe: verify NYC count",
+            "color": "orange"
+          },
+          {
+            "name": "Norman: Sales Nav count pending",
+            "color": "blue"
+          },
+          {
+            "name": "Norman: recheck scheduled",
+            "color": "blue"
+          },
+          {
+            "name": "Norman: LinkedIn jobs fallback",
+            "color": "blue"
+          }
+        ],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 15
+        }
+      },
+      {
+        "name": "Re-check",
+        "type": "checkbox",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 16
+        }
+      },
+      {
+        "name": "Website",
+        "type": "url",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 17
+        }
+      },
+      {
+        "name": "Careers Page",
+        "type": "url",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 18
+        }
+      },
+      {
+        "name": "LinkedIn",
+        "type": "url",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 19
+        }
+      },
+      {
+        "name": "Crunchbase",
+        "type": "url",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 20
+        }
+      },
+      {
+        "name": "Company Summary",
+        "type": "text",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 21
+        }
+      },
+      {
+        "name": "Funding Rounds",
+        "type": "number",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 22
+        }
+      },
+      {
+        "name": "Latest Funding $M",
+        "type": "number",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 23
+        }
+      },
+      {
+        "name": "Total Funding $M",
+        "type": "number",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 24
+        }
+      },
+      {
+        "name": "Latest Funding Date",
+        "type": "date",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 25
+        }
+      },
+      {
+        "name": "Key Investors",
+        "type": "multi_select",
+        "options": [
+          {
+            "name": "BoxGroup",
+            "color": "gray"
+          },
+          {
+            "name": "Conviction",
+            "color": "orange"
+          },
+          {
+            "name": "Bain Capital Ventures",
+            "color": "brown"
+          },
+          {
+            "name": "SV Angel",
+            "color": "purple"
+          },
+          {
+            "name": "Felicis",
+            "color": "red"
+          },
+          {
+            "name": "Accel",
+            "color": "green"
+          },
+          {
+            "name": "Battery Ventures",
+            "color": "pink"
+          },
+          {
+            "name": "Foundation Capital",
+            "color": "blue"
+          },
+          {
+            "name": "Entrée Capital",
+            "color": "yellow"
+          },
+          {
+            "name": "Target Global",
+            "color": "default"
+          },
+          {
+            "name": "Mindset Ventures",
+            "color": "default"
+          },
+          {
+            "name": "IN Venture",
+            "color": "green"
+          },
+          {
+            "name": "Skywell Capital Partners",
+            "color": "purple"
+          },
+          {
+            "name": "Bessemer Venture Partners",
+            "color": "green"
+          },
+          {
+            "name": "Neo",
+            "color": "green"
+          },
+          {
+            "name": "Uncork Capital",
+            "color": "gray"
+          },
+          {
+            "name": "Nebular",
+            "color": "yellow"
+          },
+          {
+            "name": "STV",
+            "color": "red"
+          },
+          {
+            "name": "Oraseya Capital",
+            "color": "brown"
+          },
+          {
+            "name": "Phaze Ventures",
+            "color": "green"
+          },
+          {
+            "name": "Prosus Ventures",
+            "color": "blue"
+          },
+          {
+            "name": "Framework Ventures",
+            "color": "gray"
+          },
+          {
+            "name": "Chapter One",
+            "color": "green"
+          },
+          {
+            "name": "Buckley Ventures",
+            "color": "brown"
+          },
+          {
+            "name": "Sound Ventures",
+            "color": "default"
+          },
+          {
+            "name": "P2 Ventures",
+            "color": "default"
+          },
+          {
+            "name": "General Catalyst",
+            "color": "orange"
+          },
+          {
+            "name": "Index Ventures",
+            "color": "pink"
+          },
+          {
+            "name": "Venrock",
+            "color": "green"
+          },
+          {
+            "name": "First Round Capital",
+            "color": "blue"
+          },
+          {
+            "name": "Sunflower Capital",
+            "color": "pink"
+          },
+          {
+            "name": "Theory Ventures",
+            "color": "gray"
+          },
+          {
+            "name": "Two Sigma Ventures",
+            "color": "default"
+          },
+          {
+            "name": "Oceans",
+            "color": "default"
+          },
+          {
+            "name": "Operator Partners",
+            "color": "orange"
+          },
+          {
+            "name": "ACME Capital",
+            "color": "gray"
+          },
+          {
+            "name": "Ridge Ventures",
+            "color": "default"
+          },
+          {
+            "name": "Twelve Below",
+            "color": "purple"
+          },
+          {
+            "name": "Team8",
+            "color": "yellow"
+          },
+          {
+            "name": "Holly Ventures",
+            "color": "blue"
+          },
+          {
+            "name": "AWS & Crowdstrike Cybersecurity Accelerator",
+            "color": "red"
+          },
+          {
+            "name": "Blue Collective",
+            "color": "default"
+          },
+          {
+            "name": "E14 Fund",
+            "color": "default"
+          },
+          {
+            "name": "M13",
+            "color": "red"
+          },
+          {
+            "name": "Mercer Advisors",
+            "color": "yellow"
+          },
+          {
+            "name": "Torch Capital",
+            "color": "pink"
+          },
+          {
+            "name": "Picus Capital",
+            "color": "yellow"
+          },
+          {
+            "name": "Comma Capital",
+            "color": "purple"
+          },
+          {
+            "name": "Founder Collective",
+            "color": "yellow"
+          },
+          {
+            "name": "Gilgamesh Ventures",
+            "color": "green"
+          },
+          {
+            "name": "Base10 Partners",
+            "color": "default"
+          },
+          {
+            "name": "Bienville Capital",
+            "color": "green"
+          },
+          {
+            "name": "Aglaé Ventures",
+            "color": "blue"
+          },
+          {
+            "name": "Headline",
+            "color": "purple"
+          },
+          {
+            "name": "Village Global",
+            "color": "orange"
+          },
+          {
+            "name": "Correlation Ventures",
+            "color": "green"
+          },
+          {
+            "name": "TA Ventures",
+            "color": "gray"
+          },
+          {
+            "name": "Union Square Ventures",
+            "color": "gray"
+          },
+          {
+            "name": "Haystack",
+            "color": "pink"
+          },
+          {
+            "name": "Picture Capital",
+            "color": "default"
+          },
+          {
+            "name": "Red Dot Capital Partners",
+            "color": "blue"
+          },
+          {
+            "name": "Cerca Partners",
+            "color": "purple"
+          },
+          {
+            "name": "Alumni Ventures",
+            "color": "pink"
+          },
+          {
+            "name": "Y Combinator",
+            "color": "pink"
+          },
+          {
+            "name": "Amino Capital",
+            "color": "purple"
+          },
+          {
+            "name": "Standard Capital",
+            "color": "red"
+          },
+          {
+            "name": "nvp capital",
+            "color": "green"
+          },
+          {
+            "name": "Sanofi Ventures",
+            "color": "blue"
+          },
+          {
+            "name": "AIX Ventures",
+            "color": "orange"
+          },
+          {
+            "name": "Swift Ventures",
+            "color": "red"
+          },
+          {
+            "name": "FCA Venture Partners",
+            "color": "pink"
+          },
+          {
+            "name": "Cardumen Capital",
+            "color": "purple"
+          },
+          {
+            "name": "Pelion Venture Partners",
+            "color": "blue"
+          },
+          {
+            "name": "G20 Ventures",
+            "color": "purple"
+          },
+          {
+            "name": "Pear VC",
+            "color": "purple"
+          },
+          {
+            "name": "Maverick Ventures",
+            "color": "purple"
+          },
+          {
+            "name": "Peterson Ventures",
+            "color": "purple"
+          },
+          {
+            "name": "Google for Startups",
+            "color": "orange"
+          },
+          {
+            "name": "Ethena",
+            "color": "yellow"
+          },
+          {
+            "name": "Blockchain Capital",
+            "color": "blue"
+          },
+          {
+            "name": "Celestia",
+            "color": "yellow"
+          },
+          {
+            "name": "Lattice Fund",
+            "color": "purple"
+          },
+          {
+            "name": "Selini Capital",
+            "color": "green"
+          },
+          {
+            "name": "Lightspeed Venture Partners",
+            "color": "yellow"
+          },
+          {
+            "name": "Primary Venture Partners",
+            "color": "blue"
+          },
+          {
+            "name": "Emergence Capital",
+            "color": "pink"
+          },
+          {
+            "name": "Curql",
+            "color": "default"
+          },
+          {
+            "name": "SoFi",
+            "color": "blue"
+          },
+          {
+            "name": "South Park Commons",
+            "color": "purple"
+          },
+          {
+            "name": "Alt Capital",
+            "color": "gray"
+          },
+          {
+            "name": "GTMfund",
+            "color": "brown"
+          },
+          {
+            "name": "Sentinel Global",
+            "color": "purple"
+          },
+          {
+            "name": "Recall Capital",
+            "color": "orange"
+          },
+          {
+            "name": "Andreessen Horowitz",
+            "color": "orange"
+          },
+          {
+            "name": "Abstract",
+            "color": "red"
+          },
+          {
+            "name": "Karman Ventures",
+            "color": "default"
+          },
+          {
+            "name": "Susa Ventures",
+            "color": "purple"
+          },
+          {
+            "name": "Soma Capital",
+            "color": "blue"
+          },
+          {
+            "name": "Speedinvest",
+            "color": "green"
+          },
+          {
+            "name": "Creandum",
+            "color": "pink"
+          },
+          {
+            "name": "HV Capital",
+            "color": "gray"
+          },
+          {
+            "name": "Everywhere Ventures",
+            "color": "orange"
+          },
+          {
+            "name": "Google Ventures",
+            "color": "green"
+          },
+          {
+            "name": "Precursor Ventures",
+            "color": "green"
+          },
+          {
+            "name": "Eniac Ventures",
+            "color": "gray"
+          },
+          {
+            "name": "Drive Capital",
+            "color": "red"
+          },
+          {
+            "name": "Nihal Mehta",
+            "color": "gray"
+          },
+          {
+            "name": "XYZ Ventures",
+            "color": "green"
+          },
+          {
+            "name": "Basis Set Ventures",
+            "color": "purple"
+          },
+          {
+            "name": "Flybridge",
+            "color": "gray"
+          },
+          {
+            "name": "Amplify Partners",
+            "color": "green"
+          },
+          {
+            "name": "Mischief",
+            "color": "red"
+          },
+          {
+            "name": "Harry Stebbings",
+            "color": "purple"
+          },
+          {
+            "name": "Valor Equity Partners",
+            "color": "yellow"
+          },
+          {
+            "name": "Greenoaks",
+            "color": "orange"
+          },
+          {
+            "name": "Valor Siren Ventures",
+            "color": "default"
+          },
+          {
+            "name": "Peter Rahal",
+            "color": "red"
+          },
+          {
+            "name": "Peter Attia",
+            "color": "green"
+          },
+          {
+            "name": "FirstMark",
+            "color": "purple"
+          },
+          {
+            "name": "500 Global",
+            "color": "gray"
+          },
+          {
+            "name": "Pace Capital",
+            "color": "green"
+          },
+          {
+            "name": "e2vc",
+            "color": "brown"
+          },
+          {
+            "name": "Upfront Ventures",
+            "color": "brown"
+          },
+          {
+            "name": "Seven Seven Six",
+            "color": "green"
+          },
+          {
+            "name": "Inspired Capital Partners",
+            "color": "brown"
+          },
+          {
+            "name": "Chemistry",
+            "color": "brown"
+          },
+          {
+            "name": "Construct Capital",
+            "color": "blue"
+          },
+          {
+            "name": "Khosla Ventures",
+            "color": "blue"
+          },
+          {
+            "name": "RTP Global",
+            "color": "default"
+          },
+          {
+            "name": "Maven Ventures",
+            "color": "blue"
+          },
+          {
+            "name": "SentinelOne",
+            "color": "green"
+          },
+          {
+            "name": "Hyperwise Ventures",
+            "color": "yellow"
+          },
+          {
+            "name": "Notable Capital",
+            "color": "yellow"
+          },
+          {
+            "name": "N47",
+            "color": "purple"
+          },
+          {
+            "name": "Silicon Valley CISO Investments",
+            "color": "orange"
+          },
+          {
+            "name": "Sequoia Capital",
+            "color": "gray"
+          },
+          {
+            "name": "8VC",
+            "color": "default"
+          },
+          {
+            "name": "A*",
+            "color": "blue"
+          },
+          {
+            "name": "HubSpot Ventures",
+            "color": "red"
+          },
+          {
+            "name": "Paradigm",
+            "color": "default"
+          },
+          {
+            "name": "Electric Capital",
+            "color": "red"
+          },
+          {
+            "name": "Ethereum Foundation",
+            "color": "pink"
+          },
+          {
+            "name": "Vitalik Buterin",
+            "color": "orange"
+          },
+          {
+            "name": "NextView Ventures",
+            "color": "orange"
+          },
+          {
+            "name": "Jonathan Carson",
+            "color": "pink"
+          },
+          {
+            "name": "Sarfraz Maredia",
+            "color": "purple"
+          },
+          {
+            "name": "Innovation Endeavors",
+            "color": "gray"
+          },
+          {
+            "name": "Homebrew",
+            "color": "gray"
+          },
+          {
+            "name": "Character",
+            "color": "pink"
+          },
+          {
+            "name": "Guillermo Rauch",
+            "color": "pink"
+          },
+          {
+            "name": "Activant Capital",
+            "color": "default"
+          },
+          {
+            "name": "Liquid 2 Ventures",
+            "color": "blue"
+          },
+          {
+            "name": "Hanover",
+            "color": "purple"
+          },
+          {
+            "name": "Ten Eleven Ventures",
+            "color": "orange"
+          },
+          {
+            "name": "RSA Conference",
+            "color": "red"
+          },
+          {
+            "name": "René Bonvanie",
+            "color": "default"
+          },
+          {
+            "name": "Douglas Merritt",
+            "color": "brown"
+          },
+          {
+            "name": "Pantera Capital",
+            "color": "pink"
+          },
+          {
+            "name": "Samsung NEXT",
+            "color": "pink"
+          },
+          {
+            "name": "Multicoin Capital",
+            "color": "pink"
+          },
+          {
+            "name": "Redpoint",
+            "color": "default"
+          },
+          {
+            "name": "Radical Ventures",
+            "color": "purple"
+          },
+          {
+            "name": "AperiamVentures",
+            "color": "purple"
+          },
+          {
+            "name": "Crossbeam Venture Partners",
+            "color": "green"
+          },
+          {
+            "name": "Brian O'Kelley",
+            "color": "brown"
+          },
+          {
+            "name": "Afore Capital",
+            "color": "yellow"
+          },
+          {
+            "name": "Patron",
+            "color": "brown"
+          },
+          {
+            "name": "zVentures",
+            "color": "orange"
+          },
+          {
+            "name": "Wintermute",
+            "color": "purple"
+          },
+          {
+            "name": "Robot Ventures",
+            "color": "yellow"
+          },
+          {
+            "name": "Maven 11 Capital",
+            "color": "orange"
+          },
+          {
+            "name": "Flow Traders",
+            "color": "red"
+          },
+          {
+            "name": "Kleiner Perkins",
+            "color": "default"
+          },
+          {
+            "name": "Cyberstarts",
+            "color": "default"
+          },
+          {
+            "name": "Spark Capital",
+            "color": "blue"
+          },
+          {
+            "name": "Infinity Ventures",
+            "color": "orange"
+          },
+          {
+            "name": "FJ Labs",
+            "color": "purple"
+          },
+          {
+            "name": "Initialized Capital",
+            "color": "green"
+          },
+          {
+            "name": "Benchstrength",
+            "color": "gray"
+          },
+          {
+            "name": "Plug and Play",
+            "color": "gray"
+          },
+          {
+            "name": "At One Ventures",
+            "color": "blue"
+          },
+          {
+            "name": "Katapult Ocean",
+            "color": "orange"
+          },
+          {
+            "name": "Katapult",
+            "color": "green"
+          },
+          {
+            "name": "theDOCK",
+            "color": "red"
+          },
+          {
+            "name": "Insight Partners",
+            "color": "red"
+          },
+          {
+            "name": "Work-Bench",
+            "color": "purple"
+          },
+          {
+            "name": "Chris Bullock",
+            "color": "purple"
+          },
+          {
+            "name": "Andreas Huber",
+            "color": "green"
+          },
+          {
+            "name": "Transpose Platform Management",
+            "color": "blue"
+          },
+          {
+            "name": "TwentyTwo VC",
+            "color": "blue"
+          },
+          {
+            "name": "Peak XV Partners",
+            "color": "gray"
+          },
+          {
+            "name": "Defy.vc",
+            "color": "yellow"
+          },
+          {
+            "name": "Airtree Ventures",
+            "color": "blue"
+          },
+          {
+            "name": "DST Global",
+            "color": "brown"
+          },
+          {
+            "name": "Aura Ventures",
+            "color": "orange"
+          },
+          {
+            "name": "Lux Capital",
+            "color": "gray"
+          },
+          {
+            "name": "IA Ventures",
+            "color": "brown"
+          },
+          {
+            "name": "Vincent Tammaro",
+            "color": "gray"
+          },
+          {
+            "name": "The Raine Group",
+            "color": "default"
+          },
+          {
+            "name": "Point72 Ventures",
+            "color": "pink"
+          },
+          {
+            "name": "Palm Tree Crew",
+            "color": "red"
+          },
+          {
+            "name": "Imaginary Ventures",
+            "color": "pink"
+          },
+          {
+            "name": "SEMCAP",
+            "color": "pink"
+          },
+          {
+            "name": "PeakBridge",
+            "color": "orange"
+          },
+          {
+            "name": "LifeX Ventures",
+            "color": "pink"
+          },
+          {
+            "name": "Innovation Works",
+            "color": "green"
+          },
+          {
+            "name": "Glilot Capital Partners",
+            "color": "blue"
+          },
+          {
+            "name": "MassMutual Ventures",
+            "color": "default"
+          },
+          {
+            "name": "Merlin Ventures",
+            "color": "yellow"
+          },
+          {
+            "name": "Dorm Room Fund",
+            "color": "red"
+          },
+          {
+            "name": "Acadian Ventures",
+            "color": "default"
+          },
+          {
+            "name": "Bullpen Capital",
+            "color": "red"
+          },
+          {
+            "name": "Gokul Rajaram",
+            "color": "red"
+          },
+          {
+            "name": "Eigen Ventures",
+            "color": "red"
+          },
+          {
+            "name": "XYZ Venture Capital",
+            "color": "green"
+          },
+          {
+            "name": "CRV",
+            "color": "green"
+          },
+          {
+            "name": "Designer Fund",
+            "color": "brown"
+          },
+          {
+            "name": "Go Global Ventures",
+            "color": "orange"
+          },
+          {
+            "name": "Inflect Capital",
+            "color": "yellow"
+          },
+          {
+            "name": "Silicon Road Ventures",
+            "color": "red"
+          },
+          {
+            "name": "GFT Ventures",
+            "color": "red"
+          },
+          {
+            "name": "Revolution’s Rise of the Rest Seed Fund",
+            "color": "green"
+          },
+          {
+            "name": "Launch Africa",
+            "color": "purple"
+          },
+          {
+            "name": "Techstars",
+            "color": "orange"
+          },
+          {
+            "name": "Cathay Innovation",
+            "color": "purple"
+          },
+          {
+            "name": "Partech",
+            "color": "green"
+          },
+          {
+            "name": "Blockchain Founders Fund",
+            "color": "blue"
+          },
+          {
+            "name": "SixThirty",
+            "color": "blue"
+          },
+          {
+            "name": "Hetz Ventures",
+            "color": "yellow"
+          },
+          {
+            "name": "Viola Ventures",
+            "color": "yellow"
+          },
+          {
+            "name": "Fin Capital",
+            "color": "orange"
+          },
+          {
+            "name": "Scrum Ventures",
+            "color": "yellow"
+          },
+          {
+            "name": "DCM Ventures",
+            "color": "yellow"
+          },
+          {
+            "name": "Z Fellows",
+            "color": "green"
+          },
+          {
+            "name": "Cory Levy",
+            "color": "default"
+          },
+          {
+            "name": "Marquee Ventures",
+            "color": "purple"
+          },
+          {
+            "name": "Caffeinated Capital",
+            "color": "yellow"
+          },
+          {
+            "name": "AE Industrial Partners",
+            "color": "red"
+          },
+          {
+            "name": "True Ventures",
+            "color": "gray"
+          },
+          {
+            "name": "Menlo Ventures",
+            "color": "pink"
+          },
+          {
+            "name": "Quiet Capital",
+            "color": "green"
+          },
+          {
+            "name": "Town Hall Ventures",
+            "color": "yellow"
+          },
+          {
+            "name": "Costanoa Ventures",
+            "color": "red"
+          },
+          {
+            "name": "Daybreak ventures",
+            "color": "blue"
+          },
+          {
+            "name": "WndrCo",
+            "color": "green"
+          },
+          {
+            "name": "Angel Collective",
+            "color": "purple"
+          },
+          {
+            "name": "Forward Deployed Venture Capital",
+            "color": "green"
+          },
+          {
+            "name": "The General Partnership",
+            "color": "green"
+          },
+          {
+            "name": "topology",
+            "color": "gray"
+          },
+          {
+            "name": "Lingotto",
+            "color": "green"
+          },
+          {
+            "name": "QED Investors",
+            "color": "blue"
+          },
+          {
+            "name": "Gaingels",
+            "color": "yellow"
+          },
+          {
+            "name": "Pioneer Fund",
+            "color": "pink"
+          },
+          {
+            "name": "LocalGlobe",
+            "color": "pink"
+          },
+          {
+            "name": "Acrew Capital",
+            "color": "gray"
+          },
+          {
+            "name": "Footwork",
+            "color": "green"
+          },
+          {
+            "name": "Better Tomorrow Ventures",
+            "color": "orange"
+          },
+          {
+            "name": "Rerail",
+            "color": "purple"
+          },
+          {
+            "name": "BECO Capital",
+            "color": "gray"
+          },
+          {
+            "name": "Pitango VC",
+            "color": "orange"
+          },
+          {
+            "name": "Hustle Fund",
+            "color": "gray"
+          },
+          {
+            "name": "NewView Capital",
+            "color": "red"
+          },
+          {
+            "name": "GS Futures",
+            "color": "pink"
+          },
+          {
+            "name": "Bling Capital",
+            "color": "green"
+          },
+          {
+            "name": "Workday Ventures",
+            "color": "blue"
+          },
+          {
+            "name": "Vela Partners",
+            "color": "pink"
+          },
+          {
+            "name": "Incubate Fund",
+            "color": "brown"
+          },
+          {
+            "name": "North Island Ventures",
+            "color": "yellow"
+          },
+          {
+            "name": "OSS Capital L.P.",
+            "color": "red"
+          },
+          {
+            "name": "Balaji Srinivasan",
+            "color": "purple"
+          },
+          {
+            "name": "Avid Ventures",
+            "color": "pink"
+          },
+          {
+            "name": "Brewer Lane Ventures",
+            "color": "purple"
+          },
+          {
+            "name": "TMV",
+            "color": "green"
+          },
+          {
+            "name": "Norwest",
+            "color": "yellow"
+          },
+          {
+            "name": "IBM",
+            "color": "yellow"
+          },
+          {
+            "name": "Underscore VC",
+            "color": "blue"
+          },
+          {
+            "name": "PICO Venture Partners",
+            "color": "yellow"
+          },
+          {
+            "name": "Assaf Rappaport",
+            "color": "purple"
+          },
+          {
+            "name": "Yevgeny Dibrov",
+            "color": "default"
+          },
+          {
+            "name": "Rebel Fund",
+            "color": "brown"
+          },
+          {
+            "name": "Centre Street Partners",
+            "color": "red"
+          },
+          {
+            "name": "Andy Dunn",
+            "color": "brown"
+          },
+          {
+            "name": "Coinbase Ventures",
+            "color": "brown"
+          },
+          {
+            "name": "Susquehanna International Group",
+            "color": "green"
+          },
+          {
+            "name": "Offline Ventures",
+            "color": "yellow"
+          },
+          {
+            "name": "Northzone",
+            "color": "yellow"
+          },
+          {
+            "name": "(ERA) Entrepreneurs Roundtable Accelerator",
+            "color": "default"
+          },
+          {
+            "name": "Travis May",
+            "color": "green"
+          },
+          {
+            "name": "Scale Venture Partners",
+            "color": "brown"
+          },
+          {
+            "name": "PayPal Ventures",
+            "color": "brown"
+          },
+          {
+            "name": "Ofir Ehrlich",
+            "color": "blue"
+          },
+          {
+            "name": "Left Lane Capital",
+            "color": "green"
+          },
+          {
+            "name": "Epic Padel",
+            "color": "default"
+          },
+          {
+            "name": "Gary Vaynerchuk",
+            "color": "default"
+          },
+          {
+            "name": "Kactus Capital Management",
+            "color": "default"
+          },
+          {
+            "name": "Tony Tamer",
+            "color": "gray"
+          },
+          {
+            "name": "Variant",
+            "color": "pink"
+          },
+          {
+            "name": "Quantonation",
+            "color": "red"
+          },
+          {
+            "name": "JSL Health Capital",
+            "color": "default"
+          },
+          {
+            "name": "Solari Capital",
+            "color": "gray"
+          },
+          {
+            "name": "Greycroft",
+            "color": "green"
+          },
+          {
+            "name": "MVP Ventures",
+            "color": "brown"
+          },
+          {
+            "name": "Prudence",
+            "color": "brown"
+          },
+          {
+            "name": "Villain Capital",
+            "color": "orange"
+          },
+          {
+            "name": "Zero Infinity Partners",
+            "color": "gray"
+          },
+          {
+            "name": "Optimist Ventures",
+            "color": "yellow"
+          },
+          {
+            "name": "Ibex Investors",
+            "color": "green"
+          },
+          {
+            "name": "QP Ventures",
+            "color": "red"
+          },
+          {
+            "name": "Stripe",
+            "color": "red"
+          },
+          {
+            "name": "Visible Ventures",
+            "color": "purple"
+          },
+          {
+            "name": "Shine Capital",
+            "color": "orange"
+          }
+        ],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 26
+        }
+      },
+      {
+        "name": "Fit: Employees",
+        "type": "number",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 27
+        }
+      },
+      {
+        "name": "Fit: Funding",
+        "type": "number",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 28
+        }
+      },
+      {
+        "name": "Fit: Growth",
+        "type": "number",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 29
+        }
+      },
+      {
+        "name": "Fit: Industry",
+        "type": "number",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 30
+        }
+      },
+      {
+        "name": "Fit: Investors",
+        "type": "number",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 31
+        }
+      },
+      {
+        "name": "Fit: Jobs",
+        "type": "number",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 32
+        }
+      },
+      {
+        "name": "Added From",
+        "type": "select",
+        "options": [
+          {
+            "name": "crunchbase-csv:series-a-2026-08",
+            "color": "brown"
+          }
+        ],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 33
+        }
+      },
+      {
+        "name": "Current Angle",
+        "type": "text",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 34
+        }
+      },
+      {
+        "name": "Founders",
+        "type": "text",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 35
+        }
+      },
+      {
+        "name": "Lead Investors",
+        "type": "multi_select",
+        "options": [
+          {
+            "name": "Bain Capital Ventures",
+            "color": "yellow"
+          },
+          {
+            "name": "Felicis",
+            "color": "default"
+          },
+          {
+            "name": "Accel",
+            "color": "pink"
+          },
+          {
+            "name": "Battery Ventures",
+            "color": "purple"
+          },
+          {
+            "name": "Foundation Capital",
+            "color": "brown"
+          },
+          {
+            "name": "Entrée Capital",
+            "color": "green"
+          },
+          {
+            "name": "IN Venture",
+            "color": "blue"
+          },
+          {
+            "name": "Target Global",
+            "color": "orange"
+          },
+          {
+            "name": "Bessemer Venture Partners",
+            "color": "red"
+          },
+          {
+            "name": "Uncork Capital",
+            "color": "gray"
+          },
+          {
+            "name": "Prosus Ventures",
+            "color": "blue"
+          },
+          {
+            "name": "Framework Ventures",
+            "color": "orange"
+          },
+          {
+            "name": "Sound Ventures",
+            "color": "purple"
+          },
+          {
+            "name": "General Catalyst",
+            "color": "green"
+          },
+          {
+            "name": "Venrock",
+            "color": "red"
+          },
+          {
+            "name": "AWS & Crowdstrike Cybersecurity Accelerator",
+            "color": "gray"
+          },
+          {
+            "name": "Brightmind Partners",
+            "color": "red"
+          },
+          {
+            "name": "First Round Capital",
+            "color": "pink"
+          },
+          {
+            "name": "ACME Capital",
+            "color": "gray"
+          },
+          {
+            "name": "Oceans",
+            "color": "pink"
+          },
+          {
+            "name": "Twelve Below",
+            "color": "purple"
+          },
+          {
+            "name": "Holly Ventures",
+            "color": "pink"
+          },
+          {
+            "name": "Index Ventures",
+            "color": "red"
+          },
+          {
+            "name": "E14 Fund",
+            "color": "red"
+          },
+          {
+            "name": "Afore Capital",
+            "color": "yellow"
+          },
+          {
+            "name": "M13",
+            "color": "brown"
+          },
+          {
+            "name": "Picus Capital",
+            "color": "yellow"
+          },
+          {
+            "name": "Base10 Partners",
+            "color": "orange"
+          },
+          {
+            "name": "Headline",
+            "color": "brown"
+          },
+          {
+            "name": "Union Square Ventures",
+            "color": "blue"
+          },
+          {
+            "name": "Picture Capital",
+            "color": "yellow"
+          },
+          {
+            "name": "Red Dot Capital Partners",
+            "color": "orange"
+          },
+          {
+            "name": "Standard Capital",
+            "color": "yellow"
+          },
+          {
+            "name": "McKesson Ventures",
+            "color": "orange"
+          },
+          {
+            "name": "NEXT VENTŪRES",
+            "color": "purple"
+          },
+          {
+            "name": "nvp capital",
+            "color": "brown"
+          },
+          {
+            "name": "Cardumen Capital",
+            "color": "pink"
+          },
+          {
+            "name": "G20 Ventures",
+            "color": "yellow"
+          },
+          {
+            "name": "Pelion Venture Partners",
+            "color": "red"
+          },
+          {
+            "name": "Google for Startups",
+            "color": "orange"
+          },
+          {
+            "name": "Maverick Ventures",
+            "color": "brown"
+          },
+          {
+            "name": "Y Combinator",
+            "color": "blue"
+          },
+          {
+            "name": "1kx",
+            "color": "blue"
+          },
+          {
+            "name": "Blockchain Capital",
+            "color": "orange"
+          },
+          {
+            "name": "Maven 11 Capital",
+            "color": "gray"
+          },
+          {
+            "name": "Curql",
+            "color": "purple"
+          },
+          {
+            "name": "Emergence Capital",
+            "color": "default"
+          },
+          {
+            "name": "Lightspeed Venture Partners",
+            "color": "pink"
+          },
+          {
+            "name": "Primary Venture Partners",
+            "color": "pink"
+          },
+          {
+            "name": "Sentinel Global",
+            "color": "brown"
+          },
+          {
+            "name": "Abstract",
+            "color": "default"
+          },
+          {
+            "name": "Andreessen Horowitz",
+            "color": "default"
+          },
+          {
+            "name": "Susa Ventures",
+            "color": "default"
+          },
+          {
+            "name": "Google Ventures",
+            "color": "yellow"
+          },
+          {
+            "name": "NEXT VENTURES",
+            "color": "purple"
+          },
+          {
+            "name": "CRV",
+            "color": "default"
+          },
+          {
+            "name": "Drive Capital",
+            "color": "default"
+          },
+          {
+            "name": "Amplify Partners",
+            "color": "green"
+          },
+          {
+            "name": "Basis Set Ventures",
+            "color": "blue"
+          },
+          {
+            "name": "Greenoaks",
+            "color": "orange"
+          },
+          {
+            "name": "Peter Rahal",
+            "color": "red"
+          },
+          {
+            "name": "FirstMark",
+            "color": "purple"
+          },
+          {
+            "name": "Upfront Ventures",
+            "color": "orange"
+          },
+          {
+            "name": "Seven Seven Six",
+            "color": "green"
+          },
+          {
+            "name": "Chemistry",
+            "color": "orange"
+          },
+          {
+            "name": "Contrary",
+            "color": "blue"
+          },
+          {
+            "name": "Khosla Ventures",
+            "color": "blue"
+          },
+          {
+            "name": "Hyperwise Ventures",
+            "color": "purple"
+          },
+          {
+            "name": "N47",
+            "color": "orange"
+          },
+          {
+            "name": "Notable Capital",
+            "color": "pink"
+          },
+          {
+            "name": "8VC",
+            "color": "default"
+          },
+          {
+            "name": "A*",
+            "color": "pink"
+          },
+          {
+            "name": "Sequoia Capital",
+            "color": "blue"
+          },
+          {
+            "name": "Electric Capital",
+            "color": "brown"
+          },
+          {
+            "name": "Ethereum Foundation",
+            "color": "default"
+          },
+          {
+            "name": "Paradigm",
+            "color": "pink"
+          },
+          {
+            "name": "Vitalik Buterin",
+            "color": "default"
+          },
+          {
+            "name": "Eniac Ventures",
+            "color": "orange"
+          },
+          {
+            "name": "Innovation Endeavors",
+            "color": "green"
+          },
+          {
+            "name": "Hanover",
+            "color": "pink"
+          },
+          {
+            "name": "Maple VC",
+            "color": "yellow"
+          },
+          {
+            "name": "RSA Conference",
+            "color": "orange"
+          },
+          {
+            "name": "Team8",
+            "color": "red"
+          },
+          {
+            "name": "Ten Eleven Ventures",
+            "color": "purple"
+          },
+          {
+            "name": "Multicoin Capital",
+            "color": "default"
+          },
+          {
+            "name": "Pantera Capital",
+            "color": "purple"
+          },
+          {
+            "name": "Redpoint",
+            "color": "default"
+          },
+          {
+            "name": "Radical Ventures",
+            "color": "pink"
+          },
+          {
+            "name": "Patron",
+            "color": "yellow"
+          },
+          {
+            "name": "zVentures",
+            "color": "pink"
+          },
+          {
+            "name": "Cyberstarts",
+            "color": "yellow"
+          },
+          {
+            "name": "Kleiner Perkins",
+            "color": "gray"
+          },
+          {
+            "name": "Spark Capital",
+            "color": "blue"
+          },
+          {
+            "name": "Infinity Ventures",
+            "color": "purple"
+          },
+          {
+            "name": "Initialized Capital",
+            "color": "blue"
+          },
+          {
+            "name": "At One Ventures",
+            "color": "green"
+          },
+          {
+            "name": "Katapult",
+            "color": "gray"
+          },
+          {
+            "name": "Planet Ocean Capital",
+            "color": "green"
+          },
+          {
+            "name": "Bienville Capital",
+            "color": "pink"
+          },
+          {
+            "name": "Insight Partners",
+            "color": "default"
+          },
+          {
+            "name": "Work-Bench",
+            "color": "blue"
+          },
+          {
+            "name": "Airtree Ventures",
+            "color": "green"
+          },
+          {
+            "name": "Aura Ventures",
+            "color": "pink"
+          },
+          {
+            "name": "Peak XV Partners",
+            "color": "green"
+          },
+          {
+            "name": "Point72 Ventures",
+            "color": "purple"
+          },
+          {
+            "name": "Waverley Capital",
+            "color": "orange"
+          },
+          {
+            "name": "AlphaLab Health",
+            "color": "orange"
+          },
+          {
+            "name": "Cornucopian Capital",
+            "color": "default"
+          },
+          {
+            "name": "Glilot Capital Partners",
+            "color": "green"
+          },
+          {
+            "name": "Zachary Kirkhorn",
+            "color": "green"
+          },
+          {
+            "name": "GFT Ventures",
+            "color": "purple"
+          },
+          {
+            "name": "Revolution’s Rise of the Rest Seed Fund",
+            "color": "purple"
+          },
+          {
+            "name": "Silicon Road Ventures",
+            "color": "blue"
+          },
+          {
+            "name": "AfricInvest",
+            "color": "green"
+          },
+          {
+            "name": "Blockchain Founders Fund",
+            "color": "brown"
+          },
+          {
+            "name": "Launch Africa",
+            "color": "gray"
+          },
+          {
+            "name": "Visa Inclusive Fintech Accelerator",
+            "color": "red"
+          },
+          {
+            "name": "EJF Ventures",
+            "color": "gray"
+          },
+          {
+            "name": "Hetz Ventures",
+            "color": "blue"
+          },
+          {
+            "name": "Viola Ventures",
+            "color": "orange"
+          },
+          {
+            "name": "DCM Ventures",
+            "color": "blue"
+          },
+          {
+            "name": "Caffeinated Capital",
+            "color": "brown"
+          },
+          {
+            "name": "Ensemble VC",
+            "color": "red"
+          },
+          {
+            "name": "Menlo Ventures",
+            "color": "pink"
+          },
+          {
+            "name": "Costanoa Ventures",
+            "color": "gray"
+          },
+          {
+            "name": "Town Hall Ventures",
+            "color": "red"
+          },
+          {
+            "name": "Financial Technology Partners",
+            "color": "gray"
+          },
+          {
+            "name": "LocalGlobe",
+            "color": "purple"
+          },
+          {
+            "name": "TresVista Ventures",
+            "color": "pink"
+          },
+          {
+            "name": "Acrew Capital",
+            "color": "purple"
+          },
+          {
+            "name": "Better Tomorrow Ventures",
+            "color": "brown"
+          },
+          {
+            "name": "Footwork",
+            "color": "gray"
+          },
+          {
+            "name": "BECO Capital",
+            "color": "red"
+          },
+          {
+            "name": "Pitango VC",
+            "color": "default"
+          },
+          {
+            "name": "Marathon Management Partners",
+            "color": "pink"
+          },
+          {
+            "name": "Bling Capital",
+            "color": "green"
+          },
+          {
+            "name": "Workday Ventures",
+            "color": "yellow"
+          },
+          {
+            "name": "Distributed Global",
+            "color": "default"
+          },
+          {
+            "name": "OSS Capital L.P.",
+            "color": "gray"
+          },
+          {
+            "name": "Brewer Lane Ventures",
+            "color": "pink"
+          },
+          {
+            "name": "LAMA Partners (fka FXP Ventures)",
+            "color": "yellow"
+          },
+          {
+            "name": "Norwest",
+            "color": "purple"
+          },
+          {
+            "name": "PICO Venture Partners",
+            "color": "red"
+          },
+          {
+            "name": "Jump Crypto",
+            "color": "orange"
+          },
+          {
+            "name": "Desiree Gruber",
+            "color": "red"
+          },
+          {
+            "name": "Kris Jenner",
+            "color": "blue"
+          },
+          {
+            "name": "Offline Ventures",
+            "color": "brown"
+          },
+          {
+            "name": "Soma Capital",
+            "color": "orange"
+          },
+          {
+            "name": "Stanford University",
+            "color": "brown"
+          },
+          {
+            "name": "Base 10 Ventures",
+            "color": "brown"
+          },
+          {
+            "name": "(ERA) Entrepreneurs Roundtable Accelerator",
+            "color": "blue"
+          },
+          {
+            "name": "Northzone",
+            "color": "red"
+          },
+          {
+            "name": "Scale Venture Partners",
+            "color": "green"
+          },
+          {
+            "name": "Left Lane Capital",
+            "color": "blue"
+          },
+          {
+            "name": "Rick Schnall",
+            "color": "red"
+          },
+          {
+            "name": "Castle Island Ventures",
+            "color": "red"
+          },
+          {
+            "name": "Quantonation",
+            "color": "brown"
+          },
+          {
+            "name": "Variant",
+            "color": "purple"
+          },
+          {
+            "name": "Greycroft",
+            "color": "purple"
+          },
+          {
+            "name": "Prudence",
+            "color": "default"
+          },
+          {
+            "name": "Inspired Capital Partners",
+            "color": "pink"
+          }
+        ],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 36
+        }
+      },
+      {
+        "name": "Months: A→B",
+        "type": "number",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 37
+        }
+      },
+      {
+        "name": "Months: B→C",
+        "type": "number",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 38
+        }
+      },
+      {
+        "name": "Months: Late Stage",
+        "type": "number",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 39
+        }
+      },
+      {
+        "name": "Months: Seed→A",
+        "type": "number",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 40
+        }
+      },
+      {
+        "name": "Next Check Due",
+        "type": "date",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 41
+        }
+      },
+      {
+        "name": "Relationship Notes",
+        "type": "text",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 42
+        }
+      },
+      {
+        "name": "Workplace Contact",
+        "type": "text",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 43
+        }
+      },
+      {
+        "name": "Workplace Contact Email",
+        "type": "email",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 44
+        }
+      },
+      {
+        "name": "X Profile",
+        "type": "url",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 45
+        }
+      },
+      {
+        "name": "Changes",
+        "type": "multi_select",
+        "options": [
+          {
+            "name": "First check",
+            "color": "gray"
+          },
+          {
+            "name": "Fit ↑",
+            "color": "green"
+          },
+          {
+            "name": "Fit ↓",
+            "color": "red"
+          },
+          {
+            "name": "New Round",
+            "color": "purple"
+          },
+          {
+            "name": "Funding ↑",
+            "color": "green"
+          },
+          {
+            "name": "Jobs ↑",
+            "color": "green"
+          },
+          {
+            "name": "Jobs ↓",
+            "color": "red"
+          },
+          {
+            "name": "Heads ↑",
+            "color": "green"
+          },
+          {
+            "name": "Heads ↓",
+            "color": "red"
+          },
+          {
+            "name": "Status Δ",
+            "color": "blue"
+          },
+          {
+            "name": "Velocity Δ",
+            "color": "blue"
+          }
+        ],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 46
+        }
+      },
+      {
+        "name": "Fit Drivers",
+        "type": "multi_select",
+        "options": [
+          {
+            "name": "Big NYC team",
+            "color": "green"
+          },
+          {
+            "name": "Hiring hard",
+            "color": "green"
+          },
+          {
+            "name": "Fast riser",
+            "color": "green"
+          },
+          {
+            "name": "Small NYC team",
+            "color": "orange"
+          },
+          {
+            "name": "Few NYC roles",
+            "color": "orange"
+          },
+          {
+            "name": "Slow riser",
+            "color": "orange"
+          },
+          {
+            "name": "Tiny NYC team",
+            "color": "red"
+          },
+          {
+            "name": "No NYC roles",
+            "color": "red"
+          },
+          {
+            "name": "Estimate",
+            "color": "yellow"
+          },
+          {
+            "name": "Missing data",
+            "color": "gray"
+          }
+        ],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 47
+        }
+      },
+      {
+        "name": "Fit Raw",
+        "type": "number",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 48
+        }
+      },
+      {
+        "name": "Fit: HQ",
+        "type": "number",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 49
+        }
+      },
+      {
+        "name": "Fit: Stage",
+        "type": "number",
+        "options": [],
+        "visibility_by_view": {
+          "Default view": "visible"
+        },
+        "left_to_right_position_by_view": {
+          "Default view": 50
+        }
+      }
+    ],
+    "visibility_summary": {
+      "Default view": {
+        "visible": [
+          "Added On",
+          "Last Checked",
+          "Checked",
+          "Company",
+          "Industries",
+          "Founded",
+          "Headquarters",
+          "Latest Round",
+          "Status",
+          "NYC Employees",
+          "NYC Open Jobs",
+          "Fit Score",
+          "Funding Velocity",
+          "Data Status",
+          "Action Needed",
+          "Re-check",
+          "Website",
+          "Careers Page",
+          "LinkedIn",
+          "Crunchbase",
+          "Company Summary",
+          "Funding Rounds",
+          "Latest Funding $M",
+          "Total Funding $M",
+          "Latest Funding Date",
+          "Key Investors",
+          "Fit: Employees",
+          "Fit: Funding",
+          "Fit: Growth",
+          "Fit: Industry",
+          "Fit: Investors",
+          "Fit: Jobs",
+          "Added From",
+          "Current Angle",
+          "Founders",
+          "Lead Investors",
+          "Months: A→B",
+          "Months: B→C",
+          "Months: Late Stage",
+          "Months: Seed→A",
+          "Next Check Due",
+          "Relationship Notes",
+          "Workplace Contact",
+          "Workplace Contact Email",
+          "X Profile",
+          "Changes",
+          "Fit Drivers",
+          "Fit Raw",
+          "Fit: HQ",
+          "Fit: Stage"
+        ],
+        "hidden": []
+      }
+    }
+  },
+  "section_3_views": [
+    {
+      "name": "Default view",
+      "view_url": "view://3b43930e-64f4-8125-8a57-000cd4a68b5f",
+      "layout": "table",
+      "filters": [],
+      "sorts": [],
+      "group_by": null,
+      "visible_properties": [
+        "Added On",
+        "Last Checked",
+        "Checked",
+        "Company",
+        "Industries",
+        "Founded",
+        "Headquarters",
+        "Latest Round",
+        "Status",
+        "NYC Employees",
+        "NYC Open Jobs",
+        "Fit Score",
+        "Funding Velocity",
+        "Data Status",
+        "Action Needed",
+        "Re-check",
+        "Website",
+        "Careers Page",
+        "LinkedIn",
+        "Crunchbase",
+        "Company Summary",
+        "Funding Rounds",
+        "Latest Funding $M",
+        "Total Funding $M",
+        "Latest Funding Date",
+        "Key Investors",
+        "Fit: Employees",
+        "Fit: Funding",
+        "Fit: Growth",
+        "Fit: Industry",
+        "Fit: Investors",
+        "Fit: Jobs",
+        "Added From",
+        "Current Angle",
+        "Founders",
+        "Lead Investors",
+        "Months: A→B",
+        "Months: B→C",
+        "Months: Late Stage",
+        "Months: Seed→A",
+        "Next Check Due",
+        "Relationship Notes",
+        "Workplace Contact",
+        "Workplace Contact Email",
+        "X Profile",
+        "Changes",
+        "Fit Drivers",
+        "Fit Raw",
+        "Fit: HQ",
+        "Fit: Stage"
+      ],
+      "hidden_properties": [],
+      "ambiguous": []
+    }
+  ],
+  "section_4_opened_row": {
+    "company": "Remark",
+    "page_id": "3b43930e-64f4-81a2-b762-d77fd332430d",
+    "page_url": "https://app.notion.com/p/3b43930e64f481a2b762d77fd332430d?pvs=204",
+    "body_markdown": "Fit math: Employees 6/34 (2 NYC metro) · Jobs 0/26 (0 NYC roles, location-type unknown, 0% of team) · Growth 2/10 (Slow est.) · Stage 0/8 (2 vs \\~18 expected at series-a) · HQ 6/6 (NYC-based) · Industry 5/5 · Funding 4/8 (\\$26.3M) · Investors 1/3",
+    "property_panel_scroll": {
+      "scroll_container_content_px": 2469,
+      "viewport_px": 584,
+      "approximate_viewports": 4.23,
+      "body_capture_scroll_top_px": 1800,
+      "remaining_px_at_body_capture": 85
+    },
+    "screenshots": [
+      "row_remark_open.jpg",
+      "row_remark_body.jpg"
+    ]
+  },
+  "section_6_capability_check": {
+    "plan_name": {
+      "value": null,
+      "ambiguous": "The connected workspace and UI did not expose a plan name during this read-only audit."
+    },
+    "property_types": {
+      "Button": {
+        "available": true,
+        "ui_label": "Button",
+        "gating": "No upgrade or plan-gate label shown."
+      },
+      "Formula": {
+        "available": true,
+        "ui_label": "Formula",
+        "gating": "No upgrade or plan-gate label shown."
+      },
+      "Rollup": {
+        "available": true,
+        "ui_label": "Rollup",
+        "gating": "No upgrade or plan-gate label shown."
+      },
+      "Relation": {
+        "available": true,
+        "ui_label": "Relation",
+        "gating": "No upgrade or plan-gate label shown."
+      },
+      "Unique_ID": {
+        "available": true,
+        "ui_label": "ID",
+        "gating": "No upgrade or plan-gate label shown."
+      },
+      "Verification": {
+        "available": true,
+        "ui_label": "Verification",
+        "gating": "No upgrade or plan-gate label shown."
+      }
+    },
+    "sub_items": {
+      "available": true,
+      "currently_enabled": false,
+      "evidence": "View settings > More settings > Sub-items showed a 'Turn on sub-items' button.",
+      "gating": "No upgrade or plan-gate label shown."
+    },
+    "database_automations": {
+      "available": true,
+      "event_triggers": [
+        "Any property edited",
+        "Page added",
+        "Every…"
+      ],
+      "property_specific_triggers": {
+        "offered_for_each_property": true,
+        "properties": [
+          "Added On",
+          "Last Checked",
+          "Checked",
+          "Company",
+          "Industries",
+          "Founded",
+          "Headquarters",
+          "Latest Round",
+          "Status",
+          "NYC Employees",
+          "NYC Open Jobs",
+          "Fit Score",
+          "Funding Velocity",
+          "Data Status",
+          "Action Needed",
+          "Re-check",
+          "Website",
+          "Careers Page",
+          "LinkedIn",
+          "Crunchbase",
+          "Company Summary",
+          "Funding Rounds",
+          "Latest Funding $M",
+          "Total Funding $M",
+          "Latest Funding Date",
+          "Key Investors",
+          "Fit: Employees",
+          "Fit: Funding",
+          "Fit: Growth",
+          "Fit: Industry",
+          "Fit: Investors",
+          "Fit: Jobs",
+          "Added From",
+          "Current Angle",
+          "Founders",
+          "Lead Investors",
+          "Months: A→B",
+          "Months: B→C",
+          "Months: Late Stage",
+          "Months: Seed→A",
+          "Next Check Due",
+          "Relationship Notes",
+          "Workplace Contact",
+          "Workplace Contact Email",
+          "X Profile",
+          "Changes",
+          "Fit Drivers",
+          "Fit Raw",
+          "Fit: HQ",
+          "Fit: Stage"
+        ]
+      },
+      "actions": [
+        "Edit property…",
+        "Add page to…",
+        "Edit pages in…",
+        "Send notification to…",
+        "Send mail… (New)",
+        "Send webhook",
+        "Archive pages…",
+        "Send Slack notification to…",
+        "Define variables"
+      ],
+      "gating": "No upgrade or plan-gate label shown. The Enable button was disabled only because the inspected draft had no trigger or action selected."
+    },
+    "linked_database_views": {
+      "available": null,
+      "plan_gating": null,
+      "ambiguous": "The inspected database UI did not expose the 'linked view of database' insert option. Verifying it would require opening an insert-block workflow on another page, which could create or edit a block and was excluded by the read-only limits."
+    }
+  },
+  "screenshots": {
+    "default_board": "board_default_fullwidth.jpg",
+    "views": [
+      "view_01_default_view.jpg"
+    ],
+    "opened_row_properties": "row_remark_open.jpg",
+    "opened_row_body": "row_remark_body.jpg"
+  },
+  "integrity_check": {
+    "post_inspection_property_count": 50,
+    "post_inspection_view_count": 1,
+    "blank_or_unnamed_properties": [],
+    "deleted_properties_count_before": 3,
+    "deleted_properties_count_after": 3,
+    "database_edited_timestamp_advanced_during_inspection": true,
+    "ambiguous": [
+      "The database's visible Edited timestamp advanced from '15h ago' to 'just now' while read-only property and automation configuration panels were opened. A post-inspection fetch still showed exactly 50 properties, one unchanged view, no unnamed property, and the Deleted properties count remained 3. No persistent schema, view, row, filter, sort, group, sub-item, or automation change was observed, but the metadata timestamp change cannot be explained with certainty."
+    ]
+  }
+}
