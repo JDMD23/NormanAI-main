@@ -6245,3 +6245,64 @@ SIZE (all rows in one blank group), HIRING, and the band chart.
 
 **`Reach` is the fifth built-but-unfed property in this project** unless it ships in the same
 pass. `outbox/MESSAGE-TO-CRMX-notion-writes.md`.
+
+---
+
+# Round 64 — loop 4: the test is company #134, not today's blanks
+
+JD is about to send a CSV and asked for everything to be fully wired.
+`outbox/GOAL-loop-4-fully-wired.md`.
+
+## BR1 — The acceptance test is a synthetic company followed end to end
+> **Backfilling the current 93 is half the work. The half that matters is whether the pipeline
+> populates these for the company that arrives TOMORROW, without anyone remembering to run
+> something.**
+
+**E3 is the loop's point:** ingest one synthetic row the way a CSV row arrives, run the whole
+pipeline, then read its board row and sort every column into three buckets — **populated ·
+blank-correctly · blank-WRONGLY (a source exists and nothing carried it).**
+
+> **Every column in the third bucket is a defect, and every one is invisible until a real batch
+> arrives.** This is the property-test discipline applied to a pipeline: *is this true of
+> everything*, asked of a row that does not exist yet.
+
+**Not an assertion that it works. A row JD can look at.**
+
+## BR2 — A column empty on every row is a promise the system is not keeping
+The field detector found 13. **Band B forces a decision per field — FEED with a named source, or
+RETIRE from the board** — and retiring means removing the *column*, never the store field.
+
+**Two are already answerable:** `workplace_contact` / `_email` are superseded by the contacts
+table and `Reach`. **Two are alarming:** `down_round` and `layoffs_hit_nyc` are **scoring
+inputs** that are empty everywhere — *the `hq_city` inert-component problem in a new place*, and
+the detector found them a week ago without anyone acting.
+
+**And `nyc_jobs_senior` / `nyc_jobs_facilities` are the sharpest:** the desk-role classifier
+computes role types, and `Head of Workplace` as a buy signal was the entire point of that work.
+**Nothing is stored.**
+
+## BR3 — Three distinct reasons a cell is blank, and only one is a defect
+JD asked why `Desk Jobs` and `Intensity` are blank. **The answer separates cleanly and the
+distinction is worth holding:**
+
+| | why | fix |
+|---|---|---|
+| `NYC Δ`, `Desk Jobs` | **the data exists and the projection was never written** | a write |
+| `Intensity`, `Signal` | **downstream of an empty input** | nothing — they self-fill |
+| `Desk Jobs` on companies with no careers page | **no evidence exists** | correct as-is |
+
+> **Only the first is a defect. The second is arithmetic waiting. The third is honesty.**
+> Treating all three as "blank" is what makes a board look broken when it is merely unfed — and
+> conversely, what lets a real gap hide among honest ones.
+
+## BR4 — The growth redesign is the one thing that makes a batch scoreable
+BL1 stands: **`funding_rounds` is fed by nothing and a Crunchbase CSV carries no dated round
+history.** So without E1, **every company on the new batch arrives with `growth` excluded and is
+scored on a renormalized formula relative to the board it joins.**
+
+**That is not a wrong score. It is a different formula** — and the board's ranking is the
+product. **E1 is therefore a precondition for the batch, not an improvement to it.**
+
+Bundled: `fresh_raise_growth_pts` (14) within the `growth` weight (10), plus the boot check
+beside `formula_is_coherent`. **Gated: simulate, show the movers with a concrete company beside
+the rate, then apply.**
