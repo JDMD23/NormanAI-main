@@ -5986,3 +5986,51 @@ neither is about funnels.**
 > **`brain/10` was written FROM those studies precisely so the funnel question would not require
 > going back to them.** The gap was never missing knowledge; it was knowledge never pointed at
 > the artifact it was written for.
+
+---
+
+# Round 61 — one board, 50 properties to 24, and the reachability gap
+
+**JD's ruling: one Notion database, not two.** Correct for company-first work.
+`reference/notion-one-board-design.md` supersedes the two-database section of
+`reference/notion-structure.md`.
+
+## BO1 — A property is an ANSWER to a scanning question; the page body is for deciding
+> **A column earns its place by being something you filter, sort, or read while SCANNING. The
+> page body is for what you read once you have stopped scanning.**
+
+Nothing is lost by demotion: ADR 0001 makes the whole board a rebuildable projection and **the
+page body is part of that projection.** The store already holds everything.
+
+**Round 3 already ruled this** — *"fit math moves to page body"* — **and the eight `Fit:`
+component columns came back anyway.** A ruling that is not enforced by a check is a ruling that
+regresses (BI2's shape, at the presentation layer).
+
+**The cut: 24 columns kept, 26 demoted, 2 replaced.** The largest blocks are the **eight `Fit:`
+components** (never filtered; `Fit Drivers` is what gets read) and the **four `Months:` columns**
+(**all four flagged EMPTY by the detector** — four columns holding nothing).
+
+## BO2 — Four properties represent 173 people in one board, and beat a relation here
+`Best Contact` · `Best Contact Title` · `Reachable` · `Contacts`, with **the full roster written
+into the page body** by reconcile.
+
+> **For company-first work this beats a relation**, because the answer to *"can I act on this
+> row?"* is visible in the list without a click.
+
+**`Reachable = None` is the single most useful filter on the board and does not exist today.**
+Hence **view 4, "No way in"** — high fit, no channel. **A high-fit company you cannot reach is a
+specific, solvable problem, and today it is indistinguishable from a low-fit company being
+correctly ignored.**
+
+## BO3 — Name what the single board costs, so the choice is made knowingly
+**Lost: the person-first view** — no sorting 173 humans by title across companies, and no
+per-person state (*called · replied · met*), because a person is not a row.
+
+**Right trade, for a stated reason: JD works company-first.** He opens the chase list, picks a
+company, then asks who to call. **The person is how he reaches the company, not the unit of
+work.**
+
+> **The revisit trigger is stated in advance: the day outreach state per person matters — who was
+> called, when, what they said — that is a per-person state machine and it cannot live in a
+> company row.** Naming the trigger now is BC2's pre-registration applied to an architecture
+> decision: **state what would change your mind before you have a reason to avoid changing it.**
