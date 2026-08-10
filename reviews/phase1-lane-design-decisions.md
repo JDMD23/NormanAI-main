@@ -6068,3 +6068,48 @@ chaseable *and* owe JD an errand; **filtering would hide a live prospect behind 
 **Pipeline Flow is declared a PAGE, not a view, and the reason is stated:** a view filters rows;
 flow counts transitions between states over time, which is an aggregate over the change log.
 **Naming the limit beats faking the surface.**
+
+## BO5 — Segments are properties you group by; the delta is stored and never shown
+JD redirected: not a call-list recommender — **strategic segmentation and key-indicator
+tracking.** `reference/notion-segments-and-indicators.md`.
+
+**8 bands × 5 statuses = 40 combinations.**
+> **A segment is a PROPERTY you group by. A view is a QUESTION you ask.** Notion's group-by
+> yields every band as a collapsible section with counts — that *is* the segmented view, on one
+> surface. **Four views, not forty.**
+
+`employee_band` already exists as a field and **the detector flagged it EMPTY** — it is exactly
+this property, never written.
+
+## BO6 — The leading indicator of the business is stored and surfaced nowhere
+**Verified: `prev_nyc_employees` and `prev_nyc_open_jobs` are in the entity and the schema.** The
+prior measurement exists; the delta is arithmetic; **it appears on no property and no view.**
+
+> **Norman measures NYC headcount on a cadence and never shows the change. The LEVEL says how
+> much space a company needs; the CHANGE says WHEN — and *when* is the entire business.**
+
+**Cheapest item on the page and the most meaningful: two subtractions over values already
+stored.** No measurement, no fetch, no credits, no session.
+
+## BO7 — "Hiring the most" is two questions, and it must be DESK-generating
+- **Absolute desk jobs** → *how much* new space.
+- **Intensity** (desk jobs ÷ current heads) → *how urgently*. **5 roles at 20 people is 25%
+  growth; 5 at 200 is 2.5%.** Raw count favours the big; intensity favours those about to run out
+  of room.
+
+**And it must exclude remote roles** — the desk-role classifier already exists, and
+`nyc_jobs_in_office` / `nyc_jobs_hybrid` are stored. **The number to show is
+`in_office + 0.8 × hybrid`, JD's own weighting.** A company hiring 20 remote engineers needs no
+desks, and a raw job count would rank it top.
+
+## BO8 — Choose the bands from the distribution, not from round numbers
+JD's bands are **linear** (20-wide to 100, then 50-wide). **Startup headcount is roughly
+log-distributed** — the measured companies on record sit at 4, 50, 50, 64, 84, 92, so **most of
+the board lands in the first two bands and four or five hold almost nothing.**
+
+**A band with two companies in it tells you nothing.** The exact query is in the doc; the
+log-spaced alternative (0–10 · 10–25 · 25–50 · 50–100 · 100–200 · 200+) spreads evenly if the
+distribution is skewed.
+
+> **Same discipline as anchoring score bands on the measured distribution rather than on
+> intuition (AK1) — applied to segmentation.** Run the query before choosing the cuts.
