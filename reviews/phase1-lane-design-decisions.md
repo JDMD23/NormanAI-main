@@ -22,6 +22,7 @@
 | R1's batch-6 two-browser plan | **S2** | Ruled against — serial-with-interleaving + a concurrent API lane is the standing pattern |
 | Round-20 interim "effective = configured − 0.5" | **AB1 / AB3** | Routing now compares raw; the old note was subtly wrong (banker's rounding) |
 | `reference/target-industries.md` core #8 (Biotech) | **JD ruling 2026-08-07** | Biotech excluded entirely; the code was right, the list was wrong |
+| **Round 45 — removed JD's per-session Sales Nav approval** | **AZ3** | **VOID.** Justified on a throttle that had zero call sites. Gate reinstated. See **BS1** — the round has no section in this log; this row is its tombstone |
 
 ---
 
@@ -6306,3 +6307,119 @@ product. **E1 is therefore a precondition for the batch, not an improvement to i
 Bundled: `fresh_raise_growth_pts` (14) within the `growth` weight (10), plus the boot check
 beside `formula_is_coherent`. **Gated: simulate, show the movers with a concrete company beside
 the rate, then apply.**
+
+---
+
+# Round 65 — the new build agent found a defect in MY checklist before writing code, and a hole in this log
+
+The CRMx session was reseeded onto a stronger model. Its first action — mandated as *report, do
+not build* — returned four things, and **three of them are corrections to the brain, not to the
+build.** It also ran Band D's queries rather than describing them.
+
+> **The first-action requirement paid for itself on its first use.** A build agent that reads the
+> rulings and then argues with the checklist is worth more than one that executes it.
+
+## BS1 — Round 45 is missing from this log, and the omission is mine
+The agent ran a monotonic freshness check on its clone and found **the log jumps from round 44 to
+round 46.** Round 45 exists only as `outbox/MESSAGE-TO-CRMX-round45-approval.md` and as
+references inside AZ3, which voided it.
+
+**I deleted a voided ruling instead of tombstoning it.**
+
+> **A log with a silent hole cannot support the check that discovers holes.** The monotonic test
+> passes at the endpoint and says nothing about the interior — which is exactly the failure mode
+> of any endpoint-only assertion.
+
+**Tombstone, on the record:**
+
+| Round | Status | What it said | Replaced by |
+|---|---|---|---|
+| **45** | **VOID** | Removed JD's per-session Sales Nav approval, justified on a throttle described as enforcing | **AZ3** — the throttle had **zero call sites**; the gate is reinstated |
+
+**A voided ruling is deleted from effect, never from the record.** The reasoning that produced it
+is the evidence for why the rule that replaced it exists.
+
+## BS2 — Band D needs a third category, and membership in it is proven per row
+The agent's queries: **store holds 134** (133 active; Pro Padel League tombstoned as
+mis-sourced). **39 rows carry no `notion_page_id`, all status `Research`.** D2 as written says
+*any non-terminal status → stop and escalate*, so **the letter of my own checklist halts the loop
+on pass 1 over a five-day-old deliberate decision** — round 28's deferred first-scorings.
+
+**The category is legitimate. The membership claim is not yet evidence.**
+
+> **"Consistent with round 28" is the reasoning that produced AO1.** Silna present and Pro Padel
+> explaining the tombstone makes the story *plausible*. **A story that fits is not a row that
+> matched.**
+
+**D1's deliverable is a name-level reconciliation — every row in exactly one bucket:** deferred
+by a cited ruling · tombstoned · **neither**. **D2 fires on the third bucket only, and one row in
+it outranks the loop.**
+
+**And the counts do not agree: 39 unprojected · 40 deferred by ruling · 41 with `fit_score IS
+NULL`.** Two rows appear to be **projected but unscored** — visible on JD's board, ranking
+nowhere. **Three numbers that should be one number is a finding, not a rounding.**
+
+## BS3 — A fixture may replace discovery. It may never replace computation.
+The agent found that E3 as specified **cannot exercise the columns Band A writes.** A synthetic
+CSV row has no careers URL and nothing discovers one (2 of 12 by conventional paths; the render
+pass is out of scope), and Sales Nav is human-gated. **So headcount, band, intensity, delta and
+desk jobs would all be blank-correctly — the acceptance test would validate the half of the
+pipeline that already worked.**
+
+**Ruling: seed fixtures, at the boundary of what the loop puts out of scope.**
+
+| seed | at | so this runs for real |
+|---|---|---|
+| a recorded ATS payload | the careers-fetch return | classifier · desk-role math · `Desk Jobs` |
+| **two** headcount readings, two dates | the measurement lane's own write | `NYC Band` · `Intensity` · **`NYC Δ`** |
+
+> **If the value arrives downstream of the code that was supposed to produce it, the test is
+> green by construction.**
+
+**Two readings, not one.** `prev_nyc_employees` is non-null on **4 of 134** rows — the delta path
+is nearly untested on the live board, and a single seeded reading leaves `NYC Δ` blank, which is
+the precise ambiguity E3 exists to remove.
+
+**And the report must name which inputs were seeded and where.** A fixture-fed test that does not
+say so reads as end-to-end when it is not — pre-registration (BC2) applied to a test's inputs
+rather than its expectations.
+
+## BS4 — I wrote a gate and a deadline into the same document. Second instance.
+E1 is gated on JD (*simulate → show the movers → apply → oracle → re-freeze*) and E1 is required
+green within a 3-pass budget. **Those cannot both hold.** The agent named it as BI3's class and
+proposed the fix; **adopted verbatim:**
+
+> **E1 is green for pass purposes when the simulation is done and the movers report is
+> delivered.** Apply · oracle · re-freeze on JD's go. **E3 re-verified after the apply.**
+
+**The pattern, now twice in ten rounds: I put a human gate and a pass budget in one document
+without checking whether the gate can clear inside the budget.** BI3 was resolved by removing the
+contradiction; this one by defining what green means on the engineering side of the gate. **The
+check to run on any future checklist: for each criterion, what closes it, and is that thing
+inside this loop?**
+
+## BS5 — my round-61 framing oversold `NYC Δ`'s coverage
+I wrote *"the prior measurement exists; the delta is arithmetic."* **True for 4 rows.** The
+re-measure history is thin and re-binding a Sales Nav URL clears the prior. **The projection is
+correct; the coverage claim was not.**
+
+**Pre-register the yields before the run** (~4 on `NYC Δ`, ~48 on `Desk Jobs`), per BC2.
+
+> **A band that hits a pre-registered number is green. Discovering the number afterward and
+> calling it expected is not a test** — it is the shape of every result that cannot fail.
+
+## BS6 — `Reach` collapses two different facts, and it is recorded, not fixed
+Blank `Reach` will mean both *never searched* and *searched, none reachable* — AP1 names those as
+distinct. **That is Unknown-≠-0 in a new place.** The fix is a company-level
+`contacts_searched_at`; **the loop is frozen and this is not on it.** Recorded in
+`found-not-fixed.md`, **and the collapse stated explicitly in the report** so no one reads a
+blank `Reach` as evidence that anyone looked.
+
+## BS7 — verifying the board is a precondition to writing into it
+The agent applied AO1 **to its own evidence**: the build report is the account, the board is the
+artifact. **Approved as pass-1 work, before Band A:** a read-only pass over views, properties and
+row count; and the nine views' filters read against the spec.
+
+> **Writes are about to land in columns those filters select on. A filter that differs from spec
+> means the writes arrive somewhere other than where the report says they do** — and the report
+> would still be green.
