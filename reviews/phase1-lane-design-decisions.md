@@ -5876,3 +5876,44 @@ names the constant responsible. Both fired on `fresh_raise_growth_pts`.
 - **Per-property policy** (`brain/04`) — FAIL gates, REPORT does not; P5 reports because a dead
   alias and a disconnected mechanism both trip it and **a detector that fails on non-bugs gets
   silenced** (BI5).
+
+---
+
+# Round 59 — JD approves session 1 and the growth direction; the Sales Nav "timeline" explained
+
+## BM1 — The window is ours, not LinkedIn's, and its shape is an artifact of hand-recording
+JD asked why Sales Nav has a timeline. Three facts, verified in `tripwires.py`:
+
+1. **The 80/day cap is self-imposed.** LinkedIn publishes no Sales Nav view limit. The config
+   says so: *"Conservative on purpose — JD loosens them, code never does."*
+2. **It is a ROLLING 24h window** — `since = now - timedelta(days=1)` — not a midnight reset.
+   **Correct by design: a calendar reset permits 80 at 23:59 and 80 more at 00:01**, which is
+   the burst the cap exists to prevent.
+3. **All 82 events carry one timestamp because they were hand-written after the session**, so
+   they clear in a single step. **With per-call recording the budget recovers gradually instead.**
+
+> **The cliff was a property of the recording method, not of the control.** Worth stating before
+> the new recorder changes the shape of the reading, so the difference is not read as a fault.
+
+## BM2 — Growth keys on obtainable evidence; approved as a DIRECTION, gated as a change
+JD approves BL2. **`growth` keys on active NYC hiring and fresh funding — the two signals §1b
+names that the intake can actually supply. Velocity becomes a refinement where dated round
+history exists, not a precondition for the component to fire.**
+
+**Bundled into the same change: `fresh_raise_growth_pts` 14 → within the `growth` weight of 10**
+(BK1), plus the boot check beside `formula_is_coherent`, which already catches this class and
+missed this instance.
+
+**Ruling: approval of a DIRECTION is not approval of an APPLY.** Simulate → show JD the movers →
+apply → oracle → re-freeze, the standing gate since round 20. **Report the rate with one concrete
+company beside it** (AT1).
+
+## BM3 — Sequencing recorded: loop 3 before the render pass
+Loop 2's Band B dissolves into loop 3 (BK3). **Order: property set + scheduler + stamps, then the
+render pass.**
+
+Deliberately inverting BF3's bottleneck-first rule, **because BF3's input changed when JD
+declined to send a batch** — the 142 pastes cost nothing until one runs, while the property set
+pays off on the next thing built, the render pass included.
+
+> **A rule applied without re-reading its input is how the wrong thing gets built rigorously.**
