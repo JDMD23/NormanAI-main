@@ -5430,3 +5430,64 @@ substitutes.
 only validate signals present in its frozen evidence. **So every component whose input does not
 vary in the corpus carries a validation it never earned** — and B2's field trace is how we find
 out which ones those are.
+
+---
+
+# Round 53 — I ran the reachability check instead of asking for it, and it found a fourth
+
+## BG1 — `velocity.py` is disconnected at BOTH ends: a scoring input consumed and never produced
+Ran an AST reachability pass over CRMx `src/` at `ab1f00d`. **200 public functions; 30 with no
+reference outside their own definition**, of which roughly half are pydantic validators the
+framework dispatches by decorator — **not dead, and worth separating, because "no textual
+reference" is not "never invoked" for framework-dispatched code.** The inverse of AZ1's error and
+just as easy to make.
+
+**Four are real. One is significant:**
+
+```
+scorer.py:206         reads company.funding_velocity        ← consumed
+velocity.py           360 lines, imported NOWHERE in src/   ← nothing computes it
+set_funding_velocity  store writer, called NOWHERE in src/  ← nothing writes it
+```
+
+**A scoring input that is consumed and never produced, with 19 test references keeping it
+green.** The other three: `changes_tags` (feeds the board's Changes column, which the "Changed
+Recently" view filters on), `status_owner` (the machine-vs-human ownership reconcile arbitrates
+with), and `read_headcount` (already known).
+
+**Observable: how many of the 133 have a non-null `funding_velocity`?** *Most* means an
+out-of-repo path populated it and that path needs finding; *few* means the growth component has
+been running on a mostly-absent input.
+
+> **This is the fourth built-but-unwired mechanism found by hand.** Budget, `workplace_contact`,
+> `read_headcount`, now `velocity`. **All four had passing tests. A fifth will not announce
+> itself** — which is why B3 makes the check part of `make check` rather than a thing someone
+> remembers to run.
+
+## BG2 — The render pass is a FALLBACK on a capability ladder, not a browser-first fetcher
+Grounded rather than invented — `outbox/GOAL-readiness-loop-2-grounded.md` cites each source:
+
+- **`studies/scrapling.md`** — *"ship capability ladders with visible price tags; never default to
+  the expensive tier"*, and *"trigger official skills on the failure of the platform's native
+  tool — the fallback slot is the highest-value trigger."*
+- **`studies/orca.md`** — *"run a fixed, cheap, deterministic baseline unconditionally and
+  completely; treat further tool use as a budgeted, justified exception."*
+
+**So: static HTTP on every company unconditionally; browser render only where static fails, under
+a call budget.** Not "render everything slowly." **And the 31 boards already recorded as
+unreadable are the test set — the failure log the system has been accumulating since round 4 is
+the render pass's specification.**
+
+- **`studies/scrapling.md`** — *"references into volatile external structure are derived data:
+  store a fingerprint at bind time, re-derive by similarity on failure."* Hence: **every URL found
+  records HOW; every failure records WHY.** Without the why, the second run repeats the first.
+- **`studies/ats-scrapers.md`** — *"the legitimacy of the data source is the ceiling on everything
+  built above it."* **Careers pages are public; LinkedIn is not.** The render pass applies to the
+  first and never to the second, and nothing in Band A touches the UI-only, JD-supervised,
+  halt-on-challenge rules for Sales Nav.
+
+## BG3 — Band B's placement is the rule being applied against its own pull
+BF3 ruled that a checklist opens with the measured operator bottleneck. **Band B (scoring) is
+cheaper, needs no external calls, and has far cleaner tests than Band A — which is exactly why it
+is second.** The cleanliness of the available test is not evidence about the value of the work,
+and this project has now mistaken it for such three times.
