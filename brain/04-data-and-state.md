@@ -104,3 +104,15 @@ Elite teams treat SQL and the database as a first-class part of the system:
 - Timestamps in UTC, ISO-8601 at boundaries, timezone math only at display.
   Money in integer minor units or decimal — never floats. These two rules are cheap
   to follow and catastrophically expensive to retrofit.
+
+## Bi-temporal storage: a measured value has two clocks
+
+A stored measurement carries **when it was true in the world** and, separately, **when we
+recorded it**. Collapsing them into one timestamp loses both questions. Supersession then sets an
+**end-date** rather than overwriting — so "what is true now" and "what was true then" are
+answerable from the same store, and a rule change produces a *countable* stale cohort instead of
+a silent one (studies/graphiti.md; Norman BI2, where ten rows written under a superseded rule fed
+a score for weeks and were invisible until every row was recomputed).
+
+Corollary: **staleness is a graph property, not a flag.** If you know what a derived value
+depends on, you know when it is stale without anyone remembering to mark it (studies/dagster.md).

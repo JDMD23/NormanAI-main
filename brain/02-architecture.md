@@ -152,3 +152,16 @@ The architecture-level questions that separate toy systems from production syste
 - What is the blast radius of a bad deploy? (Small, rolled-back automatically.)
 - Can every operation be traced end-to-end? (Correlation IDs from edge to store.)
 - What is idempotent and what is not — and is that written down at the boundary?
+
+## Model the assets, not the tasks
+
+For any system computing derived values, write the **asset graph** — what should exist and what
+it depends on — before the execution order. A task view shows *ordering*; an asset view shows
+*lineage*, and only the second makes the fatal case visible: **a node with no producer.** In a
+task-shaped system a value that nothing computes is invisible until something reads a null;
+on an asset graph it is a gap you can see (studies/dagster.md; Norman BL1, where a scoring
+component consumed `funding_velocity` for four days and no code path in any commit produced it).
+
+Derive the graph from the code — dependencies from signatures — so the diagram and the
+implementation cannot disagree. Adopt the *model* at ten nodes; adopt the *platform* never,
+unless the node count justifies it.

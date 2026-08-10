@@ -104,3 +104,19 @@ should be boring, proven, operable tech the team already knows (Postgres, the
 mainstream framework, the standard queue). Novelty costs on-call knowledge, hiring,
 ecosystem maturity, and Stack-Overflow-density. Spend the tokens where they
 differentiate the product — never on plumbing.
+
+## The relationships between constants need an owner
+
+A configuration in which every value is individually valid can still be **jointly incoherent**: a
+bonus floor above the ceiling it feeds, a cap above the demotion line it is meant to sit under.
+Unit tests pass, because each function is correct — the defect lives in the *relationship*, and
+nothing owns relationships (studies/opa.md).
+
+Treat a rule set the way OPA treats policy: **an artifact with its own test suite**, tested for
+mutual coherence rather than only for individual validity. Norman produced both failure modes in
+one week — one caught by a boot check written for that specific pair (AY3), one not caught at all
+because no check covered the class (BK1, `fresh_raise_growth_pts=14` erasing velocity for every
+recently-funded company).
+
+Adopt the discipline, decline the language: a policy *language* solves a policy *scale* problem,
+not a policy *organisation* problem.
