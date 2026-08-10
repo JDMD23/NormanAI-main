@@ -6034,3 +6034,37 @@ work.**
 > called, when, what they said — that is a per-person state machine and it cannot live in a
 > company row.** Naming the trigger now is BC2's pre-registration applied to an architecture
 > decision: **state what would change your mind before you have a reason to avoid changing it.**
+
+## BO4 — The view spec: four design rules, and views that monitor themselves
+`reference/notion-views-spec.md` — five views and one page, each with an exact filter, sort with
+tiebreaks, shown properties, and an expected size.
+
+**The four rules that generated it:**
+1. **One question, one axis.** A view answering two answers neither.
+2. **Every view declares whether it can EMPTY.** *A queue empties; a report cannot.* Both are
+   legitimate — **but a report needs a top-N discipline and a queue needs none.** Today and
+   Outgrowing are reports; My Queue, No Way In and What Moved are queues.
+3. **Every view declares an expected SIZE.** A breach is a signal that something upstream broke,
+   **not a filter to tune.**
+4. **Sort by value so partial completion is optimal** — clear five of twelve and you cleared the
+   five that mattered.
+
+**Rule 3 is the one with teeth.** *"Changed Recently"* returned 93 of 95 and the anomaly was
+noticed only because a human read the number. **An expectation would have caught it unattended**
+— which is why the size assertions belong in loop 3's property set, run daily.
+
+> **A view that silently triples is the earliest available signal that something upstream broke.**
+
+**Two specific tiebreak rulings worth keeping:**
+- **Today sorts `Fit Raw` ↓ then `NYC Open Jobs` ↓ then `NYC Employees` ↓.** At equal fit, **open
+  roles beat headcount — hiring is the company ACTING, headcount is the company EXISTING.** §1a
+  says size leads and growth amplifies; at a tie, growth is the tiebreak.
+- **What Moved sorts by magnitude before recency.** Within a week recency is near-uniform and
+  therefore sorts almost randomly; magnitude puts real movement on top.
+
+**And one refusal:** `Action Needed` is **shown but not filtered** on Today. A company can be
+chaseable *and* owe JD an errand; **filtering would hide a live prospect behind a chore.**
+
+**Pipeline Flow is declared a PAGE, not a view, and the reason is stated:** a view filters rows;
+flow counts transitions between states over time, which is an aggregate over the change log.
+**Naming the limit beats faking the surface.**
