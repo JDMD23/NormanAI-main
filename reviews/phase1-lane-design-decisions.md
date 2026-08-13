@@ -6423,3 +6423,111 @@ row count; and the nine views' filters read against the spec.
 > **Writes are about to land in columns those filters select on. A filter that differs from spec
 > means the writes arrive somewhere other than where the report says they do** — and the report
 > would still be green.
+
+---
+
+# Round 66 — I optimized the manual process instead of asking why it is manual. Fourth occurrence.
+
+JD asked whether answering the enrichment questions **through the system** — the brain's
+principles and CRMx's architecture — changes the answer. **It does, and the first thing it
+changes is my own last two documents.**
+
+## BS8 — The runbooks are a weight-class violation, and the pattern has a name and a count
+He asked *"what is the exact method"* and I answered with **two runbooks totalling a careful,
+well-ordered human procedure** — search templates, click order, a 90-second budget, a printable
+card. **Every line of it makes a human better at work the system was built to stop doing.**
+
+**The measurement that was already on the record when I wrote them:**
+
+```
+careers URLs JD must paste BY HAND   ~142 per 200 companies   ← the entire cost
+```
+
+**And the ruling that was already made:** BF1 — *the next loop's goal is careers-URL discovery,
+and its instrument is the K1 render pass.* **I wrote an operator runbook for the exact task a
+standing ruling says to automate.**
+
+**Decompose the 4 minutes per company:**
+
+| step | irreducibly human? |
+|---|---|
+| careers bind | **No** — the render pass, ruled at round 61, never built |
+| Crunchbase funding + round history | **No** — a public page, no login, deterministic |
+| LinkedIn About | **No** — though it shares the risky account |
+| **Sales Nav headcount** | **YES** — JD's own ruling, and it is the right ruling |
+
+> **~60 seconds of the 4 minutes is genuinely human. The other 3 minutes is work the architecture
+> was designed to do and nobody wired — about 4 hours per 80-company batch, recurring forever.**
+
+**This is the fourth occurrence of one shape**: round 32's self-audit (19 scoring commits vs 2
+product-layer), the step-back review, BF2 (*"the lane reads boards beautifully and nothing finds
+boards"*), and now this. **The tell is consistent — a precise, high-effort answer delivered one
+layer away from where the cost is.**
+
+## BS9 — A runbook is an uncharacterised instrument
+**F1 and K3 exist because you cannot compare numbers produced by different instruments.** That
+rule has only ever been applied to *machines*.
+
+**A procedure executed by a human 80 times is an instrument, and a document is not a
+calibration.** Two operators, or one operator on Tuesday and Friday, produce two rulers.
+
+**The proof is in my own runbook.** I found that the ruling pins geography to `New York City
+Metropolitan Area` while JD's saved searches use `New York, New York, United States` — and my
+remedy was *"settle it on company #1."*
+
+> **That is a procedural fix to what is structurally a config problem.** The geography string is
+> a **constant of the instrument**. It belongs in config, pinned, with the measurement recording
+> which constant it used — not in an operator's judgment on their first company of the day.
+
+**Generalised:** every place a runbook says *"pick one and be consistent"* is a place a constant
+should be pinned in code. **Consistency asked of a human is a variable; consistency asserted by
+a config is a fact.**
+
+## BS10 — Bulk hand-enrichment would permanently freeze the batch. This is the real finding.
+**K4 ranks provenance `jd-manual > machine-verified > machine-partial`, and a `jd-manual` value
+is *never silently overwritten* by a later machine measurement.**
+
+**That mechanism was designed for DISPUTES** — JD out-measuring the machine, the value adopted,
+and the disagreement logged as instrument drift. **It was never designed for INTAKE.**
+
+> **Run 80 companies × ~10 fields through an operator and roughly 800 values enter at the top of
+> the provenance ladder — immune to re-measurement, immune to healing, permanent.**
+
+**Everything in Norman rests on errors being correctable on the next pass.** Hysteresis, the
+reconcile loop, drift correction, every rescore. **AP5 named the one class that escapes it — an
+email address, because it leaves the system.** This is a second escape hatch, and it is wider:
+**a hand-entered value never leaves, and can never be corrected either.**
+
+**Ruling: bulk operator enrichment requires its own provenance tier — `operator-read` — ranked
+BELOW `machine-verified`.** A human reading a page under time pressure is not the same evidence
+as JD deliberately disputing a value, and collapsing them into one tag makes the strong signal
+unreadable. **Without that tier, an 80-company hand-run should not happen at all.**
+
+## BS11 — And the write path may not exist
+The runbook says *"write to SQLite, one write per company."* **I do not know that a bulk
+operator-write path exists.** The known human path is a **board edit adopted by reconcile** —
+which is field-level, one company at a time, and would tag all ~800 values `jd-manual` per BS10.
+
+**Stated as a question, not an assertion, because I did not check.** It is exactly the class of
+claim AO1 exists to catch: **a described mechanism accepted without an observable.**
+
+## BS12 — What survives, and what to do instead
+**The Sales Nav sections of the runbook stand.** That lane is attended by ruling, the operator
+*is* the control, and the halt-on-challenge discipline cannot be delegated to code. **The
+geography question is real and still has to be answered — but as a config constant, not an
+operator decision.**
+
+**The order changes:**
+
+1. **Pin the geography constant in config.** Minutes. Removes an entire class of drift.
+2. **Add the `operator-read` provenance tier.** Hours. **Gates any hand-run.**
+3. **Build the render pass** — BF1, ruled at round 61, still unbuilt. **Baseline is 2 of 12; the
+   exit criterion is a measurement, not a target.**
+4. **Automate the Crunchbase read**, including the dated round history — public, deterministic,
+   no account risk, **and it is the only input that unblocks the growth component.**
+5. **Then, and only then, an attended Sales Nav session** for the one thing that is genuinely a
+   human's job.
+
+> **The runbook was the right answer to the question asked and the wrong answer to the situation.
+> Answering the question in front of you is not the same as answering the one that matters — and
+> a well-executed answer at the wrong layer is harder to notice than a bad one.**
